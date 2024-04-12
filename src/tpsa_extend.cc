@@ -477,9 +477,9 @@ void ad_reserve(const unsigned int n)
         delete [] advecpool[0];
         delete [] advecpool;
     }
-    advecpool = new double*[n];
-    advecpool[0] = new double[FULL_VEC_LEN*n];
-    memset(advecpool[0], 0, FULL_VEC_LEN*n*sizeof(double));
+    advecpool = new SymEngine::Expression*[n];
+    advecpool[0] = new SymEngine::Expression[FULL_VEC_LEN*n];
+    memset(advecpool[0], 0, FULL_VEC_LEN*n*sizeof(SymEngine::Expression));
     ad_flag = 0;
     advec.clear();
     advec.push_back(advecpool[0]);

@@ -16,6 +16,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <map>
+#include <symengine/expression.h>
 #include "tpsa.h"
 
 /** \brief A table that show the relation between the orders and the index of an element in a TPS vector.
