@@ -4,7 +4,10 @@ set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_INSTALL_PREFIX /usr/local)
-project(tpsa)
+project(tpsa_sym)
+
+# Find SymEngine
+find_package(SymEngine REQUIRED CONFIG)
 
 #Bring the headers into the project
 include_directories(include)
@@ -12,16 +15,25 @@ include_directories(include)
 #However, the file(GLOB...) allows for wildcard additions:
 file(GLOB SOURCES "src/*.cc")
 
+# Include SymEngine headers
+include_directories(${SYMENGINE_INCLUDE_DIRS})
+
+
 #Generate the shared library and the static llibary from the sources
 add_library(tpsaShared SHARED ${SOURCES})
+# Link SymEngine with your application
+target_link_libraries(tpsaShared  ${SYMENGINE_LIBRARIES})
 set_target_properties(tpsaShared PROPERTIES 
-    OUTPUT_NAME "tpsa"
+    OUTPUT_NAME "symtpsa"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 add_library(tpsaStatic STATIC ${SOURCES})
+target_link_libraries(tpsaStatic  ${SYMENGINE_LIBRARIES})
 set_target_properties(tpsaStatic PROPERTIES 
-    OUTPUT_NAME "tpsa"
+    OUTPUT_NAME "symtpsa"
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
+
+
 
 add_custom_target(build_examples
     COMMAND ${CMAKE_MAKE_PROGRAM} INSTALL_DIR=${CMAKE_INSTALL_PREFIX} all
