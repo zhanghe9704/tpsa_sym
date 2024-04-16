@@ -16,8 +16,9 @@
 #include <iomanip>
 #include <cstdlib>
 #include <map>
-#include <symengine/expression.h>
+
 #include "tpsa.h"
+#include "symbolic.h"
 
 /** \brief A table that show the relation between the orders and the index of an element in a TPS vector.
  * The orders of an TPS element is a vector of integers that shows the order of each variable in  that element.
@@ -59,7 +60,7 @@ void ad_restore_order();//Restore the original TPS order, which is larger than t
 void ad_reserve(const unsigned int n);  //Reserve memory for n TPS vectors.
 void ad_clear(); //Destroy the TPS environment and release memory.
 void ad_assign(unsigned int &i);    //Assign memory to a TPS vector. The length of the vector is zero.
-double ad_con(const TVEC iv); //Return the constant part of the TPS vector
+SymEngine::Expression ad_con(const TVEC iv); //Return the constant part of the TPS vector
 void ad_reset_const(const TVEC iv, double x); //Reset the TPS vector constant element as x and all other elements zero
 unsigned int ad_remain();       //Space (number) available for new TPS vectors.
 unsigned int ad_count();        //Number of TPS vectors allocated.
@@ -74,7 +75,7 @@ void ad_composition(std::vector<TVEC> &ivecs, std::vector<std::complex<double> >
 void ad_add(const unsigned int idst, const unsigned int jsrc, unsigned int ov);
 void ad_sub(const unsigned int idst, const unsigned int jsrc, TVEC ov);
 void ad_add_const(const TVEC i, double r, TVEC ov);
-double ad_elem(const TVEC &vec, std::vector<int> &idx);
+SymEngine::Expression ad_elem(const TVEC &vec, std::vector<int> &idx);
 void ad_elem(const TVEC &vec, unsigned int idx, std::vector<unsigned int>& c, double& x);
 void ad_pok(const TVEC &vec, std::vector<int> &idx, double x);
 int ad_order(); //Return the order of the TPS environment.

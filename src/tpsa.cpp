@@ -1,6 +1,6 @@
 /*
  * Copyright(C) 2008 by Lingyun Yang
- * L. Yang, “Array Based Truncated Power Series Package”, Proc. ICAP'09, San Francisco, CA, USA, Aug.-Sep. 2009,
+ * L. Yang, ï¿½Array Based Truncated Power Series Packageï¿½, Proc. ICAP'09, San Francisco, CA, USA, Aug.-Sep. 2009,
  *
  */
 
@@ -8,6 +8,8 @@
 //! \file tpsa.cpp
 //! \version $Id: tpsa.cpp,v 1.4 2009-06-08 10:48:43 frs Exp $
 //! \author Lingyun Yang, http://www.lingyunyang.com/
+
+//! Revised by He Zhang to support symbolic computation 04/16/2024
 
 #include <iostream>
 #include <ctime>
@@ -57,8 +59,10 @@ static TNVND* vec; // vec initialized.
 static unsigned int tblsize;
 
 // memory pool
-static double **advecpool;
-std::vector<double*> advec;
+// static double **advecpool;
+// std::vector<double*> advec;
+static SymEngine::Expression** advecpool;
+std::vector<SymEngine::Expression*> advec;
 std::vector<unsigned int> adveclen;
 
 
@@ -679,7 +683,7 @@ void ad_elem(const TVEC* ivec, unsigned int* idx, unsigned int* c, double* x)
     }
 
     //
-    double* v = advec[ii];
+    auto* v = advec[ii];
     *x = v[*idx-1];
     TNVND* p = base + gnv*(*idx-1);
     for (size_t j = 0; j < gnv-1; ++j) {
@@ -693,7 +697,7 @@ void ad_elem(const TVEC* ivec, unsigned int* idx, unsigned int* c, double* x)
 #ifdef MSVC_DLL
 _declspec(dllexport) void _stdcall ad_pek(const TVEC* ivec, int* c, size_t* n, double* x)
 #else
-void ad_pek(const unsigned int* ivec, int* c, size_t* n, double* x)
+void ad_pek(const unsigned int* ivec, int* c, size_t* n, auto* x)
 #endif
 {
     const unsigned int ii = *ivec;
@@ -757,7 +761,7 @@ void ad_var(const unsigned int* ivec, const double* x, unsigned int* ibvec)
     double x0 = *x;
     //unsigned int nbvmax;
     // TNVND i = iv - 1;
-    double *v = advec[iv];
+    auto *v = advec[iv];
  #ifdef DEBUG_ALL
     std::cout << "Enter ad_var " << *ivec << "  " << *x << "  " << *ibvec << std::endl;
  #endif
@@ -841,8 +845,8 @@ void ad_add(const unsigned int* idst, const unsigned int* jsrc)
     unsigned int i = *idst;
     unsigned int j = *jsrc;
 
-    double *v = advec[i];
-    double *rhsv = advec[j];
+    auto *v = advec[i];
+    auto *rhsv = advec[j];
     //double *resv = advec[k];
 
     if (adveclen[i] < adveclen[j]) {
@@ -881,8 +885,8 @@ void ad_sub(const unsigned int* idst, const unsigned int* jsrc)
     unsigned int i = *idst;
     unsigned int j = *jsrc;
 
-    double *v = advec[i];
-    double *rhsv = advec[j];
+    auto *v = advec[i];
+    auto *rhsv = advec[j];
 
  #ifdef DEBUG_ALL
     std::cout << "AD sub " << *idst << " ["  << adveclen[i]
@@ -991,7 +995,7 @@ _declspec(dllexport) void _stdcall ad_mult_const(const TVEC* iv, double* c)
 void ad_mult_const(const TVEC* iv, double* c)
 #endif
 {
-    double* v = advec[*iv];
+    auto* v = advec[*iv];
     for (size_t i = 0; i < adveclen[*iv]; ++i)
         v[i] *= (*c);
  #ifdef DEBUG_ALL
@@ -1136,7 +1140,7 @@ _declspec(dllexport) void _stdcall ad_sqrt(const TVEC* iv, const TVEC* iret)
 void ad_sqrt(const TVEC* iv, const TVEC* iret)
 #endif
 {
-    double x = advec[*iv][0];
+    auto x = advec[*iv][0];
     double c;
     TVEC itmp, ip, ipn;
     ad_alloc(&itmp);
@@ -1326,11 +1330,11 @@ void ad_sin(const TVEC* iv, const TVEC* iret)
     ad_copy(iv, &ipnod);
     ad_copy(iv, &ip);
 
-    double *v = advec[*iv];
-    double *ret = advec[*iret];
-    double *pnod = advec[ipnod];
-    double *pnev = advec[ipnev];
-    double *p = advec[ip];
+    auto *v = advec[*iv];
+    auto *ret = advec[*iret];
+    auto *pnod = advec[ipnod];
+    auto *pnev = advec[ipnev];
+    auto *p = advec[ip];
 
  #ifdef DEBUG_ALL
     std::cout << ' ' << *iret << ' ' << ret
@@ -1942,7 +1946,7 @@ _declspec(dllexport) void _stdcall ad_read_block(const TVEC* iv,
                                                  double* v, TNVND* J, const unsigned int* N)
 #else
 void ad_read_block(const TVEC* iv,
-                   double* v, TNVND* J, const unsigned int* N)
+                   SymEngine::Expression* v, TNVND* J, const unsigned int* N)
 #endif
 {
     //unsigned int ii = *iv;
@@ -2148,7 +2152,7 @@ void ad_print_array(const TVEC* iv, const TVEC* nv)
     //os << "iv= " << ii << std::endl;
     const char* s = "          ";
     std::ios::fmtflags prevflags = os.flags();
-    double* v;
+    SymEngine::Expression* v;
     double xm = 0.0;
 
     int width_base = 2;

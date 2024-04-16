@@ -15,7 +15,6 @@
 #include <cstring>
 #include "tpsa.cpp"
 
-
 static unsigned int ad_flag = 0; ///< The index of the next available TPS vector
 static unsigned int ad_end = 0;  ///< The index of the last available TPS vector.
 ///Linked list for TPSA memory management. When ad_flag == adlist[ad_end], memory runs out!
@@ -199,7 +198,8 @@ void ad_restore_order() {
 void ad_list_order(const TVEC iv) {
     TNVND* p = base;
     for (size_t i=0; i<adveclen[iv]; ++i) {
-        if (std::abs(advec[iv][i]) < std::numeric_limits<double>::min()) {
+        // if (std::abs(advec[iv][i]) < std::numeric_limits<double>::min()) {
+        if (is_zero(advec[iv][i])) {
             p += gnv;
             continue;
         }
@@ -282,7 +282,7 @@ unsigned int ad_remain() {
  * \return Value of the constant part of the given TPS vector.
  *
  */
-double ad_con(const TVEC iv) {
+SymEngine::Expression ad_con(const TVEC iv) {
     return advec[iv][0];
 }
 
@@ -339,7 +339,8 @@ void ad_int(TVEC iv, unsigned int base_id, TVEC ov) {
     std::vector<unsigned int> c(gnv);
 
     for (size_t i=0; i<adveclen[ov]; ++i) {
-        if (std::abs(advec[ov][i]) < std::numeric_limits<double>::min()) {
+        // if (std::abs(advec[ov][i]) < std::numeric_limits<double>::min()) {
+        if (is_zero(advec[ov][i])) {
             p += gnv;
             continue;
         }
@@ -362,7 +363,8 @@ void ad_int(TVEC iv, unsigned int base_id, TVEC ov) {
 int ad_n_element(TVEC v) {
     int n = 0;
     for(size_t i=0; i<adveclen[v]; ++i)
-        if (fabs(advec[v][i])>std::numeric_limits<double>::min())
+        // if (fabs(advec[v][i])>std::numeric_limits<double>::min())
+        if (is_zero(advec[v][i]))
             ++n;
     return n;
 }
@@ -375,10 +377,11 @@ int ad_n_element(TVEC v) {
  *
  */
 bool ad_zero_check(TVEC v, double eps) {
-    double zero = std::numeric_limits<double>::min();
-    if(eps>0) zero = eps;
+    // double zero = std::numeric_limits<double>::min();
+    // if(eps>0) zero = eps;
     for(size_t i=0; i<adveclen[v]; ++i) {
-        if(fabs(advec[v][i])>zero) return false;
+        // if(fabs(advec[v][i])>zero) return false;
+        if(is_zero(advec[v][i]) ) return false;
     }
     return true;
 }
@@ -391,9 +394,9 @@ bool ad_zero_check(TVEC v, double eps) {
  */
 double ad_norm(TVEC v) {
     double norm = 0;
-    for(size_t i=0; i<adveclen[v]; ++i) {
-        if(fabs(advec[v][i])>norm) norm = fabs(advec[v][i]);
-    }
+    // for(size_t i=0; i<adveclen[v]; ++i) {
+    //     if(fabs(advec[v][i])>norm) norm = fabs(advec[v][i]);
+    // }
     return norm;
 }
 
@@ -407,29 +410,29 @@ double ad_norm(TVEC v) {
  *
  */
 double ad_weighted_norm(TVEC v, double w) {
-    TNVND* p = base;
-    std::vector<double> ww(gnd+1, 1);
-    for(int i=1; i<gnd+1; ++i) {
-        ww.at(i) = ww.at(i-1)*w;
-    }
-    double* pv = advec[v];
-    double norm = 0;
-    for (size_t i = 0; i < adveclen[v]; ++i) {
-        if (std::abs(pv[i]) < std::numeric_limits<double>::min()) {
-            p += gnv;
-            continue;
-        }
-        double coef = pv[i];
-        int order = 0;
-        for (size_t j = 0; j < gnv-1; ++j) {
-            order += (unsigned int) (*p-*(p+1));
-            ++p;
-        }
-        order += (unsigned int)*p++;
-        double value = fabs(coef*ww.at(order));
-        if(value>norm) norm = value;
-    }
-    return norm;
+    // TNVND* p = base;
+    // std::vector<double> ww(gnd+1, 1);
+    // for(int i=1; i<gnd+1; ++i) {
+    //     ww.at(i) = ww.at(i-1)*w;
+    // }
+    // double* pv = advec[v];
+    // double norm = 0;
+    // for (size_t i = 0; i < adveclen[v]; ++i) {
+    //     if (std::abs(pv[i]) < std::numeric_limits<double>::min()) {
+    //         p += gnv;
+    //         continue;
+    //     }
+    //     double coef = pv[i];
+    //     int order = 0;
+    //     for (size_t j = 0; j < gnv-1; ++j) {
+    //         order += (unsigned int) (*p-*(p+1));
+    //         ++p;
+    //     }
+    //     order += (unsigned int)*p++;
+    //     double value = fabs(coef*ww.at(order));
+    //     if(value>norm) norm = value;
+    // }
+    // return norm;
 }
 
 // ***** The following functions provide alternative ones instead of the original ones in tpsa.cpp. *****
@@ -603,8 +606,9 @@ void ad_composition(std::vector<TVEC> &ivecs, std::vector<std::complex<double> >
                 ++zero_coef;
                 continue;
             }
-            double coef = advec[ivecs.at(iv)][i];
-            if (std::abs(coef) < std::numeric_limits<double>::min()) {
+            auto coef = advec[ivecs.at(iv)][i];
+            // if (std::abs(coef) < std::numeric_limits<double>::min()) {
+            if (is_zero(coef)) {
                 ++zero_coef;
                 continue;
             }
@@ -683,8 +687,9 @@ void ad_composition(std::vector<TVEC> &ivecs, std::vector<double> &v, std::vecto
                 ++zero_coef;
                 continue;
             }
-            double coef = advec[ivecs.at(iv)][i];
-            if (std::abs(coef) < std::numeric_limits<double>::min()) {
+            auto coef = advec[ivecs.at(iv)][i];
+            // if (std::abs(coef) < std::numeric_limits<double>::min()) {
+            if (is_zero(coef)) {
                 ++zero_coef;
                 continue;
             }
@@ -775,7 +780,8 @@ void ad_composition(std::vector<TVEC> &ivecs, std::vector<TVEC> &v, std::vector<
                 ++zero_coef;
                 continue;
             }
-            if (std::abs(advec[ivecs.at(iv)][i]) < std::numeric_limits<double>::min()) {
+            // if (std::abs(advec[ivecs.at(iv)][i]) < std::numeric_limits<double>::min()) {
+            if (is_zero(advec[ivecs.at(iv)][i])) {
                 ++zero_coef;
                 continue;
             }
@@ -794,7 +800,7 @@ void ad_composition(std::vector<TVEC> &ivecs, std::vector<TVEC> &v, std::vector<
                 c_flag = false;  //Already calculated c.
             }
 
-            double coef = advec[ivecs.at(iv)][i];
+            auto coef = advec[ivecs.at(iv)][i];
             if (product_flag) {
                 ad_reset_vector(product);
                 advec[product][0] = 1;
@@ -817,7 +823,8 @@ void ad_composition(std::vector<TVEC> &ivecs, std::vector<TVEC> &v, std::vector<
     for(auto ov : ovecs) {
         adveclen[ov] = 1;
         for(int i=order_index[gnd+1]-1; i>=0; --i) {
-            if(std::abs(advec[ov][i])>std::numeric_limits<double>::min()) {
+            // if(std::abs(advec[ov][i])>std::numeric_limits<double>::min()) {
+            if(is_zero(advec[ov][i]) ) {
                 adveclen[ov] = i+1;
                 break;
             }
@@ -896,7 +903,8 @@ void ad_substitute(std::vector<TVEC> &ivecs, std::vector<unsigned int> &base_id,
                 ++i_count;
                 continue;
             }
-            if (std::abs(advec[ivecs.at(iv)][i]) < std::numeric_limits<double>::min()) {
+            // if (std::abs(advec[ivecs.at(iv)][i]) < std::numeric_limits<double>::min()) {
+            if (is_zero(advec[ivecs.at(iv)][i]))) {
                 ++i_count;
                 continue;
             }
@@ -935,7 +943,7 @@ void ad_substitute(std::vector<TVEC> &ivecs, std::vector<unsigned int> &base_id,
                     }                           //k - index of the term after eliminating the specific base.
                     k_flag = false;  //Already calculated k.
                 }
-                double coef = advec[ivecs.at(iv)][i];
+                auto coef = advec[ivecs.at(iv)][i];
                 if (k>0) {
                     if(product_flag) {
                         ad_reset_vector(product);
@@ -953,7 +961,8 @@ void ad_substitute(std::vector<TVEC> &ivecs, std::vector<unsigned int> &base_id,
                     }
 
                     ad_mult_c(product, coef, tmp);
-                    if (std::abs(advec[tmp][0]) > std::numeric_limits<double>::min())
+                    // if (std::abs(advec[tmp][0]) > std::numeric_limits<double>::min())
+                    if (is_zero(advec[tmp][0]))
                         advec[ovecs.at(iv)][k] += advec[tmp][0];
                     for (unsigned int idx = 1; idx<adveclen[tmp] && idx<idx_limit; ++idx) {
                         advec[ovecs.at(iv)][prdidx[k][idx]] += advec[tmp][idx];
@@ -990,7 +999,8 @@ void ad_substitute(std::vector<TVEC> &ivecs, std::vector<unsigned int> &base_id,
     for(auto ov : ovecs) {
         adveclen[ov] = 1;
         for(int i=order_index[gnd+1]-1; i>=0; --i) {
-            if(std::abs(advec[ov][i])>std::numeric_limits<double>::min()) {
+            // if(std::abs(advec[ov][i])>std::numeric_limits<double>::min()) {
+            if(is_zero(advec[ov][i])) {
                 adveclen[ov] = i+1;
                 break;
             }
@@ -1051,7 +1061,8 @@ void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vecto
     std::vector<unsigned int> rc(nv);
 
     for (size_t i=0; i<adveclen[iv]; ++i) { //loop over all elements.
-        if (std::abs(advec[iv][i]) < std::numeric_limits<double>::min()) {
+        // if (std::abs(advec[iv][i]) < std::numeric_limits<double>::min()) {
+        if (is_zero(advec[iv][i])){
             p += gnv;
             continue;
         }
@@ -1071,7 +1082,7 @@ void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vecto
             }
         }
         if (flag) {
-            double coef = advec[iv][i];
+            auto coef = advec[iv][i];
             unsigned int d = 0;
             for (unsigned int i = 0; i < gnv; ++i) {
                 d += c[i];
@@ -1100,7 +1111,8 @@ void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vecto
                 }
                 ad_mult_const(&product, &coef);
                 ad_restore_order();
-                if (std::abs(advec[product][0]) > std::numeric_limits<double>::min()) advec[ov][k] += advec[product][0];
+                // if (std::abs(advec[product][0]) > std::numeric_limits<double>::min()) advec[ov][k] += advec[product][0];
+                if (is_zero(advec[product][0]) ) advec[ov][k] += advec[product][0];
                 for (unsigned int idx = 1; idx<adveclen[product] && idx<idx_limit; ++idx) {
                     advec[ov][prdidx[k][idx]] += advec[product][idx];
                 }
@@ -1131,7 +1143,8 @@ void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vecto
 
     adveclen[ov] = 1;
     for(int i=order_index[gnd+1]-1; i>=0; --i) {
-        if(std::abs(advec[ov][i])>std::numeric_limits<double>::min()) {
+        // if(std::abs(advec[ov][i])>std::numeric_limits<double>::min()) {
+        if(is_zero(advec[ov][i]) ) {
             adveclen[ov] = i+1;
             break;
         }
@@ -1181,7 +1194,8 @@ void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov) {
     TVEC tmp;
 
     for (size_t i=0; i<adveclen[iv]; ++i) { //loop over all element.
-        if (std::abs(advec[iv][i]) < std::numeric_limits<double>::min()) {
+        // if (std::abs(advec[iv][i]) < std::numeric_limits<double>::min()) {
+        if (is_zero(advec[iv][i])) {
             p += gnv;
             continue;
         }
@@ -1192,7 +1206,7 @@ void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov) {
         c[gnv-1] = (unsigned int)*p++ ;
         if (c[base_id]>0) {
             tmp = ad_pow_int_pos(v, power_v, c[base_id], 1);
-            double coef = advec[iv][i];
+            auto coef = advec[iv][i];
             c[base_id] = 0;
 
             unsigned int d = 0;
@@ -1210,7 +1224,8 @@ void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov) {
             }                           //k - index of the term after eliminating the specific base.
 
             if (k>0) {
-                if (std::abs(advec[tmp][0]) > std::numeric_limits<double>::min()) advec[ov][k] += coef*advec[tmp][0];
+                // if (std::abs(advec[tmp][0]) > std::numeric_limits<double>::min()) advec[ov][k] += coef*advec[tmp][0];
+                if (is_zero(advec[tmp][0]) ) advec[ov][k] += coef*advec[tmp][0];
                 for (unsigned int idx = 1; idx<adveclen[tmp] && idx<idx_limit; ++idx) {
                     advec[ov][prdidx[k][idx]] += coef*advec[tmp][idx];
                 }
@@ -1218,7 +1233,8 @@ void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov) {
             }
             else {
                 for(unsigned int idx = 0; idx<adveclen[tmp]; ++idx) {
-                    if (std::abs(advec[tmp][idx]) > std::numeric_limits<double>::min()) {
+                    // if (std::abs(advec[tmp][idx]) > std::numeric_limits<double>::min()) {
+                    if (is_zero(advec[tmp][idx]) ) {
                         advec[ov][idx] += coef*advec[tmp][idx];
                     }
                 }
@@ -1265,7 +1281,8 @@ void ad_substitute_const(const TVEC iv, unsigned int base_id, double x, TVEC ov)
     ad_copy(&iv, &ov);
     if (std::abs(x)>= std::numeric_limits<double>::min()) { // x is not zero.
         for (size_t i=0; i<adveclen[iv]; ++i) { //loop over all element.
-            if (std::abs(advec[iv][i]) < std::numeric_limits<double>::min()) {
+            // if (std::abs(advec[iv][i]) < std::numeric_limits<double>::min()) {
+            if (is_zero(advec[iv][i])) {
                 p += gnv;
                 continue;
             }
@@ -1275,7 +1292,7 @@ void ad_substitute_const(const TVEC iv, unsigned int base_id, double x, TVEC ov)
             }
             c[gnv-1] = (unsigned int)*p++ ;
             if (c[base_id]>0) {
-                double coef = advec[iv][i]*power_x[c[base_id]];
+                auto coef = advec[iv][i]*power_x[c[base_id]];
                 c[base_id] = 0;
                 advec[ov][i] = 0;
 
@@ -1297,7 +1314,8 @@ void ad_substitute_const(const TVEC iv, unsigned int base_id, double x, TVEC ov)
     }
     else {      //Consider x as zero! All the respective terms are set to zero.
         for (size_t i=0; i<adveclen[ov]; ++i) { //loop over all elements.
-            if (std::abs(advec[ov][i]) < std::numeric_limits<double>::min()) {
+            // if (std::abs(advec[ov][i]) < std::numeric_limits<double>::min()) {
+            if (is_zero(advec[ov][i])) {
                 p += gnv;
                 continue;
             }
@@ -1311,7 +1329,8 @@ void ad_substitute_const(const TVEC iv, unsigned int base_id, double x, TVEC ov)
     }
 
     for(int i=adveclen[ov]-1; i>=0; --i) {
-        if(std::abs(advec[ov][i])<std::numeric_limits<double>::min()) adveclen[ov] -= 1;
+        // if(std::abs(advec[ov][i])<std::numeric_limits<double>::min()) adveclen[ov] -= 1;
+         if(is_zero(advec[ov][i])) adveclen[ov] -= 1;
         else break;
     }
     if (adveclen[ov]==0) adveclen[ov] = 1;
@@ -1330,9 +1349,9 @@ void ad_substitute_const(const TVEC iv, unsigned int base_id, double x, TVEC ov)
  *
  */
 void ad_add(const unsigned int idst, const unsigned int jsrc, unsigned int ov) {
-    double *v = advec[idst];
-    double *rhsv = advec[jsrc];
-    double *resv = advec[ov];
+    auto *v = advec[idst];
+    auto *rhsv = advec[jsrc];
+    auto *resv = advec[ov];
 
     unsigned int n_copy, n_add;
     n_add = adveclen[idst];
@@ -1373,9 +1392,9 @@ void ad_add_const(const TVEC i, double r, TVEC ov) {
  *
  */
 void ad_sub(const unsigned int idst, const unsigned int jsrc, TVEC ov) {
-    double *v = advec[idst];
-    double *rhsv = advec[jsrc];
-    double *resv = advec[ov];
+    auto *v = advec[idst];
+    auto *rhsv = advec[jsrc];
+    auto *resv = advec[ov];
 
     if (adveclen[idst] == 0 || adveclen[jsrc] == 0) {
         std::cerr << "ERROR: AD sub zero length vector" << std::endl;
@@ -1417,7 +1436,7 @@ void ad_elem(const TVEC &vec, unsigned int idx, std::vector<unsigned int>& c, do
  * \return Value of the element.
  *
  */
-double ad_elem(const TVEC &vec, std::vector<int> &idx) {
+SymEngine::Expression ad_elem(const TVEC &vec, std::vector<int> &idx) {
     assert(gnv==idx.size()&&"Error in ad_elem: No. of indexes NOT EQUAL to No. of bases!");
     for(auto& v: idx) {
         assert((v<=ad_order() && v>=0 && "Error in ad_elem: value of indexes out of range"));
@@ -1541,11 +1560,11 @@ void ad_free(const TVEC* i) {
  *
  */
 void ad_abs(const TVEC* iv, double* r) {
-    *r = 0;
-    for (size_t i = 0; i < adveclen[*iv]; ++i) {
-        double tmp = std::abs(advec[*iv][i]);
-        if (tmp > *r) *r = tmp;
-    }
+    // *r = 0;
+    // for (size_t i = 0; i < adveclen[*iv]; ++i) {
+    //     double tmp = std::abs(advec[*iv][i]);
+    //     if (tmp > *r) *r = tmp;
+    // }
 }
 
 /** \brief Internal multiplication of two TPS vectors. Result is saved into the third TPS vector.
@@ -1604,7 +1623,8 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
     if (L > FULL_VEC_LEN) L = FULL_VEC_LEN;
     adveclen[dst] = L;
 
-    while(std::abs(advec[dst][adveclen[dst]-1]) < std::numeric_limits<double>::min()  && adveclen[dst] > 1) --adveclen[dst];
+    // while(std::abs(advec[dst][adveclen[dst]-1]) < std::numeric_limits<double>::min()  && adveclen[dst] > 1) --adveclen[dst];
+    while(is_zero(advec[dst][adveclen[dst]-1])  && adveclen[dst] > 1) --adveclen[dst];
 
 }
 
@@ -1652,10 +1672,10 @@ void ad_c_div(const TVEC* iv, const double* c, TVEC* ivret) {
 
     TVEC iret = *ivret;
 
-    double *pn = advec[ipn];
-    double *p = advec[ip];
-    double *ret = advec[iret];
-    double *v = advec[*iv];
+    auto *pn = advec[ipn];
+    auto *p = advec[ip];
+    auto *ret = advec[iret];
+    auto *v = advec[*iv];
 
     ad_copy(iv, &ip);
     ad_copy(iv, &ipn);
@@ -1701,14 +1721,14 @@ void ad_c_div(const TVEC* iv, const double* c, TVEC* ivret) {
  */
 void ad_clean(const TVEC& iv, const double eps)
 {
-    unsigned int N = 0;
-    for(size_t i = 0; i < adveclen[iv]; ++i) {
-        if (abs(advec[iv][i]) < abs(eps)) advec[iv][i] = 0;
-        else N = i;
-    }
-    if (adveclen[iv] > N+1) {
-        adveclen[iv] = N+1;
-    }
+    // unsigned int N = 0;
+    // for(size_t i = 0; i < adveclen[iv]; ++i) {
+    //     if (abs(advec[iv][i]) < abs(eps)) advec[iv][i] = 0;
+    //     else N = i;
+    // }
+    // if (adveclen[iv] > N+1) {
+    //     adveclen[iv] = N+1;
+    // }
 }
 
 /** \brief Print a given TPS vector to screen or file.
@@ -1725,7 +1745,8 @@ void print_vec(unsigned int ii, std::ostream& os)
     //os << "iv= " << ii << std::endl;
 
     std::ios::fmtflags prevflags = os.flags();
-    double* v = advec[ii];
+    // double* v = advec[ii];
+    SymEngine::Expression* v = advec[ii];
 
     int width_base = 2;
     if (gnd > static_cast<TNVND>(9))  ++width_base;
@@ -1744,7 +1765,8 @@ void print_vec(unsigned int ii, std::ostream& os)
        << "----------------------------------------------" << std::endl;
     for (size_t i = 0; i < adveclen[ii]; ++i) {
 //    for (size_t i = 0; i < FULL_VEC_LEN; ++i) {
-        if (std::abs(v[i]) < std::numeric_limits<double>::min()) {
+        // if (std::abs(v[i]) < std::numeric_limits<double>::min()) {
+        if (is_zero(v[i])) {
             p += gnv;
             continue;
         }
@@ -1778,8 +1800,10 @@ void print_vec(unsigned int ii, unsigned int jj, std::ostream& os)
     //os << "iv= " << ii << std::endl;
 
     std::ios::fmtflags prevflags = os.flags();
-    double* v = advec[ii];
-    double* w = advec[jj];
+    // double* v = advec[ii];
+    // double* w = advec[jj];
+    SymEngine::Expression* v = advec[ii];
+    SymEngine::Expression* w = advec[jj];
 
     int width_base = 2;
     if (gnd > static_cast<TNVND>(9))  ++width_base;
@@ -1800,7 +1824,8 @@ void print_vec(unsigned int ii, unsigned int jj, std::ostream& os)
        << "-------------------------------------------------------------------" << std::endl;
 //    for (size_t i = 0; i < adveclen[ii]; ++i) {
     for (size_t i = 0; i < FULL_VEC_LEN; ++i) {
-        if (std::abs(v[i]) < std::numeric_limits<double>::min() && std::abs(w[i]) < std::numeric_limits<double>::min()) {
+        // if (std::abs(v[i]) < std::numeric_limits<double>::min() && std::abs(w[i]) < std::numeric_limits<double>::min()) {
+        if (is_zero(v[i]) && is_zero(w[i])) {
             p += gnv;
             continue;
         }
