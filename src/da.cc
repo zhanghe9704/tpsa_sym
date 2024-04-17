@@ -766,6 +766,17 @@ DAVector operator+(double real_number, const DAVector &da_vector) {
 	return res;
 }
 
+DAVector operator+(const DAVector &da_vector, SymEngine::Expression expr){
+    DAVector res;
+	ad_add_const(da_vector.da_vector_, expr, res.da_vector_);
+	return res;
+}
+DAVector operator+(SymEngine::Expression expr, const DAVector &da_vector){
+    DAVector res;
+	ad_add_const(da_vector.da_vector_, expr, res.da_vector_);
+	return res;
+}
+
 // complex<DAVector> operator+(const DAVector &da_vector, std::complex<double> complex_number) {
 //     complex<DAVector> res(complex_number.real()+da_vector, complex_number.imag());
 //     return res;
@@ -948,6 +959,17 @@ DAVector operator*(double real_number, const DAVector &da_vector) {
 	return res;
 }
 
+DAVector operator*(const DAVector &da_vector, SymEngine::Expression expr){
+	DAVector res;
+	ad_mult_c(da_vector.da_vector_, expr, res.da_vector_);
+	return res;
+}
+DAVector operator*(SymEngine::Expression expr, const DAVector &da_vector){
+	DAVector res;
+	ad_mult_c(da_vector.da_vector_, expr, res.da_vector_);
+	return res;
+}
+
 DAVector operator*(const DAVector &da_vector_1, const DAVector &da_vector_2) {
     DAVector res;
     ad_mult(&da_vector_1.da_vector_, &da_vector_2.da_vector_, &res.da_vector_);
@@ -964,6 +986,19 @@ DAVector operator-(double real_number, const DAVector &da_vector) {
 	DAVector res;
 	ad_mult_c(da_vector.da_vector_, -1, res.da_vector_);
 	ad_add_const(&res.da_vector_, &real_number);
+	return res;
+}
+
+DAVector operator-(const DAVector &da_vector, SymEngine::Expression expr){
+	DAVector res;
+	ad_add_const(da_vector.da_vector_, SymEngine::Expression(-1)*expr, res.da_vector_);
+	return res;
+}
+
+DAVector operator-(SymEngine::Expression expr, const DAVector &da_vector){
+	DAVector res;
+	ad_mult_c(da_vector.da_vector_, -1, res.da_vector_);
+	ad_add_const(&res.da_vector_, &expr);
 	return res;
 }
 
@@ -988,6 +1023,23 @@ DAVector operator/(double real_number, const DAVector &da_vector) {
     ad_c_div(&da_vector.da_vector_, &real_number, &res.da_vector_);
 	return res;
 }
+
+DAVector operator/(SymEngine::Expression expr, const DAVector &da_vector) {
+    DAVector res;
+    ad_c_div(&da_vector.da_vector_, &expr, &res.da_vector_);
+	return res;
+}
+
+DAVector operator/(const DAVector &da_vector, SymEngine::Expression expr) {
+    if (is_zero(expr)) {
+        std::cerr << "ERROR: divide a ZERO EXPRESSION! " << expr << std::endl;
+        std::exit(-1);
+    }
+	DAVector res;
+	ad_mult_c(da_vector.da_vector_, SymEngine::Expression(1.0)/expr, res.da_vector_);
+	return res;
+}
+
 
 DAVector operator/(const DAVector &da_vector_1, const DAVector &da_vector_2) {
     DAVector res;

@@ -129,16 +129,24 @@ void da_composition(std::vector<DAVector> &ivecs, std::vector<std::complex<doubl
 // void cd_composition(std::vector<std::complex<DAVector>> &ivecs, std::vector<DAVector> &v,
 //                     std::vector<std::complex<DAVector>> &ovecs);
 DAVector operator+(const DAVector &da_vector, double real_number);
-DAVector operator+(double real_number, const DAVector &da_vector) ;
+DAVector operator+(double real_number, const DAVector &da_vector);
+DAVector operator+(const DAVector &da_vector, SymEngine::Expression expr);
+DAVector operator+(SymEngine::Expression expr, const DAVector &da_vector);
 DAVector operator+(const DAVector &da_vector_1, const DAVector &da_vector_2);
 DAVector operator*(const DAVector &da_vector, double real_number);
 DAVector operator*(double real_number, const DAVector &da_vector);
+DAVector operator*(const DAVector &da_vector, SymEngine::Expression expr);
+DAVector operator*(SymEngine::Expression expr, const DAVector &da_vector);
 DAVector operator*(const DAVector &da_vector_1, const DAVector &da_vector_2);
 DAVector operator-(const DAVector &da_vector, double real_number);
 DAVector operator-(double real_number, const DAVector &da_vector);
+DAVector operator-(const DAVector &da_vector, SymEngine::Expression expr);
+DAVector operator-(SymEngine::Expression expr, const DAVector &da_vector);
 DAVector operator-(const DAVector &da_vector_1, const DAVector &da_vector_2);
 DAVector operator/(const DAVector &da_vector, double real_number);
 DAVector operator/(double real_number, const DAVector &da_vector);
+DAVector operator/(const DAVector &da_vector, SymEngine::Expression expr);
+DAVector operator/(SymEngine::Expression expr, const DAVector &da_vector);
 DAVector operator/(const DAVector &da_vector_1, const DAVector &da_vector_2);
 DAVector operator+(const DAVector &da_vector);
 DAVector operator-(const DAVector &da_vector);

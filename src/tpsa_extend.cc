@@ -464,6 +464,14 @@ void ad_mult_c(const TVEC iv, double c, TVEC ov)
         advec[ov][i] = c*advec[iv][i];
 }
 
+void ad_mult_c(const TVEC iv, SymEngine::Expression c, TVEC ov)
+{
+    adveclen[ov] = adveclen[iv];
+    for (size_t i = 0; i < std::min(adveclen[iv], order_index[gnd+1]); ++i)
+//    for (size_t i = 0; i < adveclen[iv]; ++i)
+        advec[ov][i] = c*advec[iv][i];
+}
+
 //Reserve space for n TPS vectors.
 /** \brief Reserve memory for n TPS vectors.
  * Allocate the memory pool for n TPS vectors and initialize the linked list (adlist, ad_flag and ad_end) for memory management.
@@ -1379,6 +1387,11 @@ void ad_add(const unsigned int idst, const unsigned int jsrc, unsigned int ov) {
  *
  */
 void ad_add_const(const TVEC i, double r, TVEC ov) {
+    ad_copy(&i, &ov);
+    advec[ov][0] += r;
+}
+
+void ad_add_const(const TVEC i, SymEngine::Expression r, TVEC ov) {
     ad_copy(&i, &ov);
     advec[ov][0] += r;
 }
