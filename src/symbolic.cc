@@ -1,4 +1,4 @@
-#include symbolic.H
+#include "symbolic.h"
 
 using SymEngine::Expression;
 using SymEngine::simplify;

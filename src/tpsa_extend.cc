@@ -304,7 +304,7 @@ void ad_reset_vector(const TVEC iv)
  * \return void.
  *
  */
-void ad_reset_const(const TVEC iv, double x) {
+void ad_reset_const(const TVEC iv, SymEngine::Expression x) {
     ad_reset_vector(iv);
     advec[iv][0] = x;
     adveclen[iv] = 1;
@@ -1423,7 +1423,7 @@ void ad_sub(const unsigned int idst, const unsigned int jsrc, TVEC ov) {
  * \return
  *
  */
-void ad_elem(const TVEC &vec, unsigned int idx, std::vector<unsigned int>& c, double& x) {
+void ad_elem(const TVEC &vec, unsigned int idx, std::vector<unsigned int>& c, SymEngine::Expression& x) {
     ad_elem(&vec, &idx, &(*c.begin()), &x);
 }
 
@@ -1637,7 +1637,7 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
  * \return void.
  *
  */
-void ad_div_c(const TVEC* iv, const double* c) {
+void ad_div_c(const TVEC* iv, const SymEngine::Expression* c) {
     if (std::abs(*c) < std::numeric_limits<double>::min()) {
         std::cerr << "ERROR: divide a two small number! " << *c << std::endl;
         std::exit(-1);
@@ -1658,7 +1658,7 @@ void ad_div_c(const TVEC* iv, const double* c) {
  * \return void.
  *
  */
-void ad_c_div(const TVEC* iv, const double* c, TVEC* ivret) {
+void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
     // If c is zero, set ivret zero and return.
     if (std::abs(*c) < std::numeric_limits<double>::min()) {
         ad_reset(ivret);

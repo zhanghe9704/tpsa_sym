@@ -574,23 +574,23 @@ void ad_const(const TVEC* iv, const double* r)
     adveclen[ii] = 1;
 }
 
-/** \brief Set the small TPS coefficients as 0 if they are less than eps.
- */
-#ifdef MSVC_DLL
-_declspec(dllexport) void _stdcall ad_clean(const TVEC* iv, const double* eps)
-#else
-void ad_clean(const TVEC* iv, const double* eps)
-#endif
-{
-    unsigned int N = 0;
-    for(size_t i = 0; i < adveclen[*iv]; ++i) {
-        if (abs(advec[*iv][0]) < abs(*eps)) advec[*iv][i] = 0;
-        else N = i;
-    }
-    if (adveclen[*iv] > N+1) {
-        adveclen[*iv] = N+1;
-    }
-}
+// /** \brief Set the small TPS coefficients as 0 if they are less than eps.
+//  */
+// #ifdef MSVC_DLL
+// _declspec(dllexport) void _stdcall ad_clean(const TVEC* iv, const double* eps)
+// #else
+// void ad_clean(const TVEC* iv, const double* eps)
+// #endif
+// {
+//     unsigned int N = 0;
+//     for(size_t i = 0; i < adveclen[*iv]; ++i) {
+//         if (abs(advec[*iv][0]) < abs(*eps)) advec[*iv][i] = 0;
+//         else N = i;
+//     }
+//     if (adveclen[*iv] > N+1) {
+//         adveclen[*iv] = N+1;
+//     }
+// }
 
 /** \brief Fill the TPS coefficients as a random number in [0,1]
  *
@@ -671,7 +671,7 @@ void ad_pok(const unsigned int* ivec, int* c, size_t* n, double* x)
 #ifdef MSVC_DLL
 _declspec(dllexport) void _stdcall ad_elem(const TVEC* ivec, unsigned int* idx, unsigned int* c, double* x)
 #else
-void ad_elem(const TVEC* ivec, unsigned int* idx, unsigned int* c, double* x)
+void ad_elem(const TVEC* ivec, unsigned int* idx, unsigned int* c, SymEngine::Expression* x)
 #endif
 {
     const TVEC ii = *ivec;
@@ -1104,7 +1104,8 @@ void ad_div(const TVEC* ilhs, const TVEC* irhs, TVEC* idst)
     double c = 1.0;
     bool nonzero = false;
     for (size_t i = 0; i < adveclen[*irhs]; ++i) {
-        if(std::abs(advec[*irhs][i]) > std::numeric_limits<double>::min()) {
+        // if(std::abs(advec[*irhs][i]) > std::numeric_limits<double>::min()) {
+        if(is_zero(advec[*irhs][i])) {
             nonzero = true;
             break;
         }
@@ -1172,7 +1173,7 @@ void ad_sqrt(const TVEC* iv, const TVEC* iret)
  #ifdef DEBUG_ALL
     std::cout << std::endl;
  #endif
-    x =std::sqrt(x);
+    x =SymEngine::sqrt(x);
     ad_mult_const(iret, &x);
     ad_free(&ipn);
     ad_free(&ip);
@@ -1242,7 +1243,7 @@ _declspec(dllexport) void _stdcall ad_log(const TVEC* iv, const TVEC* iret)
 void ad_log(const TVEC* iv, const TVEC* iret)
 #endif
 {
-    double x = std::log(advec[*iv][0]);
+    auto x = SymEngine::Expression(SymEngine::log(advec[*iv][0]));
     double c;
     TVEC itmp, ip, ipn;
 

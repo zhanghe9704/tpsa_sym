@@ -1,4 +1,5 @@
 #include <symengine/expression.h>
+#include <symengine/functions.h>
 #include <symengine/simplify.h>
 
 bool is_zero(SymEngine::Expression x);

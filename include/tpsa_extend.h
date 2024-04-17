@@ -61,7 +61,7 @@ void ad_reserve(const unsigned int n);  //Reserve memory for n TPS vectors.
 void ad_clear(); //Destroy the TPS environment and release memory.
 void ad_assign(unsigned int &i);    //Assign memory to a TPS vector. The length of the vector is zero.
 SymEngine::Expression ad_con(const TVEC iv); //Return the constant part of the TPS vector
-void ad_reset_const(const TVEC iv, double x); //Reset the TPS vector constant element as x and all other elements zero
+void ad_reset_const(const TVEC iv, SymEngine::Expression x); //Reset the TPS vector constant element as x and all other elements zero
 unsigned int ad_remain();       //Space (number) available for new TPS vectors.
 unsigned int ad_count();        //Number of TPS vectors allocated.
 void ad_mult_c(const TVEC iv, double c, TVEC ov); //Multiple the TPS vector iv with a constant number c, result stored in ov.
@@ -76,7 +76,7 @@ void ad_add(const unsigned int idst, const unsigned int jsrc, unsigned int ov);
 void ad_sub(const unsigned int idst, const unsigned int jsrc, TVEC ov);
 void ad_add_const(const TVEC i, double r, TVEC ov);
 SymEngine::Expression ad_elem(const TVEC &vec, std::vector<int> &idx);
-void ad_elem(const TVEC &vec, unsigned int idx, std::vector<unsigned int>& c, double& x);
+void ad_elem(const TVEC &vec, unsigned int idx, std::vector<unsigned int>& c, SymEngine::Expression& x);
 void ad_pok(const TVEC &vec, std::vector<int> &idx, double x);
 int ad_order(); //Return the order of the TPS environment.
 void ad_clean(const TVEC &iv, const double eps); //Set the coefficients smaller than eps to zero.

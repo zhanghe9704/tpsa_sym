@@ -1,6 +1,6 @@
 /*
  * Copyright(C) 2008 by Lingyun Yang
- * L. Yang, “Array Based Truncated Power Series Package”, Proc. ICAP'09, San Francisco, CA, USA, Aug.-Sep. 2009,
+ * L. Yang, ï¿½Array Based Truncated Power Series Packageï¿½, Proc. ICAP'09, San Francisco, CA, USA, Aug.-Sep. 2009,
  *
  */
 //! \brief Automatic Differentiation
@@ -100,6 +100,8 @@
 #include <iomanip>
 #include <cstdlib>
 
+#include "symbolic.h"
+
 #ifndef AD_HH
 #define AD_HH
 //! Type of order and number of variables.
@@ -180,7 +182,7 @@ extern "C" {
     void ad_nvar(TVEC* n);
     void ad_length(const TVEC* iv, unsigned int* n);
     void ad_copy(const TVEC* i, const TVEC* j);
-    void ad_elem(const TVEC* ivec, unsigned int* idx, unsigned int* c, double* x);
+    void ad_elem(const TVEC* ivec, unsigned int* idx, unsigned int* c, SymEngine::Expression* x);
     void ad_pek(const TVEC* ivec, int* c, size_t* n, double* x);
     void ad_pok(const TVEC* ivec, int* c, size_t* n, double* x);
     void ad_var(const TVEC* ii, const double* x, unsigned int* iv);
@@ -198,10 +200,10 @@ extern "C" {
     void ad_sub(const TVEC* i, const TVEC* j);
     //! internal multiplication, dst should be different from lhs and rhs.
     void ad_mult(const TVEC* ivlhs, const TVEC* ivrhs, TVEC* ivdst);
-    void ad_mult_const(const TVEC* iv, double* c);
+    void ad_mult_const(const TVEC* iv, SymEngine::Expression* c);
 
-    void ad_div_c(const TVEC* iv, const double* c);
-    void ad_c_div(const TVEC* iv, const double* c, TVEC* ivret);
+    void ad_div_c(const TVEC* iv, const SymEngine::Expression* c);
+    void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret);
     void ad_div(const TVEC* ilhs, const TVEC* irhs, TVEC* idst);
 
     void ad_sqrt(const TVEC* iv, const TVEC* iret);
