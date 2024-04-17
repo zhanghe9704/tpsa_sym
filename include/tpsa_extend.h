@@ -71,6 +71,8 @@ void ad_div_c(const TVEC* iv, const SymEngine::Expression* c);
 void ad_div_c(const TVEC* iv, const double* c);
 void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret);
 void ad_c_div(const TVEC* iv, const double* c, TVEC* ivret);
+void ad_add_const(const TVEC* i, double *r);
+void ad_add_const(const TVEC* i, SymEngine::Expression *r);
     
 void ad_substitute_const(const TVEC iv, unsigned int base_id, double x, TVEC ov);
 void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov);

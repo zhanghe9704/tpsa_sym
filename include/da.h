@@ -44,6 +44,7 @@ struct DAVector {
   void set_element(std::vector<int> idx, double elem);
   void reset();
   void reset_const(double x = 0);
+  void reset_const(SymEngine::Expression x);
   void clean(const double eps);
   void clean();
   bool iszero() const;
@@ -57,22 +58,27 @@ struct DAVector {
   DAVector& operator=(DAVector&& da_vector);
   DAVector& operator=(double x);
   DAVector& operator=(int x);
+  DAVector& operator=(SymEngine::Expression x);
   DAVector& operator+=(const DAVector& da_vector);
   DAVector& operator+=(DAVector&& da_vector_);
   DAVector& operator+=(double x);
   DAVector& operator+=(int x);
+  DAVector& operator+=(SymEngine::Expression x);
   DAVector& operator-=(const DAVector& da_vector);
   DAVector& operator-=(DAVector&& da_vector_);
   DAVector& operator-=(double x);
   DAVector& operator-=(int x);
+  DAVector& operator-=(SymEngine::Expression x);
   DAVector& operator*=(const DAVector& da_vector);
   DAVector& operator*=(DAVector&& da_vector);
   DAVector& operator*=(double x);
   DAVector& operator*=(int x);
+  DAVector& operator*=(SymEngine::Expression x);
   DAVector& operator/=(const DAVector& da_vector);
   DAVector& operator/=(DAVector&& da_vector);
   DAVector& operator/=(double x);
   DAVector& operator/=(int x);
+  DAVector& operator/=(SymEngine::Expression x);
   ~DAVector();
 };
 

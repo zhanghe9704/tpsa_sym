@@ -195,7 +195,6 @@ extern "C" {
     void ad_fill_ran(const TVEC* iv, const double* ratio, const double* xm);
 
     void ad_add(const TVEC* i, const TVEC* j);
-    void ad_add_const(const TVEC* i, double *r);
 
     void ad_sub(const TVEC* i, const TVEC* j);
     //! internal multiplication, dst should be different from lhs and rhs.

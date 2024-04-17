@@ -876,6 +876,11 @@ void ad_add_const(const TVEC* i, double *r)
     advec[*i][0] += *r;
 }
 
+void ad_add_const(const TVEC* i,SymEngine::Expression *r)
+{
+    advec[*i][0] += *r;
+}
+
 #ifdef MSVC_DLL
 _declspec(dllexport) void _stdcall ad_sub(const TVEC* idst, const TVEC* jsrc)
 #else
