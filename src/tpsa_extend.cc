@@ -1654,7 +1654,7 @@ void ad_div_c(const TVEC* iv, const double* c) {
         std::exit(-1);
     }
 
-    SymEngine::Expression sc = SymEngine::Expression(c);
+    SymEngine::Expression sc = SymEngine::Expression(*c);
     ad_div_c(iv, &sc);
 }
 
@@ -1669,7 +1669,7 @@ void ad_div_c(const TVEC* iv, const double* c) {
  */
 void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
     // If c is zero, set ivret zero and return.
-    if (std::abs(*c) < std::numeric_limits<double>::min()) {
+    if (is_ziero(*c)) {
         ad_reset(ivret);
         return;
     }
@@ -1720,6 +1720,17 @@ void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
     ad_free(&itmp);
     ad_free(&ip);
     ad_free(&ipn);
+}
+
+void ad_c_div(const TVEC* iv, const double* c, TVEC* ivret) {
+    // If c is zero, set ivret zero and return.
+    if (std::abs(*c) < std::numeric_limits<double>::min()) {
+        ad_reset(ivret);
+        return;
+    }
+
+    SymEngine::Expression sc = SymEngine::Expression(*c);
+    ad_c_div(iv, &sc, ivret);
 }
 
 /** \brief Set the small TPS coefficients as 0 if they are less than eps.

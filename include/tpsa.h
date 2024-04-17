@@ -204,7 +204,7 @@ extern "C" {
    //  void ad_mult_const(const TVEC* iv, double* c);
 
     
-    void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret);
+   
     void ad_div(const TVEC* ilhs, const TVEC* irhs, TVEC* idst);
 
     void ad_sqrt(const TVEC* iv, const TVEC* iret);

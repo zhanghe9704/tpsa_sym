@@ -69,6 +69,9 @@ void ad_mult_const(const TVEC* iv, SymEngine::Expression* c);
 void ad_mult_const(const TVEC* iv, double* c);
 void ad_div_c(const TVEC* iv, const SymEngine::Expression* c);
 void ad_div_c(const TVEC* iv, const double* c);
+void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret);
+void ad_c_div(const TVEC* iv, const double* c, TVEC* ivret);
+    
 void ad_substitute_const(const TVEC iv, unsigned int base_id, double x, TVEC ov);
 void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov);
 void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vector<TVEC> &v, TVEC ov);
