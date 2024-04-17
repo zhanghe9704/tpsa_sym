@@ -992,7 +992,7 @@ void ad_sub(const unsigned int* idst, const unsigned int* jsrc)
 #ifdef MSVC_DLL
 _declspec(dllexport) void _stdcall ad_mult_const(const TVEC* iv, double* c)
 #else
-void ad_mult_const(const TVEC* iv, double* c)
+void ad_mult_const(const TVEC* iv, SymEngine::Expression* c)
 #endif
 {
     auto* v = advec[*iv];
@@ -1001,6 +1001,11 @@ void ad_mult_const(const TVEC* iv, double* c)
  #ifdef DEBUG_ALL
     std::cout << "AD mult const " << *iv << " const= " << *c << std::endl;
  #endif
+}
+
+void ad_mult_const(const TVEC* iv, double* c) {
+    auto x = SymEngine::Expression(*c);
+    ad_mult_const(iv, &x);
 }
 
 //***************** ad_div_c is replaced in tpsa_extend.cc (by He Zhang) ***********************//

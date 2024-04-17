@@ -1638,15 +1638,24 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
  *
  */
 void ad_div_c(const TVEC* iv, const SymEngine::Expression* c) {
-    if (std::abs(*c) < std::numeric_limits<double>::min()) {
-        std::cerr << "ERROR: divide a two small number! " << *c << std::endl;
+    if (is_zero(*c)) {
+        std::cerr << "ERROR: divide by a ZERO EXPRESSION! " << *c << std::endl;
         std::exit(-1);
     }
-
     double c_inv = 1 / *c;
     for (size_t i = 0; i < std::min(adveclen[*iv], order_index[gnd+1]); ++i)
 //    for (size_t i = 0; i < adveclen[*iv]; ++i)
         advec[*iv][i] *= c_inv;
+}
+
+void ad_div_c(const TVEC* iv, const double* c) {
+    if (std::abs(*c) < std::numeric_limits<double>::min()) {
+        std::cerr << "ERROR: divide by a too small number! " << *c << std::endl;
+        std::exit(-1);
+    }
+
+    SymEngine::Expression sc = SymEngine::Expression(c);
+    ad_div_c(iv, &sc);
 }
 
 /** \brief A real number is divided by a TPS vector. Result is saved to another TPS vector.

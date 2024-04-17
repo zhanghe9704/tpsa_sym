@@ -200,9 +200,10 @@ extern "C" {
     void ad_sub(const TVEC* i, const TVEC* j);
     //! internal multiplication, dst should be different from lhs and rhs.
     void ad_mult(const TVEC* ivlhs, const TVEC* ivrhs, TVEC* ivdst);
-    void ad_mult_const(const TVEC* iv, SymEngine::Expression* c);
+   //  void ad_mult_const(const TVEC* iv, SymEngine::Expression* c);
+   //  void ad_mult_const(const TVEC* iv, double* c);
 
-    void ad_div_c(const TVEC* iv, const SymEngine::Expression* c);
+    
     void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret);
     void ad_div(const TVEC* ilhs, const TVEC* irhs, TVEC* idst);
 

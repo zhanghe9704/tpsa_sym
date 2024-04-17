@@ -65,6 +65,10 @@ void ad_reset_const(const TVEC iv, SymEngine::Expression x); //Reset the TPS vec
 unsigned int ad_remain();       //Space (number) available for new TPS vectors.
 unsigned int ad_count();        //Number of TPS vectors allocated.
 void ad_mult_c(const TVEC iv, double c, TVEC ov); //Multiple the TPS vector iv with a constant number c, result stored in ov.
+void ad_mult_const(const TVEC* iv, SymEngine::Expression* c);
+void ad_mult_const(const TVEC* iv, double* c);
+void ad_div_c(const TVEC* iv, const SymEngine::Expression* c);
+void ad_div_c(const TVEC* iv, const double* c);
 void ad_substitute_const(const TVEC iv, unsigned int base_id, double x, TVEC ov);
 void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov);
 void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vector<TVEC> &v, TVEC ov);
