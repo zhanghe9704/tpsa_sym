@@ -569,76 +569,76 @@ void ad_assign(unsigned int &i) {
  * \return void.
  *
  */
-void ad_composition(std::vector<TVEC> &ivecs, std::vector<std::complex<double> > &v, std::vector<std::complex<double> > &ovecs) {
-    assert(gnv==v.size()&&"Error in ad_composition: No. of TPS vectors NOT EQUAL to No. of bases!");
-    assert(ivecs.size()==ovecs.size()&&"Error in ad_composition: No. of input vectors NOT EQUAL to No. of output vectors!");
+// void ad_composition(std::vector<TVEC> &ivecs, std::vector<std::complex<double> > &v, std::vector<std::complex<double> > &ovecs) {
+//     assert(gnv==v.size()&&"Error in ad_composition: No. of TPS vectors NOT EQUAL to No. of bases!");
+//     assert(ivecs.size()==ovecs.size()&&"Error in ad_composition: No. of input vectors NOT EQUAL to No. of output vectors!");
 
-    TNVND* p = base;
-    std::vector<unsigned int> c(gnv);
-    std::vector<unsigned int> bv(gnv);
-//    std::vector< std::vector<double> > power_vv (gnv, std::vector<double>(gnd+1));
-    std::vector< std::vector<std::complex<double> > > power_vv (gnv, std::vector<std::complex<double> >(gnd+1));
-    for(auto& power_v : power_vv) {
-        power_v.at(0) = 1;
-    }
-    for (unsigned int idx = 0; idx<gnv; ++idx) {
-//        double val = v.at(idx);
-        std::complex<double> val = v.at(idx);
-        for(unsigned int i = 1; i<gnd+1; ++i) {
-            power_vv.at(idx).at(i) = val*power_vv.at(idx).at(i-1);
-        }
-    }
-    //Find the length of the longest TPS vector.
-    unsigned int veclen_max = 0;
-    for(auto iv : ivecs)
-        if (adveclen[iv]>veclen_max) veclen_max = adveclen[iv];
+//     TNVND* p = base;
+//     std::vector<unsigned int> c(gnv);
+//     std::vector<unsigned int> bv(gnv);
+// //    std::vector< std::vector<double> > power_vv (gnv, std::vector<double>(gnd+1));
+//     std::vector< std::vector<std::complex<double> > > power_vv (gnv, std::vector<std::complex<double> >(gnd+1));
+//     for(auto& power_v : power_vv) {
+//         power_v.at(0) = 1;
+//     }
+//     for (unsigned int idx = 0; idx<gnv; ++idx) {
+// //        double val = v.at(idx);
+//         std::complex<double> val = v.at(idx);
+//         for(unsigned int i = 1; i<gnd+1; ++i) {
+//             power_vv.at(idx).at(i) = val*power_vv.at(idx).at(i-1);
+//         }
+//     }
+//     //Find the length of the longest TPS vector.
+//     unsigned int veclen_max = 0;
+//     for(auto iv : ivecs)
+//         if (adveclen[iv]>veclen_max) veclen_max = adveclen[iv];
 
-    //Copy the constant element to output vectors
-    for(unsigned int iv = 0; iv<ivecs.size(); ++iv)
-        ovecs.at(iv) = advec[ivecs.at(iv)][0];
+//     //Copy the constant element to output vectors
+//     for(unsigned int iv = 0; iv<ivecs.size(); ++iv)
+//         ovecs.at(iv) = advec[ivecs.at(iv)][0];
 
-    for (size_t j = 0; j < gnv-1; ++j) {
-        c.at(j) = (unsigned int) (*p-*(p+1));
-        ++p;
-    }
-    c.at(gnv-1) = (unsigned int)*p++ ;
-    unsigned int vec_size = ivecs.size();
-    for (size_t i=1; i<veclen_max; ++i) { //loop over all elements, except for the constant element.
-        bool product_flag = true; //Calculate the product.
-        bool c_flag = true;
-        std::complex<double> product = 1;
-//        double product = 1;
-        unsigned int zero_coef = 0;
-        for(unsigned int iv = 0; iv<vec_size; ++iv) {
-            if (i>=adveclen[ivecs.at(iv)]) {
-                ++zero_coef;
-                continue;
-            }
-            auto coef = advec[ivecs.at(iv)][i];
-            // if (std::abs(coef) < std::numeric_limits<double>::min()) {
-            if (is_zero(coef)) {
-                ++zero_coef;
-                continue;
-            }
+//     for (size_t j = 0; j < gnv-1; ++j) {
+//         c.at(j) = (unsigned int) (*p-*(p+1));
+//         ++p;
+//     }
+//     c.at(gnv-1) = (unsigned int)*p++ ;
+//     unsigned int vec_size = ivecs.size();
+//     for (size_t i=1; i<veclen_max; ++i) { //loop over all elements, except for the constant element.
+//         bool product_flag = true; //Calculate the product.
+//         bool c_flag = true;
+//         std::complex<double> product = 1;
+// //        double product = 1;
+//         unsigned int zero_coef = 0;
+//         for(unsigned int iv = 0; iv<vec_size; ++iv) {
+//             if (i>=adveclen[ivecs.at(iv)]) {
+//                 ++zero_coef;
+//                 continue;
+//             }
+//             auto coef = advec[ivecs.at(iv)][i];
+//             // if (std::abs(coef) < std::numeric_limits<double>::min()) {
+//             if (is_zero(coef)) {
+//                 ++zero_coef;
+//                 continue;
+//             }
 
-            if(c_flag) {
-                for (size_t j = 0; j < gnv-1; ++j) {
-                    c.at(j) = (unsigned int) (*p-*(p+1));
-                    ++p;
-                }
-                c.at(gnv-1) = (unsigned int)*p++ ;
-                c_flag = false;
-            }
+//             if(c_flag) {
+//                 for (size_t j = 0; j < gnv-1; ++j) {
+//                     c.at(j) = (unsigned int) (*p-*(p+1));
+//                     ++p;
+//                 }
+//                 c.at(gnv-1) = (unsigned int)*p++ ;
+//                 c_flag = false;
+//             }
 
-            if (product_flag) {
-                for(unsigned int id=0; id<gnv; ++id) product *= power_vv.at(id).at(c.at(id));
-                product_flag = false;
-            }
-            ovecs.at(iv) += product*coef;
-        }
-        if (zero_coef == vec_size) p += gnv;
-    }
-}
+//             if (product_flag) {
+//                 for(unsigned int id=0; id<gnv; ++id) product *= power_vv.at(id).at(c.at(id));
+//                 product_flag = false;
+//             }
+//             ovecs.at(iv) += product*coef;
+//         }
+//         if (zero_coef == vec_size) p += gnv;
+//     }
+// }
 
 /** \brief Composition of a group of TPS vectors with a group of numbers.
  * Submitting the numbers into the bases of a group of TPS vectors, and save the result into another group of TPS vectors.
@@ -1655,7 +1655,7 @@ void ad_div_c(const TVEC* iv, const SymEngine::Expression* c) {
         std::cerr << "ERROR: divide by a ZERO EXPRESSION! " << *c << std::endl;
         std::exit(-1);
     }
-    double c_inv = 1 / *c;
+    auto c_inv = 1 / *c;
     for (size_t i = 0; i < std::min(adveclen[*iv], order_index[gnd+1]); ++i)
 //    for (size_t i = 0; i < adveclen[*iv]; ++i)
         advec[*iv][i] *= c_inv;
@@ -1682,7 +1682,7 @@ void ad_div_c(const TVEC* iv, const double* c) {
  */
 void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
     // If c is zero, set ivret zero and return.
-    if (is_ziero(*c)) {
+    if (is_zero(*c)) {
         ad_reset(ivret);
         return;
     }
@@ -1702,9 +1702,9 @@ void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
     ad_copy(iv, &ip);
     ad_copy(iv, &ipn);
 
-    double x0 = v[0];
+    auto x0 = v[0];
 
-    double inv_x0 = 1/x0;
+    auto inv_x0 = 1/x0;
     inv_x0 *= -1;
     for (size_t i = 1; i < adveclen[ip]; ++i) {
         p[i] *= inv_x0;
@@ -1725,7 +1725,7 @@ void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
             ret[i] += pn[i];
     }
     adveclen[iret] = FULL_VEC_LEN;
-    double ret_coef = inv_x0*(*c);
+    auto ret_coef = inv_x0*(*c);
 
     for (size_t i = 0; i < adveclen[iret]; ++i) {
         ret[i] *= ret_coef;

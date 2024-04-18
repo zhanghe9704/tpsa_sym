@@ -83,7 +83,7 @@ void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vecto
 void ad_substitute(std::vector<TVEC> &ivecs, std::vector<unsigned int> &base_id, std::vector<TVEC> &v, std::vector<TVEC> &ovecs) ;
 void ad_composition(std::vector<TVEC> &ivecs, std::vector<TVEC> &v, std::vector<TVEC> &ovecs);
 void ad_composition(std::vector<TVEC> &ivecs, std::vector<double> &v, std::vector<double> &ovecs);
-void ad_composition(std::vector<TVEC> &ivecs, std::vector<std::complex<double> > &v, std::vector<std::complex<double> > &ovecs);
+// void ad_composition(std::vector<TVEC> &ivecs, std::vector<std::complex<double> > &v, std::vector<std::complex<double> > &ovecs);
 void ad_add(const unsigned int idst, const unsigned int jsrc, unsigned int ov);
 void ad_sub(const unsigned int idst, const unsigned int jsrc, TVEC ov);
 void ad_add_const(const TVEC i, double r, TVEC ov);

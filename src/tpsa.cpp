@@ -697,7 +697,7 @@ void ad_elem(const TVEC* ivec, unsigned int* idx, unsigned int* c, SymEngine::Ex
 #ifdef MSVC_DLL
 _declspec(dllexport) void _stdcall ad_pek(const TVEC* ivec, int* c, size_t* n, double* x)
 #else
-void ad_pek(const unsigned int* ivec, int* c, size_t* n, auto* x)
+void ad_pek(const unsigned int* ivec, int* c, size_t* n, SymEngine::Expression* x)
 #endif
 {
     const unsigned int ii = *ivec;
@@ -1196,7 +1196,7 @@ _declspec(dllexport) void _stdcall ad_exp(const TVEC* iv, const TVEC* iret)
 void ad_exp(const TVEC* iv, const TVEC* iret)
 #endif
 {
-    double x = std::exp(advec[*iv][0]);
+    SymEngine::Expression x = SymEngine::exp(advec[*iv][0]);
     double c;
     TVEC itmp, ip, ipn;
 
@@ -1355,8 +1355,8 @@ void ad_sin(const TVEC* iv, const TVEC* iret)
               << std::endl;
  #endif
     // TODO: didn't check c = 0.0
-    double s = sin(v[0]);
-    double c = cos(v[0]);
+    auto s = sin(v[0]);
+    auto c = cos(v[0]);
 
     // odd and even
     size_t pnevlen = adveclen[ipnev], pnodlen=adveclen[ipnod];
@@ -1427,15 +1427,15 @@ void ad_cos(const TVEC* iv, const TVEC* iret)
     ad_copy(iv, &ipnod);
     ad_copy(iv, &ip);
 
-    double *v = advec[*iv];
-    double *ret = advec[*iret];
-    double *pnev = advec[ipnev];
-    double *pnod = advec[ipnod];
-    double *p = advec[ip];
+    auto *v = advec[*iv];
+    auto *ret = advec[*iret];
+    auto *pnev = advec[ipnev];
+    auto *pnod = advec[ipnod];
+    auto *p = advec[ip];
 
     // TODO: didn't check c = 0.0
-    double s = std::sin(v[0]);
-    double c = std::cos(v[0]);
+    SymEngine::Expression s = SymEngine::sin(v[0]);
+    SymEngine::Expression c = SymEngine::cos(v[0]);
 
     pnev[0] = pnod[0] = p[0] = 0;
 
@@ -1676,7 +1676,8 @@ void ad_shift(const TVEC* iv, unsigned int* ishift, const TVEC* iret, const doub
     unsigned int d = 0, k=0;
 
     for (size_t i = 0; i < adveclen[*iv]; ++i) {
-        if (std::abs(advec[*iv][i]) < epsv) {
+        // if (std::abs(advec[*iv][i]) < epsv) {
+        if (is_zero(advec[*iv][i])) {
             p += gnv;
             continue;
         }
@@ -1772,13 +1773,14 @@ void ad_subst(const TVEC* iv, const TVEC* ibv, const TNVND* nbv, const TVEC* ire
     ad_alloc(&it1);
     ad_alloc(&it2);
     TNVND* pb = base;
-    double* pv1 = advec[it1];
+    SymEngine::Expression* pv1 = advec[it1];
     //double* pv2 = advec[it2];
     // loop every entry(monimial)
     for(size_t i = 0; i < adveclen[*iv]; ++i) {
         // only problem of this "== 0" would be(if any) is the speed.
         //if (advec[*iv][i] == 0) {
-        if (std::abs(advec[*iv][i]) < std::numeric_limits<double>::min()) {
+        // if (std::abs(advec[*iv][i]) < std::numeric_limits<double>::min()) {
+        if (is_zero(advec[*iv][i])) {
             pb += gnv;
             continue;
         }
@@ -2123,84 +2125,84 @@ void ad_print(const unsigned int* iv)
     print_vec(*iv, std::cout);
 }
 
-#ifdef MSVC_DLL
-_declspec(dllexport) void _stdcall ad_print_array(const TVEC* iv, const TVEC* nv)
-#else
-void ad_print_array(const TVEC* iv, const TVEC* nv)
-#endif
-{
-    std::ostream& os = std::cout;
-    //unsigned int ii = *iv;
-    //TNVND* p = base;
-    //os << "iv= " << ii << std::endl;
- #ifdef V_BY_V
-    // vector by vector, each vector one line
-    std::ios::fmtflags prevflags = os.flags();
-    double* v;
-    double x;
+// #ifdef MSVC_DLL
+// _declspec(dllexport) void _stdcall ad_print_array(const TVEC* iv, const TVEC* nv)
+// #else
+// void ad_print_array(const TVEC* iv, const TVEC* nv)
+// #endif
+// {
+//     std::ostream& os = std::cout;
+//     //unsigned int ii = *iv;
+//     //TNVND* p = base;
+//     //os << "iv= " << ii << std::endl;
+//  #ifdef V_BY_V
+//     // vector by vector, each vector one line
+//     std::ios::fmtflags prevflags = os.flags();
+//     double* v;
+//     double x;
 
-    int width_base = 2;
-    if (gnd > static_cast<TNVND>(9))  ++width_base;
-    os << "    const.  |    linear " << std::endl;
-    for (size_t i = 0; i < *nv; ++i) {
-        v = advec[iv[i]];
-        for (size_t j = 0; j < gnv+1; ++j) {
-            if (j < adveclen[iv[i]]) x = v[j];
-            else x = 0;
+//     int width_base = 2;
+//     if (gnd > static_cast<TNVND>(9))  ++width_base;
+//     os << "    const.  |    linear " << std::endl;
+//     for (size_t i = 0; i < *nv; ++i) {
+//         v = advec[iv[i]];
+//         for (size_t j = 0; j < gnv+1; ++j) {
+//             if (j < adveclen[iv[i]]) x = v[j];
+//             else x = 0;
 
-            os << ' ' << std::setprecision(3)
-               << std::scientific << std::setw(3+7) << x;
-            if (j==0) os << " |";
-        }
-        os << std::endl;
-    }
+//             os << ' ' << std::setprecision(3)
+//                << std::scientific << std::setw(3+7) << x;
+//             if (j==0) os << " |";
+//         }
+//         os << std::endl;
+//     }
 
-    os.flags(prevflags);
- #endif
+//     os.flags(prevflags);
+//  #endif
 
-    //unsigned int ii = *iv;
-    TNVND* p = base;
-    //os << "iv= " << ii << std::endl;
-    const char* s = "          ";
-    std::ios::fmtflags prevflags = os.flags();
-    SymEngine::Expression* v;
-    double xm = 0.0;
+//     //unsigned int ii = *iv;
+//     TNVND* p = base;
+//     //os << "iv= " << ii << std::endl;
+//     const char* s = "          ";
+//     std::ios::fmtflags prevflags = os.flags();
+//     SymEngine::Expression* v;
+//     double xm = 0.0;
 
-    int width_base = 2;
-    if (gnd > static_cast<TNVND>(9))  ++width_base;
+//     int width_base = 2;
+//     if (gnd > static_cast<TNVND>(9))  ++width_base;
 
-    std::cout << "# min: " << std::numeric_limits<double>::min() << std::endl;
-    std::cout << "# eps: " << std::numeric_limits<double>::epsilon() << std::endl;
-    os << "          V              Base  [ "
-       << " / " << FULL_VEC_LEN << " ]" << std::endl
-       << "----------------------------------------------" << std::endl;
-    for (size_t i = 0; i < adveclen[*iv]; ++i) {
-        for (size_t j = 0; j < *nv; ++j) {
-            v = advec[iv[j]];
-            double x = v[i];
-            if (std::abs(x) > xm && std::abs(x) < 1)  xm =  std::abs(x);
-            if (std::abs(x) < std::numeric_limits<double>::epsilon()){
-                x = 0;
-                os << ' ' << s;
-            } else {
-                os << ' ' << std::setprecision(3)
-                   << std::scientific << std::setw(3+7) << x;
-            }
-        }
-        os << "   ";
-        for (size_t j = 0; j < gnv-1; ++j) {
-            os << std::setw(width_base) << (unsigned int) (*p-*(p+1));
-            ++p;
-        }
-        os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << std::endl;
-    }
-    os << std::endl;
-    os << "# abs(max in [0,1))= " << xm << std::endl;
-    os.flags(prevflags);
+//     std::cout << "# min: " << std::numeric_limits<double>::min() << std::endl;
+//     std::cout << "# eps: " << std::numeric_limits<double>::epsilon() << std::endl;
+//     os << "          V              Base  [ "
+//        << " / " << FULL_VEC_LEN << " ]" << std::endl
+//        << "----------------------------------------------" << std::endl;
+//     for (size_t i = 0; i < adveclen[*iv]; ++i) {
+//         for (size_t j = 0; j < *nv; ++j) {
+//             v = advec[iv[j]];
+//             auto x = v[i];
+//             if (std::abs(x) > xm && std::abs(x) < 1)  xm =  std::abs(x);
+//             if (std::abs(x) < std::numeric_limits<double>::epsilon()){
+//                 x = 0;
+//                 os << ' ' << s;
+//             } else {
+//                 os << ' ' << std::setprecision(3)
+//                    << std::scientific << std::setw(3+7) << x;
+//             }
+//         }
+//         os << "   ";
+//         for (size_t j = 0; j < gnv-1; ++j) {
+//             os << std::setw(width_base) << (unsigned int) (*p-*(p+1));
+//             ++p;
+//         }
+//         os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << std::endl;
+//     }
+//     os << std::endl;
+//     os << "# abs(max in [0,1))= " << xm << std::endl;
+//     os.flags(prevflags);
 
- #ifdef DEBUG_ALL
- #endif
-}
+//  #ifdef DEBUG_ALL
+//  #endif
+// }
 
 #ifdef MSVC_DLL
 #define DLL_PROCESS_DETACH 0

@@ -226,7 +226,7 @@ extern "C" {
 
     void print_index(std::ostream& os);
     void ad_print(const TVEC* iv);
-    void ad_print_array(const TVEC* iv, const TVEC* nv);
+   //  void ad_print_array(const TVEC* iv, const TVEC* nv);
  #endif
 
 #ifdef __cplusplus
