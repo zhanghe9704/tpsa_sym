@@ -13,7 +13,6 @@
 #include <memory>
 #include <iostream>
 #include <vector>
-
 #include "symbolic.h"
 
 /** \brief Differential Algebra (DA) Vector
@@ -38,8 +37,8 @@ struct DAVector {
   SymEngine::Expression element(int i);
   SymEngine::Expression element(std::vector<int> idx);
   std::vector<int>& element_orders(int i);
-  double norm();
-  double weighted_norm(double w);
+  // double norm();
+  // double weighted_norm(double w);
   void set_element(int *c, double elem);
   void set_element(std::vector<int> idx, double elem);
   void reset();
@@ -119,9 +118,9 @@ void da_substitute(const DAVector &iv, std::vector<unsigned int> &base_id, std::
 void da_substitute(std::vector<DAVector> &ivecs, std::vector<unsigned int> &base_id, std::vector<DAVector> &v,
                   std::vector<DAVector> &ovecs);
 void da_composition(std::vector<DAVector> &ivecs, std::vector<DAVector> &v, std::vector<DAVector> &ovecs);
-void da_composition(std::vector<DAVector> &ivecs, std::vector<double> &v, std::vector<double> &ovecs);
-void da_composition(std::vector<DAVector> &ivecs, std::vector<std::complex<double>> &v,
-                    std::vector<std::complex<double>> &ovecs);
+void da_composition(std::vector<DAVector> &ivecs, std::vector<double> &v, std::vector<SymEngine::Expression> &ovecs);
+// void da_composition(std::vector<DAVector> &ivecs, std::vector<std::complex<double>> &v,
+//                     std::vector<std::complex<double>> &ovecs);
 // void cd_composition(std::vector<DAVector> &ivecs, std::vector<std::complex<DAVector>> &v,
 //                     std::vector<std::complex<DAVector>> &ovecs);
 // void cd_composition(std::vector<std::complex<DAVector>> &ivecs, std::vector<std::complex<DAVector>> &v,

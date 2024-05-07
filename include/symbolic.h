@@ -8,7 +8,7 @@
 bool is_zero(SymEngine::Expression x);
 void simplified_expr(SymEngine::Expression& x);
 
-SymEngine::Expression operator/(int i, const SymEngine::Expression expr) {
+inline SymEngine::Expression operator/(int i, const SymEngine::Expression expr) {
     return SymEngine::Expression(i)/expr;
 }
 

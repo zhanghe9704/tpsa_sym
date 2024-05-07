@@ -235,23 +235,23 @@ bool DAVector::iszero(double eps) const{
     return ad_zero_check(da_vector_, eps);
 }
 
-/** \brief Return the norm of the DA vector, e.g. the maximum of the absolute value of the DA coefficients.
- * \return The norm of the DA vector.
- *
- */
-double DAVector::norm() {
-    return ad_norm(da_vector_);
-}
+// /** \brief Return the norm of the DA vector, e.g. the maximum of the absolute value of the DA coefficients.
+//  * \return The norm of the DA vector.
+//  *
+//  */
+// double DAVector::norm() {
+//     return ad_norm(da_vector_);
+// }
 
-/** \brief Return the weighted norm of the DA vector.
- * Calculate the absolute value of coef*w^n for each term, where coef is the coefficient of the term, n is the total
- * order of the term and w is the weight. Return the maximum of the calculation.
- *  \param w The weight.
- *  \return The norm of the DA vector.
- */
-double DAVector::weighted_norm(double w) {
-    return ad_weighted_norm(da_vector_, w);
-}
+// /** \brief Return the weighted norm of the DA vector.
+//  * Calculate the absolute value of coef*w^n for each term, where coef is the coefficient of the term, n is the total
+//  * order of the term and w is the weight. Return the maximum of the calculation.
+//  *  \param w The weight.
+//  *  \return The norm of the DA vector.
+//  */
+// double DAVector::weighted_norm(double w) {
+//     return ad_weighted_norm(da_vector_, w);
+// }
 
 /** \brief Set the value of a specific element.
  *
@@ -552,7 +552,7 @@ void da_composition(std::vector<DAVector> &ivecs, std::vector<DAVector> &v, std:
  * \return void.
  *
  */
-void da_composition(std::vector<DAVector> &ivecs, std::vector<double> &v, std::vector<double> &ovecs) {
+void da_composition(std::vector<DAVector> &ivecs, std::vector<double> &v, std::vector<SymEngine::Expression> &ovecs) {
     std::vector<TVEC> ad_iv;
     for(auto&& i : ivecs) ad_iv.push_back(i.da_vector_);
     ad_composition(ad_iv, v, ovecs);

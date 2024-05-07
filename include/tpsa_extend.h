@@ -82,7 +82,7 @@ void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov);
 void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vector<TVEC> &v, TVEC ov);
 void ad_substitute(std::vector<TVEC> &ivecs, std::vector<unsigned int> &base_id, std::vector<TVEC> &v, std::vector<TVEC> &ovecs) ;
 void ad_composition(std::vector<TVEC> &ivecs, std::vector<TVEC> &v, std::vector<TVEC> &ovecs);
-void ad_composition(std::vector<TVEC> &ivecs, std::vector<double> &v, std::vector<double> &ovecs);
+void ad_composition(std::vector<TVEC> &ivecs, std::vector<double> &v, std::vector<SymEngine::Expression> &ovecs);
 // void ad_composition(std::vector<TVEC> &ivecs, std::vector<std::complex<double> > &v, std::vector<std::complex<double> > &ovecs);
 void ad_add(const unsigned int idst, const unsigned int jsrc, unsigned int ov);
 void ad_sub(const unsigned int idst, const unsigned int jsrc, TVEC ov);
@@ -96,8 +96,8 @@ int ad_full_length();   //Return the maximum length of a TPS.
 void ad_int(TVEC iv, unsigned int base_id, TVEC ov); //Integrate w.r.t. the specific base.
 int ad_n_element(TVEC v);   //Number of non-zero element!
 bool ad_zero_check(TVEC v, double eps = -1); //Check if all the abs value of the coefficients in v are zero or smaller than a given eps.
-double ad_norm(TVEC v); //Norm of the TPS vector.
-double ad_weighted_norm(TVEC v, double w); //Weighted norm of the TPS vector.
+// double ad_norm(TVEC v); //Norm of the TPS vector.
+// double ad_weighted_norm(TVEC v, double w); //Weighted norm of the TPS vector.
 unsigned int ad_last_note();    //Index of the last available slot in the TPS vector pool.
 unsigned int ad_next_note();    //Index of the next available slot in the TPS vector pool.
 void print_vec(unsigned int ii, std::ostream& os);
