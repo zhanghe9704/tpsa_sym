@@ -33,12 +33,35 @@ set_target_properties(tpsaStatic PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
+# Set the output directory for the binaries
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/examples)
 
+# Find all example files in the examples directory
+file(GLOB EXAMPLE_SOURCES ${CMAKE_SOURCE_DIR}/examples/*.cc)
 
-add_custom_target(build_examples
-    COMMAND ${CMAKE_MAKE_PROGRAM} INSTALL_DIR=${CMAKE_INSTALL_PREFIX} all
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/examples
-    COMMENT "Building examples using Makefile with custom INSTALL_DIR"
+# Custom target to build examples
+add_custom_target(build_examples ALL DEPENDS tpsaStatic)
+
+# Create an executable for each example file
+foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
+    # Get the file name without extension
+    get_filename_component(EXAMPLE_NAME ${EXAMPLE_SOURCE} NAME_WE)
+
+    # Add the executable
+    add_executable(${EXAMPLE_NAME} ${EXAMPLE_SOURCE})
+
+    # Link against the static library
+    target_link_libraries(${EXAMPLE_NAME} tpsaStatic)
+
+    # Make the example depend on the custom target
+    add_dependencies(build_examples ${EXAMPLE_NAME})
+endforeach()
+
+# Optionally, you can add a custom command to build examples separately
+add_custom_target(examples
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target build_examples
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Building examples"
 )
 
 add_custom_target(build_tests
