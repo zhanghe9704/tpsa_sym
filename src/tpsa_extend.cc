@@ -363,7 +363,6 @@ void ad_int(TVEC iv, unsigned int base_id, TVEC ov) {
  */
 int ad_n_element(TVEC v) {
     int n = 0;
-    std::cout<<"adveclen: "<<adveclen[v]<<std::endl;
     for(size_t i=0; i<adveclen[v]; ++i){
         // if (fabs(advec[v][i])>std::numeric_limits<double>::min())
         if (!is_zero(advec[v][i]))
