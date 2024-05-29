@@ -15,6 +15,7 @@
 #include <cstring>
 #include "tpsa.cpp"
 
+
 static unsigned int ad_flag = 0; ///< The index of the next available TPS vector
 static unsigned int ad_end = 0;  ///< The index of the last available TPS vector.
 ///Linked list for TPSA memory management. When ad_flag == adlist[ad_end], memory runs out!
@@ -362,10 +363,12 @@ void ad_int(TVEC iv, unsigned int base_id, TVEC ov) {
  */
 int ad_n_element(TVEC v) {
     int n = 0;
-    for(size_t i=0; i<adveclen[v]; ++i)
+    std::cout<<"adveclen: "<<adveclen[v]<<std::endl;
+    for(size_t i=0; i<adveclen[v]; ++i){
         // if (fabs(advec[v][i])>std::numeric_limits<double>::min())
-        if (is_zero(advec[v][i]))
+        if (!is_zero(advec[v][i]))
             ++n;
+    }
     return n;
 }
 
