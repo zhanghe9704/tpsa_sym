@@ -1737,7 +1737,8 @@ void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
     }
     pn[0] = p[0] = 0;
     inv_x0 *= -1;
-    memcpy(pn, p, adveclen[ip]*sizeof(double));
+    // memcpy(pn, p, adveclen[ip]*sizeof(double));
+    memcpy(pn, p, adveclen[ip]*sizeof(SymEngine::Expression));
 
     ret[0] = 1;
     adveclen[iret] = 1;
