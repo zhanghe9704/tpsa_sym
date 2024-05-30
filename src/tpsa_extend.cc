@@ -295,7 +295,10 @@ SymEngine::Expression ad_con(const TVEC iv) {
  */
 void ad_reset_vector(const TVEC iv)
 {
-    memset(advec[iv], 0, FULL_VEC_LEN*sizeof(double));
+    // memset(advec[iv], 0, FULL_VEC_LEN*sizeof(double));
+    for(int i=0; i < FULL_VEC_LEN; ++i) {
+        advec[iv][i] = SymEngine::Expression(0);
+    }
 }
 
 /** \brief Reset the given TPS vector to a given constant.
@@ -1596,7 +1599,7 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
     unsigned int rhs = *irhs;
     unsigned int dst = *idst;
 
-    memset(advec[dst], 0, FULL_VEC_LEN*sizeof(double));
+    memset(advec[dst], 0, FULL_VEC_LEN*sizeof(SymEngine::Expression));
 //    memset(advec[dst], 0, adveclen[dst]*sizeof(double));   //This will cause a bug of extra terms in some cases!
 
     adveclen[dst] = adveclen[lhs];
@@ -1605,7 +1608,9 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
     if (advec[lhs][0]!=0) {
         for (size_t i = 1; i < std::min(adveclen[rhs], order_index[gnd+1]); ++i) {
 //        for (size_t i = 1; i <adveclen[rhs]; ++i) {
-            advec[dst][i] += advec[lhs][0]*advec[rhs][i];
+            SymEngine::Expression tmp = advec[lhs][0]*advec[rhs][i];
+            advec[dst][i] = advec[dst][i] + tmp;
+//            advec[dst][i] += advec[lhs][0]*advec[rhs][i];
         }
     }
 
