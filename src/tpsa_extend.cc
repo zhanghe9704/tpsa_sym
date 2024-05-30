@@ -495,7 +495,8 @@ void ad_reserve(const unsigned int n)
     }
     advecpool = new SymEngine::Expression*[n];
     advecpool[0] = new SymEngine::Expression[FULL_VEC_LEN*n];
-    memset(advecpool[0], 0, FULL_VEC_LEN*n*sizeof(SymEngine::Expression));
+    // memset(advecpool[0], 0, FULL_VEC_LEN*n*sizeof(SymEngine::Expression));
+    std::fill(advecpool[0], advecpool[0]+FULL_VEC_LEN*n, SymEngine::Expression(0));
     ad_flag = 0;
     advec.clear();
     advec.push_back(advecpool[0]);
