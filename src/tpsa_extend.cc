@@ -1599,25 +1599,42 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
     unsigned int rhs = *irhs;
     unsigned int dst = *idst;
 
-    memset(advec[dst], 0, FULL_VEC_LEN*sizeof(SymEngine::Expression));
+
+    // memset(advec[dst], 0, FULL_VEC_LEN*sizeof(SymEngine::Expression));
 //    memset(advec[dst], 0, adveclen[dst]*sizeof(double));   //This will cause a bug of extra terms in some cases!
+
+    for(int i=0; i<FULL_VEC_LEN; ++i) {
+        advec[dst][i]  = SymEngine::Expression(0);
+    }
 
     adveclen[dst] = adveclen[lhs];
 
     advec[dst][0] = advec[lhs][0] * advec[rhs][0];
-    if (advec[lhs][0]!=0) {
+
+    // if (advec[lhs][0]!=0) {
+    if (!is_zero(advec[lhs][0])) {
         for (size_t i = 1; i < std::min(adveclen[rhs], order_index[gnd+1]); ++i) {
 //        for (size_t i = 1; i <adveclen[rhs]; ++i) {
+            // advec[dst][i] += advec[lhs][0]*advec[rhs][i];
             SymEngine::Expression tmp = advec[lhs][0]*advec[rhs][i];
-            advec[dst][i] = advec[dst][i] + tmp;
-//            advec[dst][i] += advec[lhs][0]*advec[rhs][i];
+            simplified_expr(tmp);
+            tmp += advec[dst][i];
+            simplified_expr(tmp);
+            advec[dst][i] = tmp;
         }
     }
 
-    if (advec[rhs][0]!=0) {
+    // if (advec[rhs][0]!=0) {
+    if (!is_zero(advec[rhs][0])) {
         for (size_t i = 1; i < std::min(adveclen[lhs], order_index[gnd+1]); ++i) {
 //        for (size_t i = 1; i < adveclen[lhs]; ++i) {
-            advec[dst][i] += advec[lhs][i]*advec[rhs][0];
+            // advec[dst][i] += advec[lhs][i]*advec[rhs][0];
+            SymEngine::Expression tmp = advec[lhs][i]*advec[rhs][0];
+            simplified_expr(tmp);
+            tmp += advec[dst][i];
+            simplified_expr(tmp);
+            advec[dst][i] = tmp;
+
         }
     }
 
@@ -1631,7 +1648,12 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
         if (M > adveclen[rhs]) M = adveclen[rhs];
         if(advec[lhs][i]!=0) {
             for (size_t j = 1; j < M; ++j) {
-                advec[dst][prdidx[i][j]] += advec[lhs][i]*advec[rhs][j];
+                // advec[dst][prdidx[i][j]] += advec[lhs][i]*advec[rhs][j];
+                SymEngine::Expression tmp = advec[lhs][i]*advec[rhs][j];
+                simplified_expr(tmp);
+                tmp += advec[dst][prdidx[i][j]];
+                simplified_expr(tmp);
+                advec[dst][prdidx[i][j]] = tmp;
             }
         }
 
@@ -1718,7 +1740,8 @@ void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
     }
     pn[0] = p[0] = 0;
     inv_x0 *= -1;
-    memcpy(pn, p, adveclen[ip]*sizeof(double));
+    // memcpy(pn, p, adveclen[ip]*sizeof(double));
+    memcpy(pn, p, adveclen[ip]*sizeof(SymEngine::Expression));
 
     ret[0] = 1;
     adveclen[iret] = 1;
@@ -1811,14 +1834,17 @@ void print_vec(unsigned int ii, std::ostream& os)
             continue;
         }
         ++cnt;
-        os <<std::setw(cnt_width)<<cnt;
-        os << ' ' << std::setprecision(15)
-           << std::scientific << std::setw(15+8) << v[i] << "    ";
+        // os <<std::setw(cnt_width)<<cnt;
+        // os << ' ' << std::setprecision(15)
+        //    << std::scientific << std::setw(15+8) << v[i] << "    ";
         for (size_t j = 0; j < gnv-1; ++j) {
             os << std::setw(width_base) << (unsigned int) (*p-*(p+1));
             ++p;
         }
-        os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << std::endl;
+        // os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << std::endl;
+        os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << "    ";
+        simplified_expr(v[i]);
+        os << v[i] <<std::endl;
     }
     os << std::endl;
 

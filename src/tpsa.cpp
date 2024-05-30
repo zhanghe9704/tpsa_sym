@@ -1115,7 +1115,7 @@ void ad_div(const TVEC* ilhs, const TVEC* irhs, TVEC* idst)
     bool nonzero = false;
     for (size_t i = 0; i < adveclen[*irhs]; ++i) {
         // if(std::abs(advec[*irhs][i]) > std::numeric_limits<double>::min()) {
-        if(is_zero(advec[*irhs][i])) {
+        if(!is_zero(advec[*irhs][i])) {
             nonzero = true;
             break;
         }
