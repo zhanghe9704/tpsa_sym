@@ -1830,14 +1830,17 @@ void print_vec(unsigned int ii, std::ostream& os)
             continue;
         }
         ++cnt;
-        os <<std::setw(cnt_width)<<cnt;
-        os << ' ' << std::setprecision(15)
-           << std::scientific << std::setw(15+8) << v[i] << "    ";
+        // os <<std::setw(cnt_width)<<cnt;
+        // os << ' ' << std::setprecision(15)
+        //    << std::scientific << std::setw(15+8) << v[i] << "    ";
         for (size_t j = 0; j < gnv-1; ++j) {
             os << std::setw(width_base) << (unsigned int) (*p-*(p+1));
             ++p;
         }
-        os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << std::endl;
+        // os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << std::endl;
+        os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << "    ";
+        simplified_expr(v[i]);
+        os << v[i] <<std::endl;
     }
     os << std::endl;
 
