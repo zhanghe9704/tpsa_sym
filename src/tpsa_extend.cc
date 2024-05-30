@@ -1544,7 +1544,9 @@ void ad_copy(const TVEC* isrc, const TVEC* idst) {
     unsigned int i = *isrc;
     unsigned int j = *idst;
     if (i == j) return;
-    memcpy(advec[j], advec[i], FULL_VEC_LEN*sizeof(double));
+    // memcpy(advec[j], advec[i], FULL_VEC_LEN*sizeof(double));
+    // memcpy(advec[j], advec[i], FULL_VEC_LEN*sizeof(SymEngine::Expression));
+    for(int k=0; k<FULL_VEC_LEN; ++k) advec[j][k] = advec[i][k];
     adveclen[j] = adveclen[i];
 }
 
@@ -1600,7 +1602,6 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
     unsigned int rhs = *irhs;
     unsigned int dst = *idst;
 
-
     // memset(advec[dst], 0, FULL_VEC_LEN*sizeof(SymEngine::Expression));
 //    memset(advec[dst], 0, adveclen[dst]*sizeof(double));   //This will cause a bug of extra terms in some cases!
 
@@ -1609,7 +1610,6 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
     }
 
     adveclen[dst] = adveclen[lhs];
-
     advec[dst][0] = advec[lhs][0] * advec[rhs][0];
 
     // if (advec[lhs][0]!=0) {
@@ -1625,7 +1625,7 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
         }
     }
 
-    // if (advec[rhs][0]!=0) {
+     // if (advec[rhs][0]!=0) {
     if (!is_zero(advec[rhs][0])) {
         for (size_t i = 1; i < std::min(adveclen[lhs], order_index[gnd+1]); ++i) {
 //        for (size_t i = 1; i < adveclen[lhs]; ++i) {
@@ -1647,7 +1647,8 @@ void ad_mult(const TVEC* ilhs, const TVEC* irhs, TVEC* idst) {
         if (order_index[ord+1] <= i) ++ord;
         unsigned int M = order_index[gnd-ord+1];
         if (M > adveclen[rhs]) M = adveclen[rhs];
-        if(advec[lhs][i]!=0) {
+        // if(advec[lhs][i]!=0) {
+        if(!is_zero(advec[lhs][i])) {
             for (size_t j = 1; j < M; ++j) {
                 // advec[dst][prdidx[i][j]] += advec[lhs][i]*advec[rhs][j];
                 SymEngine::Expression tmp = advec[lhs][i]*advec[rhs][j];
@@ -1742,7 +1743,8 @@ void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
     pn[0] = p[0] = 0;
     inv_x0 *= -1;
     // memcpy(pn, p, adveclen[ip]*sizeof(double));
-    memcpy(pn, p, adveclen[ip]*sizeof(SymEngine::Expression));
+    // memcpy(pn, p, adveclen[ip]*sizeof(SymEngine::Expression));
+    for(int i=0; i<adveclen[ip]; ++i) pn[i] = p[i];
 
     ret[0] = 1;
     adveclen[iret] = 1;
@@ -1752,6 +1754,7 @@ void ad_c_div(const TVEC* iv, const SymEngine::Expression* c, TVEC* ivret) {
     for (TNVND nd = 2; nd < gnd+1; ++nd) {
         ad_mult(&ipn, &ip, &itmp);
         ad_copy(&itmp, &ipn);
+
         for (size_t i = 0; i < adveclen[ipn]; ++i)
             ret[i] += pn[i];
     }
