@@ -256,28 +256,28 @@ bool DAVector::iszero(double eps) const{
 //     return ad_weighted_norm(da_vector_, w);
 // }
 
-// /** \brief Set the value of a specific element.
-//  *
-//  * \param c The order pattern of the element.
-//  * \param elem The expression of the element.
-//  * \return void.
-//  *
-//  */
-// void DAVector::set_element(int *c, SymEngine::Expression elem) {
-//     size_t n = DAVector::dim();
-//     ad_pok(&da_vector_, c, &n, &elem);
-// }
+/** \brief Set the value of a specific element.
+ *
+ * \param c The order pattern of the element.
+ * \param elem The expression of the element.
+ * \return void.
+ *
+ */
+void DAVector::set_element(int *c, SymEngine::Expression elem) {
+    size_t n = DAVector::dim();
+    ad_pok(&da_vector_, c, &n, elem);
+}
 
-// /** \brief Set the value of a specific element.
-//  *
-//  * \param idx The order pattern of the element.
-//  * \param elem The expression of the element.
-//  * \return void.
-//  *
-//  */
-// void DAVector::set_element(std::vector<int> idx, SymEngine::Expression elem) {
-//     ad_pok(da_vector_, idx, elem);
-// }
+/** \brief Set the value of a specific element.
+ *
+ * \param idx The order pattern of the element.
+ * \param elem The expression of the element.
+ * \return void.
+ *
+ */
+void DAVector::set_element(std::vector<int> idx, SymEngine::Expression elem) {
+    ad_pok(da_vector_, idx, elem);
+}
 
 /** \brief Set the value of a specific element.
  *

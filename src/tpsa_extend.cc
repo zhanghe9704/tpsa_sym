@@ -1483,12 +1483,12 @@ SymEngine::Expression ad_elem(const TVEC &vec, std::vector<int> &idx) {
  * changes the value of the element (x^nx)*(n^ny)*(z^nz) in vec, the TPS vector, to x.
  * \param vec A TPS vector.
  * \param idx Order pattern of the element.
- * \param x Given value of the element.
+ * \param x Given expression of the element.
  * \return void.
  *
  */
 
-void ad_pok(const TVEC &vec, std::vector<int> &idx, double x) {
+void ad_pok(const TVEC &vec, std::vector<int> &idx, SymEngine::Expression x) {
     assert(gnv==idx.size()&&"Error in ad_pok: No. of indexes NOT EQUAL to No. of bases!");
     for(auto& v: idx) {
         assert((v<=ad_order() && v>=0 && "Error in ad_pok: value of indexes out of range"));
@@ -1508,6 +1508,20 @@ void ad_pok(const TVEC &vec, std::vector<int> &idx, double x) {
     advec[vec][k] = x;
     if (k+1>adveclen[vec])
         adveclen[vec] =  k+1;
+}
+
+/** \brief Change the value of a specific element in a TPS vector
+ * Take a TPS vector with three bases as an example. Given the order pattern idx = {nx,ny,nz} and a value x, the function
+ * changes the value of the element (x^nx)*(n^ny)*(z^nz) in vec, the TPS vector, to x.
+ * \param vec A TPS vector.
+ * \param idx Order pattern of the element.
+ * \param x Given value of the element.
+ * \return void.
+ *
+ */
+
+void ad_pok(const TVEC &vec, std::vector<int> &idx, double x) {
+    ad_pok(vec, idx, SymEngine::Expression(x));
 }
 
 /** \brief Change the value of a specific element in a TPS vector

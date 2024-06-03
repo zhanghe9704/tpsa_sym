@@ -40,8 +40,8 @@ struct DAVector {
   std::vector<int>& element_orders(int i);
   // double norm();
   // double weighted_norm(double w);
-  // void set_element(int *c, SymEngine::Expression elem);
-  // void set_element(std::vector<int> idx, SymEngine::Expression elem);
+  void set_element(int *c, SymEngine::Expression elem);
+  void set_element(std::vector<int> idx, SymEngine::Expression elem);
   void set_element(int *c, double elem);
   void set_element(std::vector<int> idx, double elem);
   void reset();

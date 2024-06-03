@@ -616,12 +616,12 @@ void ad_fill_ran(const TVEC* iv, const double* ratio, const double* xm)
 #ifdef MSVC_DLL
 _declspec(dllexport) void _stdcall ad_pok(const TVEC* ivec, int* c, size_t* n, double* x)
 #else
-void ad_pok(const unsigned int* ivec, int* c, size_t* n, double* x)
+void ad_pok(const unsigned int* ivec, int* c, size_t* n, SymEngine::Expression x)
 #endif
 {
     const unsigned int ii = *ivec;
     size_t N = (*n > gnv) ? gnv : *n;
-    double r = *x;
+    // double r = *x;
  #ifdef DEBUG_ALL
     std::cout << "AD Pok ivec= " << *ivec << " n= " << *n << " x= " << *x << std::endl;
  #endif
@@ -658,12 +658,17 @@ void ad_pok(const unsigned int* ivec, int* c, size_t* n, double* x)
     }
     //std::cout << std::endl;
     //std::cout << k << std::endl;
-    advec[ii][k] = r;
+    // advec[ii][k] = r;
+    advec[ii][k] = x;
 
     if (k+1>adveclen[ii])
         adveclen[ii] =  k+1;
     delete []cef;
     delete []bv;
+}
+
+void ad_pok(const unsigned int* ivec, int* c, size_t* n, double* x) {
+    ad_pok(ivec, c, n, SymEngine::Expression(*x));
 }
 
 // ith element of ivec, save pattern in c, value in x
