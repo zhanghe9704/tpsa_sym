@@ -14,6 +14,9 @@
 #include <limits>
 #include <sstream>
 #include <set>
+#include <symengine/eval_double.h>
+#include <symengine/expression.h>
+#include <symengine/symbol.h>
 #include "../include/tpsa_extend.h"
 
 using std::complex;
@@ -253,6 +256,29 @@ bool DAVector::iszero(double eps) const{
 //     return ad_weighted_norm(da_vector_, w);
 // }
 
+// /** \brief Set the value of a specific element.
+//  *
+//  * \param c The order pattern of the element.
+//  * \param elem The expression of the element.
+//  * \return void.
+//  *
+//  */
+// void DAVector::set_element(int *c, SymEngine::Expression elem) {
+//     size_t n = DAVector::dim();
+//     ad_pok(&da_vector_, c, &n, &elem);
+// }
+
+// /** \brief Set the value of a specific element.
+//  *
+//  * \param idx The order pattern of the element.
+//  * \param elem The expression of the element.
+//  * \return void.
+//  *
+//  */
+// void DAVector::set_element(std::vector<int> idx, SymEngine::Expression elem) {
+//     ad_pok(da_vector_, idx, elem);
+// }
+
 /** \brief Set the value of a specific element.
  *
  * \param c The order pattern of the element.
@@ -291,6 +317,16 @@ void DAVector::clean(const double eps) {
  */
 void DAVector::clean() {
     ad_clean(da_vector_, DAVector::eps);
+}
+
+void DAVector::eval(SymEngine::map_basic_basic m) {
+    for(int i=0; i<this->n_element(); ++i) {
+        SymEngine::Expression elem = this->element(i);
+        if(!is_zero(elem)) {
+            SymEngine::Expression subs_expr = elem.subs(m);
+            ad_pok(da_vector_, i, SymEngine::Expression(eval_double(subs_expr)));
+        }
+    }
 }
 
 Base::Base(const unsigned int n) {

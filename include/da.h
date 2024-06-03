@@ -10,6 +10,7 @@
 #define DA_H_INCLUDED
 
 #include <complex>
+#include <map>
 #include <memory>
 #include <iostream>
 #include <vector>
@@ -39,6 +40,8 @@ struct DAVector {
   std::vector<int>& element_orders(int i);
   // double norm();
   // double weighted_norm(double w);
+  // void set_element(int *c, SymEngine::Expression elem);
+  // void set_element(std::vector<int> idx, SymEngine::Expression elem);
   void set_element(int *c, double elem);
   void set_element(std::vector<int> idx, double elem);
   void reset();
@@ -49,6 +52,7 @@ struct DAVector {
   bool iszero() const;
   bool iszero(double eps) const;
   void clear();
+  void eval(SymEngine::map_basic_basic m);
   static int dim();
   static int order();
   static int full_length();

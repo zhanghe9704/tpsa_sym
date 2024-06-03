@@ -1510,6 +1510,22 @@ void ad_pok(const TVEC &vec, std::vector<int> &idx, double x) {
         adveclen[vec] =  k+1;
 }
 
+/** \brief Change the value of a specific element in a TPS vector
+ * Take a TPS vector with three bases as an example. Given the order pattern idx = {nx,ny,nz} and a value x, the function
+ * changes the value of the element (x^nx)*(n^ny)*(z^nz) in vec, the TPS vector, to x.
+ * \param vec A TPS vector.
+ * \param k Index of the element.
+ * \param x Given value of the element.
+ * \return void.
+ *
+ */
+void ad_pok(const TVEC &vec, int k, SymEngine::Expression expr) {
+    assert(k<FULL_VEC_LEN && "Error in ad_pok: element number out of range");
+     advec[vec][k] = expr;
+    if (k+1>adveclen[vec])
+        adveclen[vec] =  k+1;
+}
+
 // ***** The following functions replace the original ones in tpsa.cpp. *****
 
 

@@ -90,6 +90,7 @@ void ad_add_const(const TVEC i, double r, TVEC ov);
 SymEngine::Expression ad_elem(const TVEC &vec, std::vector<int> &idx);
 void ad_elem(const TVEC &vec, unsigned int idx, std::vector<unsigned int>& c, SymEngine::Expression& x);
 void ad_pok(const TVEC &vec, std::vector<int> &idx, double x);
+void ad_pok(const TVEC &vec, int k, SymEngine::Expression expr);
 int ad_order(); //Return the order of the TPS environment.
 void ad_clean(const TVEC &iv, const double eps); //Set the coefficients smaller than eps to zero.
 int ad_full_length();   //Return the maximum length of a TPS.
