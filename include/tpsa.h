@@ -185,7 +185,7 @@ typedef unsigned int TVEC;
     void ad_length(const TVEC* iv, unsigned int* n);
     void ad_copy(const TVEC* i, const TVEC* j);
     void ad_elem(const TVEC* ivec, unsigned int* idx, unsigned int* c, SymEngine::Expression* x);
-    void ad_pek(const TVEC* ivec, int* c, size_t* n, double* x);
+    void ad_pek(const TVEC* ivec, int* c, size_t* n, SymEngine::Expression* x);
     void ad_pok(const TVEC* ivec, int* c, size_t* n, double* x);
     void ad_pok(const TVEC* ivec, int* c, size_t* n,  SymEngine::Expression x);
     void ad_var(const TVEC* ii, const double* x, unsigned int* iv);
