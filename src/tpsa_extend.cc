@@ -828,8 +828,11 @@ void ad_composition(std::vector<TVEC> &ivecs, std::vector<TVEC> &v, std::vector<
                 product_flag = false;
             }
             ad_mult_c(product, coef, tmp);
-            for(unsigned int idx=0; idx<adveclen[tmp]; ++idx)
-                advec[ovecs.at(iv)][idx] += advec[tmp][idx];
+            print_vec(tmp, std::cout);
+
+            for(unsigned int idx=0; idx<adveclen[tmp]; ++idx) {
+                 advec[ovecs.at(iv)][idx] += advec[tmp][idx];
+            }
         }
         if (zero_coef==vec_size) p += gnv;
     }
@@ -838,7 +841,7 @@ void ad_composition(std::vector<TVEC> &ivecs, std::vector<TVEC> &v, std::vector<
         adveclen[ov] = 1;
         for(int i=order_index[gnd+1]-1; i>=0; --i) {
             // if(std::abs(advec[ov][i])>std::numeric_limits<double>::min()) {
-            if(is_zero(advec[ov][i]) ) {
+            if(!is_zero(advec[ov][i]) ) {
                 adveclen[ov] = i+1;
                 break;
             }
