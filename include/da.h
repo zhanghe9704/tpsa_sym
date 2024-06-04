@@ -10,10 +10,13 @@
 #define DA_H_INCLUDED
 
 #include <complex>
+#include <functional>
 #include <map>
 #include <memory>
 #include <iostream>
 #include <vector>
+#include <symengine/lambda_double.h>
+#include <symengine/symengine_rcp.h>
 #include "symbolic.h"
 
 /** \brief Differential Algebra (DA) Vector
@@ -53,6 +56,7 @@ struct DAVector {
   bool iszero(double eps) const;
   void clear();
   void eval(SymEngine::map_basic_basic m);
+  void eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> vars, std::vector<SymEngine::LambdaRealDoubleVisitor>& v);
   static int dim();
   static int order();
   static int full_length();

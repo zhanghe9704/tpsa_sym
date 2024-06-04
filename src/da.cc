@@ -14,6 +14,7 @@
 #include <limits>
 #include <sstream>
 #include <set>
+#include <vector>
 #include <symengine/eval_double.h>
 #include <symengine/expression.h>
 #include <symengine/symbol.h>
@@ -326,6 +327,22 @@ void DAVector::eval(SymEngine::map_basic_basic m) {
             SymEngine::Expression subs_expr = elem.subs(m);
             ad_pok(da_vector_, i, SymEngine::Expression(eval_double(subs_expr)));
         }
+    }
+}
+
+void DAVector::eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> vars, std::vector<SymEngine::LambdaRealDoubleVisitor>& vec) {
+    // std::vector<SymEngine::RCP<const SymEngine::Basic>> exprs;
+    vec.resize(this->n_element());
+    for(int i=0; i<this->n_element(); ++i) {
+        SymEngine::Expression elem = this->element(i);
+        SymEngine::LambdaRealDoubleVisitor v;
+        if(!is_zero(elem)) {
+            vec.at(i).init(vars, {elem.get_basic()});   
+        }
+        else {
+            vec.at(i).init(vars,{SymEngine::Expression(0).get_basic()});
+        }
+        // vec.push_back(v);
     }
 }
 
