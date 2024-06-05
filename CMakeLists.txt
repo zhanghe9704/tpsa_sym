@@ -17,8 +17,12 @@ file(GLOB SOURCES "src/*.cc")
 
 # Include SymEngine headers
 include_directories(${SYMENGINE_INCLUDE_DIRS})
+link_directories(${SYMENGINE_LIBRARY_DIRS})
 
 set(RELEASE_COMPILE_OPTIONS "-O3" "-DNDEBUG" "-Wall")
+
+message(STATUS "SYMENGINE_LIBRARIES = ${SYMENGINE_LIBRARIES}")
+message(STATUS "SYMENGINE_INCLUDE_DIRS = ${SYMENGINE_INCLUDE_DIRS}")
 
 #Generate the shared library and the static llibary from the sources
 add_library(tpsaShared SHARED ${SOURCES})
