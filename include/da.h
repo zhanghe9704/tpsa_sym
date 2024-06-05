@@ -57,6 +57,7 @@ struct DAVector {
   void clear();
   void eval(SymEngine::map_basic_basic m);
   void eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> vars, std::vector<SymEngine::LambdaRealDoubleVisitor>& v);
+  void eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> vars, SymEngine::LambdaRealDoubleVisitor& v);
   static int dim();
   static int order();
   static int full_length();

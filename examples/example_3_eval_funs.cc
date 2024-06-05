@@ -1,5 +1,6 @@
 #include "da.h"
 #include "symbolic.h"
+#include <array>
 #include <iostream>
 #include <vector>
 #include <symengine/symengine_rcp.h>
@@ -13,6 +14,7 @@ using SymEngine::symbol;
 using std::cout;
 using std::endl;
 using std::vector;
+using std::array;
 
 
 int main(){
@@ -29,6 +31,7 @@ int main(){
 
     cout<<da1;
 
+    //Use a vector of visitors, in which each element represents one coefficients of da1. 
     vector<RCP<const Basic>> vars{x,y,z};
     vector<SymEngine::LambdaRealDoubleVisitor> vec;
     da1.eval_funs(vars,vec);
@@ -36,6 +39,21 @@ int main(){
     for (auto& v : vec) {
         cout<< v.call({0.1, 0.2, 0.3}) <<endl;
     }
+
+    //Use one visitor v for all the coeffients of da1. This is the better method. 
+    SymEngine::LambdaRealDoubleVisitor v;
+    da1.eval_funs(vars, v);
+    vector<double> results;
+    results.resize(da1.n_element());
+    array<double, 3> inputs{0.1, 0.2, 0.3};
+    
+    cout<<"=============="<<endl;
+    v.call(&results[0], &inputs[0]);
+    for (auto r : results) {
+        cout<< r << endl;
+    }
+
+
     return 0;
 }
 

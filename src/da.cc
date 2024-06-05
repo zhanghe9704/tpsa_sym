@@ -346,6 +346,20 @@ void DAVector::eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> var
     }
 }
 
+void DAVector::eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> vars, SymEngine::LambdaRealDoubleVisitor& v) {
+    std::vector<SymEngine::RCP<const SymEngine::Basic>> exprs;
+    for(int i=0; i<this->n_element(); ++i) {
+        SymEngine::Expression elem = this->element(i);
+        if(!is_zero(elem)) {
+            exprs.push_back(elem.get_basic());   
+        }
+        else {
+            exprs.push_back(SymEngine::Expression(0).get_basic());
+        }
+    }
+    v.init(vars, exprs);
+}
+
 Base::Base(const unsigned int n) {
     for(unsigned int i = 0; i<n; ++i) {
         DAVector v;
