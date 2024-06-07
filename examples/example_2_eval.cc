@@ -6,6 +6,7 @@ using SymEngine::Expression;
 using std::cout;
 using std::endl;
 
+using namespace SymbDA;
 
 int main(){
     int da_order = 3;

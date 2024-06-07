@@ -16,6 +16,7 @@ using std::endl;
 using std::vector;
 using std::array;
 
+using namespace SymbDA;
 
 int main(){
     int da_order = 3;
