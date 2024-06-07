@@ -5,8 +5,8 @@
  * @email hezhang@jlab.org
  */
 
-#ifndef TPSA_EXTEND
-#define TPSA_EXTEND
+#ifndef SYMBTPSA_EXTEND
+#define SYMBTPSA_EXTEND
 
 #include <vector>
 #include <limits>
@@ -104,5 +104,5 @@ unsigned int ad_last_note();    //Index of the last available slot in the TPS ve
 unsigned int ad_next_note();    //Index of the next available slot in the TPS vector pool.
 void print_vec(unsigned int ii, std::ostream& os);
 void print_vec(unsigned int ii, unsigned int jj, std::ostream& os);
-#endif // TPSA_EXTEND
+#endif // SYMBTPSA_EXTEND
 

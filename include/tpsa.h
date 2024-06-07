@@ -8,8 +8,8 @@
 //! \version $Id: tpsa.h,v 1.4 2009-04-17 17:32:23 frs Exp $
 //! \author Lingyun Yang, http://www.lingyunyang.com/
 
-#ifndef TPSA
-#define TPSA
+#ifndef SYMBTPSA
+#define SYBMTPSA
 // #ifndef WIN32
 
 // /* should work unchanged on _win32 using Lahey */
@@ -238,4 +238,4 @@ typedef unsigned int TVEC;
 
 #endif
 
-#endif // TPSA
+#endif // SYMBTPSA

@@ -6,8 +6,8 @@
  * @email hezhang@jlab.org
  */
 
-#ifndef DA_H_INCLUDED
-#define DA_H_INCLUDED
+#ifndef SYMBDA_H_INCLUDED
+#define SYMBDA_H_INCLUDED
 
 #include <complex>
 #include <functional>
@@ -248,4 +248,4 @@ namespace SymbDA {
   // void inv_map(std::vector<DAVector> &ivecs, int dim, std::vector<DAVector> &ovecs);
 
 }
-#endif // DA_H_INCLUDED
+#endif // SYMBDA_H_INCLUDED
