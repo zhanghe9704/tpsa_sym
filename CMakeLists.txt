@@ -133,5 +133,5 @@ add_custom_target(build_tests
 install(TARGETS tpsaShared tpsaStatic DESTINATION)
 
 #Install the header file
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/da.h DESTINATION include)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/sda.h DESTINATION include)
 
