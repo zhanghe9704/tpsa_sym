@@ -19,10 +19,12 @@
 #include <symengine/expression.h>
 #include <symengine/symbol.h>
 #include "../include/tpsa_extend.h"
+#include "symbolic.h"
 
 using std::complex;
 using std::vector;
 using std::string;
+using namespace SymbTPSA;
 
 namespace SymbDA {
 

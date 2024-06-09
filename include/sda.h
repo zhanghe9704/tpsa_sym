@@ -17,7 +17,6 @@
 #include <vector>
 #include <symengine/lambda_double.h>
 #include <symengine/symengine_rcp.h>
-#include "symbolic.h"
 
 namespace SymbDA {
 

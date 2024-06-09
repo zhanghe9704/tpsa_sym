@@ -15,6 +15,7 @@
 #include <cstring>
 #include "tpsa.cpp"
 
+namespace SymbTPSA {
 
 static unsigned int ad_flag = 0; ///< The index of the next available TPS vector
 static unsigned int ad_end = 0;  ///< The index of the last available TPS vector.
@@ -1948,3 +1949,5 @@ void print_vec(unsigned int ii, unsigned int jj, std::ostream& os)
 
     os.flags(prevflags);
 }
+
+} //namespace SymbTPSA

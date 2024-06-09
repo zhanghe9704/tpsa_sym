@@ -20,6 +20,8 @@
 #include "tpsa.h"
 #include "symbolic.h"
 
+namespace SymbTPSA{
+
 /** \brief A table that show the relation between the orders and the index of an element in a TPS vector.
  * The orders of an TPS element is a vector of integers that shows the order of each variable in  that element.
  * For example, the element x^3*y*z^2 in a 3D TPS vector is "3,1,2".
@@ -104,5 +106,6 @@ unsigned int ad_last_note();    //Index of the last available slot in the TPS ve
 unsigned int ad_next_note();    //Index of the next available slot in the TPS vector pool.
 void print_vec(unsigned int ii, std::ostream& os);
 void print_vec(unsigned int ii, unsigned int jj, std::ostream& os);
+} //namespace SymbTPSA
 #endif // SYMBTPSA_EXTEND
 

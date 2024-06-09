@@ -8,7 +8,7 @@ using std::endl;
 using namespace SymbDA;
 
 int main(){
-    int da_order = 3;
+    int da_order = 4;
     int da_dim = 3;
     int da_pool = 400;
 
@@ -21,19 +21,11 @@ int main(){
 
     cout<<"da1 length: "<<da1.n_element()<<endl;
     
-    for(int i=0; i<da1.n_element(); ++i) {
-        std::vector<unsigned int> c{0,0,0};
-        Expression elem;
-        da1.element(i, c, elem);
-        cout<<i;
-        for (auto idx : c) {
-            cout<< idx << ' ';
-        }
-        cout<< expand(elem) <<endl;
-    }
-    auto da2 = da1 * da1;
 
+    DAVector Ocm = Expression(1)/sqrt(Expression(1)+(x*x + y*y + z*z)*(da[0]*da[0]+da[1]*da[1]+da[2]*da[2]) - 
+        Expression(2)*x*da[0] - Expression(2)*y*da[1] - Expression(2)*z*da[2]);
+    cout<<Ocm;
 
-
+    return 0;
 }
 

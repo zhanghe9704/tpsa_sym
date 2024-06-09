@@ -20,6 +20,8 @@
 
 #include "../include/tpsa.h"
 
+namespace SymbTPSA{
+
 static unsigned int comb_num(unsigned int n, unsigned int r);
 static unsigned int gcd(unsigned int a, unsigned int b);
 static void init_order_index(unsigned int nv, unsigned int nd);
@@ -2221,3 +2223,5 @@ extern "C" unsigned long __stdcall DllEntryPoint(void *hDll, unsigned long Reaso
     return (1);
 }
 #endif
+
+}//namespace SymbTPSA

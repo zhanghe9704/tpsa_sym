@@ -104,8 +104,12 @@
 
 #include "symbolic.h"
 
+
+
 #ifndef AD_HH
 #define AD_HH
+
+namespace SymbTPSA{
 //! Type of order and number of variables.
 //typedef unsigned char TNVND;
 typedef unsigned int TNVND;
@@ -235,7 +239,7 @@ typedef unsigned int TVEC;
 // #ifdef __cplusplus
 // }
 // #endif
-
+}
 #endif
 
 #endif // SYMBTPSA
