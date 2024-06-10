@@ -14,17 +14,33 @@ int main(){
 
     da_init(da_order, da_dim, da_pool);
 
-    Expression x("x0");
-    Expression y("y0");
-    Expression z("z0");
+    Expression x("x");
+    Expression y("y");
+    Expression z("z");
     DAVector da1 = 1+(Expression(1)+x)*da[0] + y*da[1] + (z-Expression(0.5))*da[2];
 
-    cout<<"da1 length: "<<da1.n_element()<<endl;
-    
+    cout<<"Symbolic DA vector 1: "<<endl;
+    cout<<da1;
 
-    DAVector Ocm = Expression(1)/sqrt(Expression(1)+(x*x + y*y + z*z)*(da[0]*da[0]+da[1]*da[1]+da[2]*da[2]) - 
-        Expression(2)*x*da[0] - Expression(2)*y*da[1] - Expression(2)*z*da[2]);
-    cout<<Ocm;
+    DAVector da2 = 3.3+(Expression(0.5)+x)*da[0] + y*y*da[1] + (x+z+Expression(1.1))*da[2];
+    cout<<"Symbolic DA vector 2: "<<endl;
+    cout<<da2;
+
+    cout<<"Summation: vec 1 + vec 2:" <<endl;
+    auto da3 = da1 + da2;
+    cout<<da3;
+
+    cout<<"Multiplication: vec 1 * vec 2: "<<endl;
+    da3 = da1 * da3;
+    cout<<da3;
+
+    cout<<"Inverse of vec 1: "<<endl;
+    da3 = 1/da1;
+    cout<<da3;
+
+    cout<<"Square root of vec 1: "<<endl;
+    da3 = sqrt(da1);
+    cout<<da3;
 
     return 0;
 }

@@ -54,7 +54,6 @@ int main(){
         cout<< r << endl;
     }
 
-
     return 0;
 }
 
