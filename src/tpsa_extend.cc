@@ -1859,9 +1859,10 @@ void print_vec(unsigned int ii, std::ostream& os)
     std::string start (cnt_width, ' ');
     std::string sep (cnt_width, '-');
     start.replace(start.end()-1, start.end()-1, 1, 'I');
+    start = " Base     " + start;
     int cnt = 0;
     os << start;
-    os << "          V [" << ii << "]              Base  [ "
+    os << "       V [" << ii << "]               [ "
        << adveclen[ii] << " / " << FULL_VEC_LEN << " ]" << std::endl <<sep
        << "----------------------------------------------" << std::endl;
     for (size_t i = 0; i < adveclen[ii]; ++i) {
@@ -1880,7 +1881,7 @@ void print_vec(unsigned int ii, std::ostream& os)
             ++p;
         }
         // os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << std::endl;
-        os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << "    ";
+        os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << cnt << "    ";
         simplified_expr(v[i]);
         os << v[i] <<std::endl;
     }
