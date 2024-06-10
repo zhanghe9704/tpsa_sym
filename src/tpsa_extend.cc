@@ -1868,6 +1868,7 @@ void print_vec(unsigned int ii, std::ostream& os)
     for (size_t i = 0; i < adveclen[ii]; ++i) {
 //    for (size_t i = 0; i < FULL_VEC_LEN; ++i) {
         // if (std::abs(v[i]) < std::numeric_limits<double>::min()) {
+        simplified_expr(v[i]);
         if (is_zero(v[i])) {
             p += gnv;
             continue;
@@ -1882,7 +1883,7 @@ void print_vec(unsigned int ii, std::ostream& os)
         }
         // os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << std::endl;
         os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << cnt << "    ";
-        simplified_expr(v[i]);
+        // simplified_expr(v[i]);
         os << v[i] <<std::endl;
     }
     os << std::endl;
