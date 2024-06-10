@@ -6,7 +6,7 @@ using SymEngine::expand;
 
 bool is_zero(Expression x) {
     Expression y = simplify(expand(x));
-    return y == Expression(0);
+    return y == Expression(0) || y == Expression(0.0) ;
 }
 
 void simplified_expr(Expression& x) {
