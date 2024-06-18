@@ -1882,7 +1882,7 @@ void print_vec(unsigned int ii, std::ostream& os)
             ++p;
         }
         // os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << std::endl;
-        os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << cnt << "    ";
+        os << std::setw(width_base) << (unsigned int)*p++ << std::setw(6) << i << "    ";
         // simplified_expr(v[i]);
         os << v[i] <<std::endl;
     }
