@@ -336,8 +336,8 @@ namespace SymbDA {
 
     void DAVector::eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> vars, std::vector<SymEngine::LambdaRealDoubleVisitor>& vec) {
         // std::vector<SymEngine::RCP<const SymEngine::Basic>> exprs;
-        vec.resize(this->n_element());
-        for(int i=0; i<this->n_element(); ++i) {
+        vec.resize(this->length());
+        for(int i=0; i<this->length(); ++i) {
             SymEngine::Expression elem = this->element(i);
             SymEngine::LambdaRealDoubleVisitor v;
             if(!is_zero(elem)) {
@@ -352,8 +352,10 @@ namespace SymbDA {
 
     void DAVector::eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> vars, SymEngine::LambdaRealDoubleVisitor& v) {
         std::vector<SymEngine::RCP<const SymEngine::Basic>> exprs;
-        for(int i=0; i<this->n_element(); ++i) {
+        // for(int i=0; i<this->n_element(); ++i) {
+        for(int i=0; i<this->length(); ++i) {
             SymEngine::Expression elem = this->element(i);
+            std::cout<<i<<' '<<elem<<std::endl;
             if(!is_zero(elem)) {
                 exprs.push_back(elem.get_basic());   
             }
