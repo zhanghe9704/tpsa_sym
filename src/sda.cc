@@ -355,7 +355,6 @@ namespace SymbDA {
         // for(int i=0; i<this->n_element(); ++i) {
         for(int i=0; i<this->length(); ++i) {
             SymEngine::Expression elem = this->element(i);
-            std::cout<<i<<' '<<elem<<std::endl;
             if(!is_zero(elem)) {
                 exprs.push_back(elem.get_basic());   
             }
