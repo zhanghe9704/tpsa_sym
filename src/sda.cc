@@ -307,6 +307,17 @@ namespace SymbDA {
         ad_pok(da_vector_, idx, elem);
     }
 
+    /** \brief Set the value of a specific element.
+     *
+     * \param i The index of the element.
+     * \param elem The value of the element.
+     * \return void.
+     *
+     */
+    void DAVector::set_element(int i, SymEngine::Expression elem) {
+        ad_pok(da_vector_, i, elem);
+    }
+
     /** \brief Set a coefficient in the DA Vector to be zero if the abs of the
      * coefficient is less than the given eps.
      * \param[in] the threshold for zero.

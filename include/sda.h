@@ -48,6 +48,7 @@ namespace SymbDA {
     void set_element(std::vector<int> idx, SymEngine::Expression elem);
     void set_element(int *c, double elem);
     void set_element(std::vector<int> idx, double elem);
+    void set_element(int i, SymEngine::Expression elem);
     void reset();
     void reset_const(double x = 0);
     void reset_const(SymEngine::Expression x);
