@@ -65,6 +65,11 @@ namespace SymbDA {
         ad_reset_const(da_vector_, s);
     }
 
+    DAVector::DAVector(std::vector<SymEngine::Expression>& v) {
+    ad_alloc(&da_vector_);
+    ad_copy(v.data(), v.size(), &da_vector_);
+}
+
     DAVector::~DAVector() {
         ad_free(&da_vector_);
     }

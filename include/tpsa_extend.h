@@ -62,6 +62,7 @@ void ad_restore_order();//Restore the original TPS order, which is larger than t
 void ad_reserve(const unsigned int n);  //Reserve memory for n TPS vectors.
 void ad_clear(); //Destroy the TPS environment and release memory.
 void ad_assign(unsigned int &i);    //Assign memory to a TPS vector. The length of the vector is zero.
+void ad_copy(const SymEngine::Expression* isrc, int length, const TVEC* idst); //Copy memory to a TPS vector.
 SymEngine::Expression ad_con(const TVEC iv); //Return the constant part of the TPS vector
 void ad_reset_const(const TVEC iv, SymEngine::Expression x); //Reset the TPS vector constant element as x and all other elements zero
 unsigned int ad_remain();       //Space (number) available for new TPS vectors.

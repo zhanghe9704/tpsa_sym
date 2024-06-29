@@ -829,7 +829,7 @@ void ad_composition(std::vector<TVEC> &ivecs, std::vector<TVEC> &v, std::vector<
                 product_flag = false;
             }
             ad_mult_c(product, coef, tmp);
-            print_vec(tmp, std::cout);
+            // print_vec(tmp, std::cout);
 
             for(unsigned int idx=0; idx<adveclen[tmp]; ++idx) {
                  advec[ovecs.at(iv)][idx] += advec[tmp][idx];
@@ -1583,6 +1583,19 @@ void ad_copy(const TVEC* isrc, const TVEC* idst) {
     for(int k=0; k<FULL_VEC_LEN; ++k) advec[j][k] = advec[i][k];
     adveclen[j] = adveclen[i];
 }
+
+/** \brief Copy TPS vector from memory
+ * \param[in] isrc starting address of the ememory
+ * \param[in] length length (of SymEngine::Expression) to copy
+ * \param[out] idst destination
+ */
+void ad_copy(const SymEngine::Expression* isrc, int length, const TVEC* idst) {
+    unsigned int j = *idst;
+    if (FULL_VEC_LEN<length) length = FULL_VEC_LEN;
+    memcpy(advec[j], isrc, length*sizeof(SymEngine::Expression));
+    adveclen[j] = length;
+}
+
 
 /** \brief Reset a TPS vector to a constant 0
  * This function replaces the original one in tpsa.cpp.

@@ -239,7 +239,7 @@ typedef unsigned int TVEC;
 // #ifdef __cplusplus
 // }
 // #endif
-}
+} //namespace SymbTPSA
 #endif
 
 #endif // SYMBTPSA

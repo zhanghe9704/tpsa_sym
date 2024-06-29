@@ -32,6 +32,7 @@ namespace SymbDA {
     DAVector(double x);
     DAVector(int i);
     DAVector(SymEngine::Expression s);
+    DAVector(std::vector<SymEngine::Expression>& v);
   //  DAVector(bool b);
     void print() const;
     SymEngine::Expression con() const;
