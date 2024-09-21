@@ -62,11 +62,18 @@ set_target_properties(tpsaStatic PROPERTIES
 # Set the output directory for the binaries
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+# ----------------------------------------------------------------------------------
+# Create a custom target for examples (NOT built by default)
+# ----------------------------------------------------------------------------------
+
 # Find all example files in the examples directory
 file(GLOB EXAMPLE_SOURCES ${CMAKE_SOURCE_DIR}/examples/*.cc)
 
 # Custom target to build examples
-add_custom_target(build_examples ALL DEPENDS tpsaStatic)
+# add_custom_target(build_examples ALL DEPENDS tpsaStatic)
+add_custom_target(build_examples
+    COMMENT "Building examples"
+)
 
 # Create an executable for each example file
 foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
@@ -74,7 +81,7 @@ foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
     get_filename_component(EXAMPLE_NAME ${EXAMPLE_SOURCE} NAME_WE)
 
     # Add the executable
-    add_executable(${EXAMPLE_NAME} ${EXAMPLE_SOURCE})
+    add_executable(${EXAMPLE_NAME} EXCLUDE_FROM_ALL ${EXAMPLE_SOURCE})
 
     # Set a specific output directory for the debug executable
     set_target_properties(${EXAMPLE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/examples)
@@ -86,13 +93,11 @@ foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
     add_dependencies(build_examples ${EXAMPLE_NAME})
 endforeach()
 
-# Optionally, you can add a custom command to build examples separately
-add_custom_target(examples
-    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target build_examples
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    COMMENT "Building examples"
-)
 
+
+# ----------------------------------------------------------------------------------
+# Create a custom target for debug (NOT built by default)
+# ----------------------------------------------------------------------------------
 
 # Custom target to build the debug executable
 add_custom_target(build_debug
@@ -116,7 +121,7 @@ foreach(DEBUG_SOURCE ${DEBUG_SOURCES})
     get_filename_component(DEBUG_NAME ${DEBUG_SOURCE} NAME_WE)
 
     # Add the executable
-    add_executable(${DEBUG_NAME} ${DEBUG_SOURCE} ${SOURCES})
+    add_executable(${DEBUG_NAME} EXCLUDE_FROM_ALL ${DEBUG_SOURCE} ${SOURCES})
 
     # Set a specific output directory for the debug executable
     set_target_properties(${DEBUG_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/debug)
@@ -134,6 +139,13 @@ foreach(DEBUG_SOURCE ${DEBUG_SOURCES})
      # Make the debug executable depend on the custom target
      add_dependencies(build_debug ${DEBUG_NAME})
 endforeach()
+
+# Optionally, you can add a custom command to build examples separately
+add_custom_target(examples
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target build_examples
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Building examples"
+)
 
 # Optionally, you can add a custom command to build examples separately
 add_custom_target(dbg
