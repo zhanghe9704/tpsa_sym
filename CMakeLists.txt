@@ -21,8 +21,26 @@ link_directories(${SYMENGINE_LIBRARY_DIRS})
 
 set(RELEASE_COMPILE_OPTIONS "-O3" "-DNDEBUG" "-Wall")
 
+# Loop through each library in SYMENGINE_LIBRARIES
+foreach(LIB ${SYMENGINE_LIBRARIES})
+    # Extract the directory name from the library path
+    get_filename_component(LIB_DIR ${LIB} DIRECTORY)
+
+    # Only process non-empty directory values (this avoids issues with entries like "symengine")
+    if (LIB_DIR)
+        # Check if the directory has already been added to SYMENGINE_LIBRARY_DIRS
+        list(FIND SYMENGINE_LIBRARY_DIRS ${LIB_DIR} DIR_INDEX)
+        
+        # Add the directory to the list if it's not already present
+        if (DIR_INDEX EQUAL -1)
+            list(APPEND SYMENGINE_LIBRARY_DIRS ${LIB_DIR})
+        endif()
+    endif()
+endforeach()
+
 message(STATUS "SYMENGINE_LIBRARIES = ${SYMENGINE_LIBRARIES}")
 message(STATUS "SYMENGINE_INCLUDE_DIRS = ${SYMENGINE_INCLUDE_DIRS}")
+message(STATUS "SYMENGINE_LIBRARY_DIRS = ${SYMENGINE_LIBRARY_DIRS}")
 
 #Generate the shared library and the static llibary from the sources
 add_library(tpsaShared SHARED ${SOURCES})
@@ -90,6 +108,9 @@ set(DEBUG_COMPILE_OPTIONS "-g" "-O0" "-DDEBUG")
 # Custom target to build the debug executable
 file(GLOB DEBUG_SOURCES ${CMAKE_SOURCE_DIR}/debug/*.cc)
 
+# Ensure linker directories are set for the debug build
+link_directories(${SYMENGINE_LIBRARY_DIRS})
+
 foreach(DEBUG_SOURCE ${DEBUG_SOURCES})
     # Get the file name without extension
     get_filename_component(DEBUG_NAME ${DEBUG_SOURCE} NAME_WE)
@@ -108,7 +129,7 @@ foreach(DEBUG_SOURCE ${DEBUG_SOURCES})
     target_include_directories(${DEBUG_NAME} PRIVATE ${DEBUG_INCLUDE_DIRS})
  #   message(STATUS "Set include directories for ${DEBUG_EXECUTABLE_NAME} to: ${DEBUG_INCLUDE_DIRS}")
 
-    target_link_libraries(${DEBUG_NAME} PRIVATE libsymengine.a libgmp.so)
+    target_link_libraries(${DEBUG_NAME} PRIVATE symengine flint gmp mpfr)
    
      # Make the debug executable depend on the custom target
      add_dependencies(build_debug ${DEBUG_NAME})
