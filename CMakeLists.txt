@@ -94,6 +94,50 @@ foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
 endforeach()
 
 
+# ----------------------------------------------------------------------------------
+# Create a custom target for tests (NOT built by default)
+# ----------------------------------------------------------------------------------
+
+# Find all example files in the tests directory
+file(GLOB TEST_SOURCES ${CMAKE_SOURCE_DIR}/tests/*.cc)
+
+# Custom target to build examples
+# add_custom_target(build_examples ALL DEPENDS tpsaStatic)
+add_custom_target(build_tests
+    COMMENT "Building tests"
+)
+
+# Add the executable
+add_executable(run_tests EXCLUDE_FROM_ALL ${TEST_SOURCES})
+
+# Set a specific output directory for the debug executable
+set_target_properties(run_tests PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests)
+
+# Link against the static library
+target_link_libraries(run_tests tpsaStatic)
+
+# Make the example depend on the custom target
+add_dependencies(build_tests run_tests)
+
+# # Create an executable for each example file
+# foreach(TEST_SOURCE ${TEST_SOURCES})
+#     # Get the file name without extension
+#     get_filename_component(TEST_NAME ${TEST_SOURCE} NAME_WE)
+
+#     # Add the executable
+#     add_executable(${TEST_NAME} EXCLUDE_FROM_ALL ${TEST_SOURCE})
+
+#     # Set a specific output directory for the debug executable
+#     set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests)
+
+#     # Link against the static library
+#     target_link_libraries(${TEST_NAME} tpsaStatic)
+
+#     # Make the example depend on the custom target
+#     add_dependencies(build_tests ${TEST_NAME})
+# endforeach()
+
+
 
 # ----------------------------------------------------------------------------------
 # Create a custom target for debug (NOT built by default)
@@ -154,11 +198,10 @@ add_custom_target(dbg
     COMMENT "Building debug executable"
 )
 
-
-add_custom_target(build_tests
-    COMMAND ${CMAKE_MAKE_PROGRAM} INSTALL_DIR=${CMAKE_INSTALL_PREFIX} all
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test
-    COMMENT "Building tests using Makefile with custom INSTALL_DIR"
+add_custom_target(tests
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target build_tests
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Building tests"
 )
 
 #Set the location for library installation -- i.e., /usr/local/lib in this case
