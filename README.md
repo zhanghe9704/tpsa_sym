@@ -4,46 +4,29 @@
 ,
 ## About this code
 
-This code allows users to do computations using Truncated Power Series Algebra (TPSA) and/or Differential Algebra (DA) in C++ and Python 3.x environment.
+This code allows users to do symbolic computations using  Differential Algebra (DA), also called Truncated Power Series Algebra (TPSA), in C++. This code is developed based on the numerical DA/TPSA lib,  [*cppTPSA/pyTPSA*](https://github.com/zhanghe9704/tpsa), and the symbolic computation lib, [*SymEngine*](https://github.com/symengine/symengine). The algorithms for DA/TPSA computation in this lib are exactly the same with those in  [*cppTPSA/pyTPSA*](https://github.com/zhanghe9704/tpsa), but they are implemented on symbols rather than numbers. Currently, symbol calculation with complex numbers is not supported. It could be added in the future version, should a desire exist. 
 
-For TPSA and DA, please refer to chapter 8 in [*Lecture Notes on Special Topics in Accelerator Physics*](http://inspirehep.net/record/595287/files/slac-pub-9574.pdf)  by  Prof. Alex Chao  and chapter 2 in [*Modern Map Methods in Particle Beam Physics*](http://bt.pa.msu.edu/cgi-bin/display.pl?name=AIEP108book) by Prof. Martin Berz. 
+For users who are not familar with TPSA and DA, please refer to chapter 8 in [*Lecture Notes on Special Topics in Accelerator Physics*](http://inspirehep.net/record/595287/files/slac-pub-9574.pdf)  by  Prof. Alex Chao  and chapter 2 in [*Modern Map Methods in Particle Beam Physics*](http://bt.pa.msu.edu/cgi-bin/display.pl?name=AIEP108book) by Prof. Martin Berz. It may also be helpful to play with the numerical DA/TPSA lib [*cppTPSA/pyTPSA*](https://github.com/zhanghe9704/tpsa) first. 
 
-This code is developed based on Dr. Lingyun Yang's tpsa codes in C++ . His codes (tpsa.cpp and tpsa.h) are included in this repository. They are untouched, except for a few functions that are commented off and replaced by functions in tpsa_extend.cc. 
 
-The major change is the memory management. The current memory management works in the following way. Before any TPSA/DA calculation, one needs to reserve the memory for $n$ TPS vector. A memory pool is allocated in the heap, which can be considered as $n$ slots, each for one TPS vector. A linked list is created to reference the  available (unused) slots. Two pointers point to the beginning and the end of the linked list respectively. When a new TPS vector is created, the first slot will be assigned to it and the beginning pointer points to the  following slot in the linked list. When a TPS vector goes out of its scope, the slot will be reset to empty and liked to the end of the list. The end pointer will be updated and point to the new end.  
+Popular mathematical operators and functions have been overloaded for the symbolic DA vector data type. 
 
-![Memory management](doc/figs/tpsa_memory_management.png)
+Math operator overloaded: (SDA - Symbolic DA vector)
 
-A new data type DAVector is created as a wrapper of the TPS vector. The following mathematical operator and functions are overloaded for DAVector, so that a variable of DAVector type can be used as a intrinsic type in calculations. 
-
-Math operator overloaded: (DA - DA vector, CD - complex DA vector)
-
-| Left hand | Operator | Right hand |
-|:---------:|:--------:|:----------:|
-| DA/CD     | +        | DA/CD      |
-| double    | +        | DA/CD      |
-| DA/CD     | +        | double     |
-|           | +        | DA/CD      |
-| DA/CD     | -        | DA/CD      |
-| DA/CD     | -        | double     |
-| double    | -        | DA/CD      |
-|           | -        | DA/CD      |
-| DA/CD     | *        | DA/CD      |
-| DA/CD     | *        | double     |
-| double    | *        | DA/CD      |
-| DA/CD     | /        | DA/CD      |
-| DA/CD     | /        | double     |
-| double    | /        | DA/CD      |
-| DA/CD     | =        | DA/CD      |
-| DA/CD     | =        | double     |
-| DA/CD     | +=       | DA/CD      |
-| DA/CD     | +=       | double     |
-| DA/CD     | -=       | DA/CD      |
-| DA/CD     | -=       | double     |
-| DA/CD     | *=       | DA/CD      |
-| DA/CD     | *=       | double     |
-| DA/CD     | /=       | DA/CD      |
-| DA/CD     | /=       | double     |
+| Left hand | Operator | Right hand | Left hand | Operator | Right hand |
+| :-------: | :------: | :--------: | :-------: | :------: | :--------: |
+|    SDA    |    +     |    SDA     |    SDA    |    /     |   double   |
+|  double   |    +     |    SDA     |  double   |    /     |    SDA     |
+|    SDA    |    +     |   double   |    SDA    |    =     |    SDA     |
+|           |    +     |    SDA     |    SDA    |    =     |   double   |
+|    SDA    |    -     |    SDA     |    SDA    |    +=    |    SDA     |
+|    SDA    |    -     |   double   |    SDA    |    +=    |   double   |
+|  double   |    -     |    SDA     |    SDA    |    -=    |    SDA     |
+|           |    -     |    SDA     |    SDA    |    -=    |   double   |
+|    SDA    |    *     |    SDA     |    SDA    |    *=    |    SDA     |
+|    SDA    |    *     |   double   |    SDA    |    *=    |   double   |
+|  double   |    *     |    SDA     |    SDA    |    /=    |    SDA     |
+|    SDA    |    /     |    SDA     |    SDA    |    /=    |   double   |
 
 Math functions overloaded:
 
@@ -61,31 +44,7 @@ Math functions overloaded:
 - tanh
 - pow
 - abs
-- erf (DA only)
-
-Some test results for efficiency are presented in the following. They are done in a Windows 10 desktop with Intel Xeon (R) E5-1620 processor at 3.60 GHz. Table 1 shows the time cost for composition of one DA/TPS vector of six bases with six DA/TPS vectors.  First column shows the order of the vectors, second column the number of terms in each vector, third column the time using the DA data type with revised memory management, and the fourth column the time using the original code. Table 2 shows the time of composition of six DA vectors, each having six bases, with the other group of six DA vectors. The composition in group cost less time if compared with separate compositions. 
-
-Table 1.  Time (in second) of composition 
-
-| Order | No. of terms | DA                    | TPSA                 |
-| ----- | ------------ | --------------------- | -------------------- |
-| 2     | 28           | $7.57\times 10^{-6}$  | $6.25\times 10^{-6}$ |
-| 4     | 210          | $7.50\times 10^{-4}$  | $1.44\times 10^{-2}$ |
-| 6     | 924          | $4.48 \times 10^{-3}$ | $8.39\times 10^{-2}$ |
-| 8     | 3003         | $9.90 \times 10^{-1}$ | $2.55$               |
-| 10    | 8008         | $15.49$               | $44.60$              |
-
-Table 2. Time (in second) of group composition 
-
-| Order | DA                   |
-| ----- | -------------------- |
-| 2     | $1.51\times 10^{-5}$ |
-| 4     | $1.04\times 10^{-3}$ |
-| 6     | $4.42\times 10^{-2}$ |
-| 8     | $1.05$               |
-| 10    | $16.04$              |
-
-More information on the code is available in [this doxygen document](https://zhanghe9704.github.io/tpsa/doc/doxygen/html/index.html).
+- erf 
 
 ## How to compile
 You will need a C++ compiler that supports C++ 14 standard. You also need to install [SymEngine](https://github.com/symengine/symengine) before compiling this code. In the following, we will explain how to install SymEngine and compile SDA lib. 
@@ -132,25 +91,105 @@ The `make` command will generate a shared lib `libsymtpsa.so` and a static lib `
 
 ### Windows 11 ###
 
+The simplest way to compile SDA in Windows is to use WSL2 and compile it as in Linux. But if a library that runs in the native Windows environment is desired, try to compile in the following way. 
+
+1. **Compile with GNU compilers**
+
+   To compile SDA using GNU compilers, we need to compile SymEngine from source code first. We can do it using MSYS2. 
+
+   1.1 **Compile SymEngine from source code**
+
+   Clone the SymEngine repo from Github.
+   `git clone git@github.com:symengine/symengine.git`
+
+   Install MSYS2 and then open MSYS2 MINGW64 terminal.  If necessary, install the compiling tools. (May have already been installed.)
+
+   `pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake`
+
+   Make sure `gcc`, `g++`, `mingw32-make`, and `cmake` are callable from the  terminal. Close the terminal and reopen it. 
+
+   In the MSYS2 MINGW64 terminal, go to the SymEngine folder. Windows partitions are mounted under the root in MSYS2. For example, go to `/d/symengine` for `D:\symengine`. Use the following command to compile SymEngine. 
+
+   ```shell
+   mkdir build
+   cd build
+   cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+   mingw32-make
+   ```
+
+   This will build a static lib of SymEngine. For dynamic/shared lib, use the following command to configure cmake.
+
+   `cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=YES`
+
+   To install SymEngine to the default folder, run MSYS2 MINGW64 as administrator and go back to the above folder. 
+
+   `mingw32-make install`
+
+    SymEngine will be installed to ` C:/Program Files (x86)/symengine/`
+
+   1.2 **Compile SDA**
+
+   Go to the SDA folder and run the following commands.
+
+   ```shell
+   mkdir build
+   cd build
+   cmake .. -G "MinGW Makefiles"
+   mingw32-make
+   ```
+
+   1.3 **compile the examples**
+
+   `make examples`
+
+   The example source files locate in the folder `examples`. The executables are compiled and save in `build/bin/examples`. 
+
+   1.4 **Compile the tests**
+
+   `make tests`
+
+   An executable `run_tests` will be created in `build/bin/tests`.   
+
+   The tests depend on [*Catch2*]([GitHub - catchorg/Catch2: A modern, C++-native, test framework for unit-tests, TDD and BDD - using C++14, C++17 and later (C++11 support is in v2.x branch, and C++03 on the Catch1.x branch)](https://github.com/catchorg/Catch2)) version 2.3.16, which is a header only test framework for C++. 
+
+   1.5 **Before you run any executables**
+
+   The dynamic libs of *symengine* and *gmp* may be needed to run the executables. To make sure they can be found, add their directories to the environmental variable *Path*. If compiled as above, the directories are
+
+   `C:\Program Files (x86)\symengine\bin`
+
+   `C:\msys64\mingw64\bin`
+
+
+2. **Compile with Microsoft compiler and Visual Studio IDE**
+
+   If SymEngine is installed through conda-forge using 
+
+   `conda install symengine -c conda-forge`
+
+   the SymEngine lib was compiled by Microsoft compiler. SDA has to be compiled by Microsoft compiler, too. Open SDA fold with conda terminal and run the following commands.
+
+   ```shell
+   mkdir build
+   cd build
+   cmake -G "Visual Studio 16 2019" -A x64 ..
+   ```
+
+    Visual Studio projects will be generated. Then you can open those projects to compile the SDA, the examples, and the tests. You may want to change some settings inside the projects. However, the author is not familar with Visual Studio and cannot provide further help. 
+
 ### macOS ###
 Sorry! The author has never used macOS and hence cannot provide an instruction. However, if you can install SymEngine following its instruction successfully, compiling SDA lib is expected to be as straightforward as in Linux. 
 
 
 **Known issues:**
 
-When running tests in Linux (tested in Ubuntu 18.04/20.04/22.04), a "segmentation fault" error will be reported after passing all the tests. The does not happen when running the tests on Windows, and in Linux it does not happen when I used the lib in other programs in C++ or in Python.    
-
-## How to compile and install pyTPSA
-
-pyTPSA is the Python wrapper of cppTPSA. It generates a Python 3.x module for TPSA calculations. Source files of the wrapper, together with examples and tests, are in the subfolder "python-wrapper". Please see [**HERE**](https://zhanghe9704.github.io/tpsa/python-wrapper/readme.html) on how to compile, install, and use pyTPSA. 
+When running tests in Linux (tested in Ubuntu 20.04/22.04), a "segmentation fault" error will be reported after passing all the tests. The does not happen when running the tests on Windows, and in Linux it does not happen when I used the lib in other programs.    
 
 ## Guidelines for Third-Party Contributions, Issue Reporting, and Support
 
 See [here](https://zhanghe9704.github.io/tpsa/contributing.html).
 
 ## Acknowledgement
-
-Thanks to Dr. Lingyun Yang for providing his tpsa code.
 
 **This work is supported by the U.S. Department of Energy, Office of Science, Office of Nuclear Physics under contract DE-AC05-06OR23177.**
 
