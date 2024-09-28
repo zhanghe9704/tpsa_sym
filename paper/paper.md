@@ -15,7 +15,7 @@ authors:
 affiliations:
  - name: Thomas Jefferson National Accelerator Facility, Newport News, VA 23606, USA
    index: 1
-date: 15 July 2021
+date: 27 September 2024
 bibliography: paper.bib
 ---
 
@@ -25,7 +25,7 @@ The truncated power series algebra (TPSA), also referred to as differential alge
 
 # Background
 
-In the following, we give a very brief introduction on TPSA/DA from a practical computational perspective. Please refer to @AIEP108book and @chao2002lecture for the complete theory with more details. 
+In the following, we give a very brief introduction on (symbolic) TPSA/DA from a practical computational perspective. Please refer to @AIEP108book and @chao2002lecture for the complete theory with more details.
 
 The fundamental concept in DA is the DA vector. To make this concept easier to understand, we can consider a DA vector as the Taylor expansion of a function at a specific point.  
 
@@ -50,6 +50,8 @@ which can be carried out term by term on $[a]_n$. The operator $\partial_v$ sati
 $$ \partial_v([a]\cdot [b]) = [a]\cdot (\partial_v [b]) + (\partial_v [a])\cdot [b]. $$
 
 The inverse operator $\partial^{-1}_v$ can also be defined and carried out easily in a term-by-term manner. Once the fundamental operators are defined, the DA vector can be used in calculations just as a number. More sophisticated methods using DA have been developed, *e.g.* symplectic tracking [@caprimap], normal form analysis [@monthnf], verified integration [@rdaint], global optimization [@makino2005verified,], fast multipole method for pairwise interactions between particles [@FMMCPO2010].  
+
+The symbolic DA/TPSA combines the DA/TPSA with symbolic calculation. Exactly the same DA/TPSA algorithms are implemented on symbols rather than numbers. Compared to the numerical DA/TPSA, the only difference is any coefficient of a Symblic DA (SDA) vector is an explicit expression of the symbols in lieu of a number.  
 
 # Statement of need
 
@@ -120,8 +122,6 @@ This library has been verified with COSY Infinity 9.0. As an example, the output
 ![cppTPSA output.\label{fig:cpptpsa}](cppTPSA-output.png)
 
 # Acknowledgements
-
-The author would like to thank Dr. Lingyun Yang for providing his source code. 
 
 This material is based upon work supported by the U.S. Department of Energy, Office of Science, Office of Nuclear Physics under contract DE-AC05-06OR23177.
 
