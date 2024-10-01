@@ -40,8 +40,11 @@ namespace SymbDA {
     int n_element() const;
     void element(unsigned int i, unsigned int *c, SymEngine::Expression& elem) const;
     void element(unsigned int i, std::vector<unsigned int>& c, SymEngine::Expression& elem) const;
+    void derivative(unsigned int i, unsigned int *c, SymEngine::Expression& elem) const;
+    void derivative(unsigned int i, std::vector<unsigned int>& c, SymEngine::Expression& elem) const;
     SymEngine::Expression element(int i);
     SymEngine::Expression element(std::vector<int> idx);
+    SymEngine::Expression derivative(std::vector<int> idx);
     std::vector<int>& element_orders(int i);
     // double norm();
     // double weighted_norm(double w);
