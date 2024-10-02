@@ -11,6 +11,7 @@
 
 #include "../include/tpsa_extend.h"
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <cstring>
 #include "tpsa.cpp"
@@ -48,8 +49,8 @@ void ADOrderTable::generate_order_table() {
     }
 }
 
-// Define a static std::array of factorial values up to 22.
-static const std::array<long long, 23> FACT20 = {
+// Define a static std::array of factorial values up to 20.
+static const std::array<long long, 21> FACT20 = {
     1LL, 1LL, 2LL, 6LL, 24LL, 120LL, 720LL, 5040LL, 40320LL, 362880LL,
     3628800LL, 39916800LL, 479001600LL, 6227020800LL, 87178291200LL,
     1307674368000LL, 20922789888000LL, 355687428096000LL, 6402373705728000LL,
