@@ -45,7 +45,7 @@ int main(){
     SymEngine::LambdaRealDoubleVisitor v;
     da1.eval_funs(vars, v);
     vector<double> results;
-    results.resize(da1.n_element());
+    results.resize(da1.full_length());
     array<double, 3> inputs{0.1, 0.2, 0.3};
     
     cout<<"=============="<<endl;
