@@ -229,7 +229,7 @@ namespace SymbDA {
   // DAVector acosh(const DAVector &da_vector);
   // DAVector atanh(const DAVector &da_vector);
   DAVector pow(const DAVector &da_vector, const int order);
-  // DAVector pow(const DAVector &da_vector, const double order);
+  DAVector pow(const DAVector &da_vector, const double order);
   // std::complex<DAVector> pow(const std::complex<DAVector> &cd_vector, const int order);
   // std::complex<DAVector> pow(const std::complex<DAVector> &cd_vector, const double order);
   // double abs(const DAVector &da_vector);

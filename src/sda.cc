@@ -1411,26 +1411,36 @@ namespace SymbDA {
     }
 
 
-    // DAVector pow(const DAVector &da_vector, const double order) {
-    //     DAVector res;
-    //     if (std::floor(order) == order) {//order is integer
-    //         res = pow(da_vector, static_cast<int>(order));
-    //     }
-    //     else {
-    //         SymEngine::Expression bas = da_vector.con();
-    //         if(bas>0) {
-    //             res = exp(order*log(da_vector));    //Is there a better way?
-    //         }
-    //         else if(bas==0) {
-    //             res.reset_const(INFINITY);
-    //         }
-    //         else {
-    //             res.reset_const(NAN);
-    //         }
-    //     }
+    DAVector pow(const DAVector &da_vector, const double order) {
+        DAVector res;
+        if (std::floor(order) == order) {//order is integer
+            res = pow(da_vector, static_cast<int>(order));
+        }
+        else {
+            SymEngine::Expression bas = da_vector.con();
+            if (is_zero(bas)) {
+                // SymEngine::Expression inf = SymEngine::Expression(SymEngine::inf);
+                SymEngine::RCP<const SymEngine::Basic> inf_basic = SymEngine::Inf; // 'Inf' is an RCP<const Basic>
+                SymEngine::Expression inf(inf_basic); // Create an Expression from inf_basic
 
-    //     return res;
-    // }
+                res.reset_const(inf);
+            }
+            else {
+                res = exp(order*log(da_vector));
+            }
+            // if(bas>0) {
+            //     res = exp(order*log(da_vector));    //Is there a better way?
+            // }
+            // else if(bas==0) {
+            //     res.reset_const(INFINITY);
+            // }
+            // else {
+            //     res.reset_const(NAN);
+            // }
+        }
+
+        return res;
+    }
 
     // DAVector asinh(const DAVector& da_vector) {
     //     return log(da_vector+sqrt(da_vector*da_vector+1));
