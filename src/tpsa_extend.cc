@@ -1252,7 +1252,7 @@ void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov) {
 
             if (k>0) {
                 // if (std::abs(advec[tmp][0]) > std::numeric_limits<double>::min()) advec[ov][k] += coef*advec[tmp][0];
-                if (is_zero(advec[tmp][0]) ) advec[ov][k] += coef*advec[tmp][0];
+                if (!is_zero(advec[tmp][0]) ) advec[ov][k] += coef*advec[tmp][0];
                 for (unsigned int idx = 1; idx<adveclen[tmp] && idx<idx_limit; ++idx) {
                     advec[ov][prdidx[k][idx]] += coef*advec[tmp][idx];
                 }
@@ -1261,7 +1261,7 @@ void ad_substitute(const TVEC iv, unsigned int base_id, const TVEC v, TVEC ov) {
             else {
                 for(unsigned int idx = 0; idx<adveclen[tmp]; ++idx) {
                     // if (std::abs(advec[tmp][idx]) > std::numeric_limits<double>::min()) {
-                    if (is_zero(advec[tmp][idx]) ) {
+                    if (!is_zero(advec[tmp][idx]) ) {
                         advec[ov][idx] += coef*advec[tmp][idx];
                     }
                 }
