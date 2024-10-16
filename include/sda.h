@@ -165,15 +165,15 @@ namespace SymbDA {
   DAVector operator+(const DAVector &da_vector);
   DAVector operator-(const DAVector &da_vector);
   bool operator==(const DAVector &da_vector_1, const DAVector &da_vector_2);
-  inline DAVector& get_real(std::complex<DAVector>& v){return reinterpret_cast<DAVector(&)[2]>(v)[0];}
-  inline DAVector& get_imag(std::complex<DAVector>& v){return reinterpret_cast<DAVector(&)[2]>(v)[1];}
-  inline const DAVector& get_real(const std::complex<DAVector>& v){return reinterpret_cast<const DAVector(&)[2]>(v)[0];}
-  inline const DAVector& get_imag(const std::complex<DAVector>& v){return reinterpret_cast<const DAVector(&)[2]>(v)[1];}
+  // inline DAVector& get_real(std::complex<DAVector>& v){return reinterpret_cast<DAVector(&)[2]>(v)[0];}
+  // inline DAVector& get_imag(std::complex<DAVector>& v){return reinterpret_cast<DAVector(&)[2]>(v)[1];}
+  // inline const DAVector& get_real(const std::complex<DAVector>& v){return reinterpret_cast<const DAVector(&)[2]>(v)[0];}
+  // inline const DAVector& get_imag(const std::complex<DAVector>& v){return reinterpret_cast<const DAVector(&)[2]>(v)[1];}
   // void cd_copy(std::complex<DAVector>& vs, std::complex<DAVector>& vo);
   // void cd_copy(std::complex<double> vs, std::complex<DAVector>& vo);
   // void cd_copy(double x, std::complex<DAVector>& vo);
   std::string trim_whitespace(std::string input_line);
-  bool read_da_from_file(std::string filename, DAVector& d);
+  // bool read_da_from_file(std::string filename, DAVector& d);
   // bool read_cd_from_file(std::string filename, std::complex<DAVector>& cd);
   // DAVector devide_by_element(DAVector& t, DAVector& b);
   // bool compare_da_vectors(DAVector& a, DAVector& b, double eps=1e-15);

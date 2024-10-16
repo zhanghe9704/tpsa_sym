@@ -1885,63 +1885,63 @@ namespace SymbDA {
     }
 
 
-    /** \brief Read a DA vector from a file
-     *
-     * \param filename The file to read.
-     * \param d The DA vector to save the reading result from the file.
-     * \return True: reading succeeded; False: reading failed.
-     *
-     */
-    bool read_da_from_file(string filename, DAVector& d) {
-        d.reset();
-        std::fstream input;
-        input.open(filename, std::ios::in | std::ios::out | std::ios::app);
-        string line;
+    // /** \brief Read a DA vector from a file
+    //  *
+    //  * \param filename The file to read.
+    //  * \param d The DA vector to save the reading result from the file.
+    //  * \return True: reading succeeded; False: reading failed.
+    //  *
+    //  */
+    // bool read_da_from_file(string filename, DAVector& d) {
+    //     d.reset();
+    //     std::fstream input;
+    //     input.open(filename, std::ios::in | std::ios::out | std::ios::app);
+    //     string line;
 
-        bool reading = false;
-        bool read_success = false;
-        int n_terms = 0;
-        while(std::getline(input, line)) {
-            if(!line.empty() && line[line.size()-1] == '\r') line.erase(line.size()-1);
-            if (!line.empty()) {
-                line = trim_whitespace(line);
-                if(reading) {
-                    int i = std::stoi(line.substr(line.length()-6));
-                    line.erase(line.end()-6, line.end());
-                    double elem = 0;
-                    std::vector<int> idx;
+    //     bool reading = false;
+    //     bool read_success = false;
+    //     int n_terms = 0;
+    //     while(std::getline(input, line)) {
+    //         if(!line.empty() && line[line.size()-1] == '\r') line.erase(line.size()-1);
+    //         if (!line.empty()) {
+    //             line = trim_whitespace(line);
+    //             if(reading) {
+    //                 int i = std::stoi(line.substr(line.length()-6));
+    //                 line.erase(line.end()-6, line.end());
+    //                 double elem = 0;
+    //                 std::vector<int> idx;
 
-                    std::istringstream iss(line);
-                    string word;
-                    iss >> word;
-                    iss >> word;
-                    elem = std::stod(word);
-                    while(!iss.eof()) {
-                        int index = 0;
-                        iss >> word;
-                        index = std::stoi(word);
-                        idx.push_back(index);
-                    }
-                    d.set_element(idx, elem);
-                    if(n_terms-i == 1) read_success = true;
-                }
-                else {
-                    auto pi = line.find_last_of("/");
-                    auto pf = line.find_last_of("[");
-                    if(pi!=string::npos && pf!=string::npos) {
-                        n_terms = std::stoi(line.substr(pi+1,pf));
-                        continue;
-                    }
-                    line.erase(std::remove(line.begin(), line.end(), '-'), line.end());
-                    if(line.empty()) {
-                        reading = true;
-                        continue;
-                    }
-                }
-            }
-        }
-        return read_success;
-    }
+    //                 std::istringstream iss(line);
+    //                 string word;
+    //                 iss >> word;
+    //                 iss >> word;
+    //                 elem = std::stod(word);
+    //                 while(!iss.eof()) {
+    //                     int index = 0;
+    //                     iss >> word;
+    //                     index = std::stoi(word);
+    //                     idx.push_back(index);
+    //                 }
+    //                 d.set_element(idx, elem);
+    //                 if(n_terms-i == 1) read_success = true;
+    //             }
+    //             else {
+    //                 auto pi = line.find_last_of("/");
+    //                 auto pf = line.find_last_of("[");
+    //                 if(pi!=string::npos && pf!=string::npos) {
+    //                     n_terms = std::stoi(line.substr(pi+1,pf));
+    //                     continue;
+    //                 }
+    //                 line.erase(std::remove(line.begin(), line.end(), '-'), line.end());
+    //                 if(line.empty()) {
+    //                     reading = true;
+    //                     continue;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return read_success;
+    // }
 
 
 
