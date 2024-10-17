@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "cppTPSA", "index.html", [
+  [ "SDA (Symbolic DA/TPSA)", "index.html", [
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
