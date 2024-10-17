@@ -989,7 +989,7 @@ void ad_substitute(std::vector<TVEC> &ivecs, std::vector<unsigned int> &base_id,
 
                     ad_mult_c(product, coef, tmp);
                     // if (std::abs(advec[tmp][0]) > std::numeric_limits<double>::min())
-                    if (is_zero(advec[tmp][0]))
+                    if (!is_zero(advec[tmp][0]))
                         advec[ovecs.at(iv)][k] += advec[tmp][0];
                     for (unsigned int idx = 1; idx<adveclen[tmp] && idx<idx_limit; ++idx) {
                         advec[ovecs.at(iv)][prdidx[k][idx]] += advec[tmp][idx];
@@ -1027,7 +1027,7 @@ void ad_substitute(std::vector<TVEC> &ivecs, std::vector<unsigned int> &base_id,
         adveclen[ov] = 1;
         for(int i=order_index[gnd+1]-1; i>=0; --i) {
             // if(std::abs(advec[ov][i])>std::numeric_limits<double>::min()) {
-            if(is_zero(advec[ov][i])) {
+            if(!is_zero(advec[ov][i])) {
                 adveclen[ov] = i+1;
                 break;
             }
@@ -1139,7 +1139,7 @@ void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vecto
                 ad_mult_const(&product, &coef);
                 ad_restore_order();
                 // if (std::abs(advec[product][0]) > std::numeric_limits<double>::min()) advec[ov][k] += advec[product][0];
-                if (is_zero(advec[product][0]) ) advec[ov][k] += advec[product][0];
+                if (!is_zero(advec[product][0]) ) advec[ov][k] += advec[product][0];
                 for (unsigned int idx = 1; idx<adveclen[product] && idx<idx_limit; ++idx) {
                     advec[ov][prdidx[k][idx]] += advec[product][idx];
                 }
@@ -1171,7 +1171,7 @@ void ad_substitute(const TVEC iv, std::vector<unsigned int> &base_id, std::vecto
     adveclen[ov] = 1;
     for(int i=order_index[gnd+1]-1; i>=0; --i) {
         // if(std::abs(advec[ov][i])>std::numeric_limits<double>::min()) {
-        if(is_zero(advec[ov][i]) ) {
+        if(!is_zero(advec[ov][i]) ) {
             adveclen[ov] = i+1;
             break;
         }
