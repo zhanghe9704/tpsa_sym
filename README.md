@@ -44,6 +44,9 @@ Math functions overloaded:
 - tanh
 - pow
 - erf 
+  
+More information on the code is available in [this doxygen document](https://zhanghe9704.github.io/tpsa_sym/doc/doxygen/html/index.html).
+
 
 ## How to compile
 You will need a C++ compiler that supports C++ 14 standard. You also need to install [SymEngine](https://github.com/symengine/symengine) before compiling this code. In the following, we will explain how to install SymEngine and compile SDA lib. 
