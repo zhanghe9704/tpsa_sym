@@ -186,7 +186,7 @@ When running tests in Linux (tested in Ubuntu 20.04/22.04), a "segmentation faul
 
 ## Guidelines for Third-Party Contributions, Issue Reporting, and Support
 
-See [here](https://zhanghe9704.github.io/tpsa_sym/contributing.md).
+See [here](https://zhanghe9704.github.io/tpsa_sym/contributing.html).
 
 ## Acknowledgement
 
