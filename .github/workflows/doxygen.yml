@@ -3,7 +3,7 @@ name: Generate and Deploy Documentation
 on:
   push:
     branches:
-      - master  # Adjust this to your default branch
+      - main  # Adjust this to your default branch
 
 jobs:
   build-docs:
