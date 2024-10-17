@@ -1,0 +1,20 @@
+# _config.yml
+include:
+  - readme.md
+  - contributing.md
+#  - .github/CONTRIBUTING.md
+  
+exclude:
+  - 'CMakeFiles'
+  - 'examples'
+  - 'paper'
+  - 'web'
+  - 'src'
+  - 'include'
+  - 'test'
+  
+navigation:
+  - name: Home
+    link: /
+
+  
