@@ -381,6 +381,187 @@ vector<double> v_erf {9.7569519695814055e-01,
 0.0000000000000000e+00,
 -2.3068466761450004e+01};
 
+vector<double> v_der {0.0000000000000000e+00,
+9.8330305291714115e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+5.2997084643075162e+01,
+0.0000000000000000e+00,
+9.8330305291714115e+00,
+0.0000000000000000e+00,
+1.4281919355039111e+02,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+5.2997084643075162e+01,
+0.0000000000000000e+00,
+2.5658420249284768e+02,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00};
+
+vector<double> v_int {
+    0.0000000000000000e+00,
+4.9165152645857058e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+2.6498542321537581e+01,
+0.0000000000000000e+00,
+1.6388384215285685e+00,
+0.0000000000000000e+00,
+7.1409596775195553e+01,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+8.8328474405125252e+00,
+0.0000000000000000e+00,
+1.2829210124642384e+02,
+0.0000000000000000e+00,
+4.9165152645857052e-01,
+0.0000000000000000e+00,
+2.3803198925065185e+01,
+0.0000000000000000e+00,
+1.7286398452196264e+02,
+0.0000000000000000e+00};
+
+vector<double> v_subc {1.2291288161464264e+01,
+0.0000000000000000e+00,
+6.6246355803843954e+01,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+1.4281919355039111e+02,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+2.5658420249284768e+02,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+1.7286398452196264e+02,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+0.0000000000000000e+00,
+1.8633700347560443e+02};
+
+vector<double> v_sub {1.8981620087089855e+01,
+0.0000000000000000e+00,
+1.7100535860620653e+02,
+1.2746557474964902e+01,
+0.0000000000000000e+00,
+6.2681915857331160e+02,
+0.0000000000000000e+00,
+9.5198663144355919e+01,
+0.0000000000000000e+00,
+1.1023627091700214e+03,
+2.4582576322928529e+00,
+0.0000000000000000e+00,
+2.1422879032558666e+02,
+0.0000000000000000e+00,
+8.6431992260981315e+02,
+0.0000000000000000e+00,
+1.3249271160768791e+01,
+0.0000000000000000e+00,
+1.2829210124642384e+02,
+0.0000000000000000e+00,
+1.8633700347560443e+02};
+
+vector<double> v_subv {9.9749939097621802e+02,
+0.0000000000000000e+00,
+1.1512590930808019e+03,
+2.1360355735584579e+02,
+0.0000000000000000e+00,
+-4.4758214953827373e+04,
+0.0000000000000000e+00,
+-1.6608796390829688e+04,
+0.0000000000000000e+00,
+-3.0987895299849177e+04,
+-1.5407904327541128e+03,
+0.0000000000000000e+00,
+-1.7248397109217120e+04,
+0.0000000000000000e+00,
+9.7163445148612640e+05,
+0.0000000000000000e+00,
+-3.2002517968007724e+03,
+0.0000000000000000e+00,
+7.2110466370011435e+05,
+0.0000000000000000e+00,
+3.1279038644950697e+05};
+
+vector<double> v_vsub0 {2.9683742321537579e+01,
+0.0000000000000000e+00,
+1.4820889355039111e+02,
+2.7498542321537581e+01,
+0.0000000000000000e+00,
+3.8487630373927152e+02,
+0.0000000000000000e+00,
+1.4281919355039111e+02,
+0.0000000000000000e+00,
+6.9145593808785054e+02,
+1.3249271160768791e+01,
+0.0000000000000000e+00,
+3.8487630373927152e+02,
+0.0000000000000000e+00,
+9.3168501737802217e+02,
+0.0000000000000000e+00,
+7.1409596775195553e+01,
+0.0000000000000000e+00,
+6.9145593808785054e+02,
+0.0000000000000000e+00,
+1.0043005476324653e+03};
+
+vector<double> v_vsub1 {2.2789117817838105e+04,
+0.0000000000000000e+00,
+4.7247897335916117e+05,
+8.7663315835605143e+04,
+0.0000000000000000e+00,
+4.8149709416966103e+06,
+0.0000000000000000e+00,
+1.7867305941691040e+06,
+0.0000000000000000e+00,
+3.2197066119944468e+07,
+1.6575417872693326e+05,
+0.0000000000000000e+00,
+1.7921442447600685e+07,
+0.0000000000000000e+00,
+1.5854645261039719e+08,
+0.0000000000000000e+00,
+3.3251280122457058e+06,
+0.0000000000000000e+00,
+1.1766625423336896e+08,
+0.0000000000000000e+00,
+6.0926100575974762e+08};
+
+vector<double> v_vsub2 {-1.0573135900055892e+05,
+0.0000000000000000e+00,
+-2.8866867756027146e+06,
+-5.3559321958600974e+05,
+0.0000000000000000e+00,
+-3.9188057115516029e+07,
+0.0000000000000000e+00,
+-1.4541832426857166e+07,
+0.0000000000000000e+00,
+-3.5349388645438391e+08,
+-1.3490391326843027e+06,
+0.0000000000000000e+00,
+-1.9676079547343114e+08,
+0.0000000000000000e+00,
+-2.3869922351913180e+09,
+0.0000000000000000e+00,
+-3.6506817721474491e+07,
+0.0000000000000000e+00,
+-1.7715214094968681e+09,
+0.0000000000000000e+00,
+-1.2880995781051701e+10};
+
+vector<double> v_compc {6.2871116966104892e+04,
+3.5879835234251332e+04,
+-1.6797595287239095e+05};
+
 TEST_CASE("INITIALIZE DA ENVIRONMENT") {
     int da_dim = 2;
     int da_order = 5;
@@ -484,73 +665,137 @@ TEST_CASE("SDA FUNCTIONS") {
     }
 
     SECTION("ATAN"){
+        cout<<"===== Testing math function: atan() ====="<<endl;
         sv = atan(sx-1 + sda[0]*sda[0] + sy*sda[1]);
         eval(sv, sx, sy, x, y, results);
-        cout<<"===== Testing math function: atan() ====="<<endl;
         REQUIRE(compare_vectors(v_atan, results, eps));
     }
 
-    // SECTION("ASIN"){
-    //     cout<<"===== Testing math function: asin() ====="<<endl;
-    //     sv = asin(sx-1 + sda[0]*sda[0] + sy*sda[1]);
-    //     eval(sv, sx, sy, x, y, results);
-    //     REQUIRE(compare_vectors(v_asin, results, eps));
-    // }
+    SECTION("DA_DER") {
+        cout<<"===== Testing function: da_der() ====="<<endl;
+        sv = exp(sx + sda[0]*sda[0] + sy*sda[1]);
+        sv = da_der(sv, 0);
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_der, results, eps));
+    }
 
-    // SECTION("ACOS"){
-    //     cout<<"===== Testing math function: acos() ====="<<endl;
-    //     sv = acos(sx-1 + sda[0]*sda[0] + sy*sda[1]);
-    //     eval(sv, sx, sy, x, y, results);
-    //     REQUIRE(compare_vectors(v_acos, results, eps));
-    // }
+    SECTION("DA_INT") {
+        cout<<"===== Testing function: da_int() ====="<<endl;
+        sv = exp(sx + sda[0]*sda[0] + sy*sda[1]);
+        sv = da_int(sv, 0);
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_int, results, eps));
+    }
 
-	// DAVector z;
-    // da_substitute(y, 0, 1, z);
+    SECTION("SUB_CONST") {
+        cout<<"===== Testing function:  da_substitute_const() ====="<<endl;
+        sv = exp(sx + sda[0]*sda[0] + sy*sda[1]);
+        SDA sz;
+        da_substitute_const(sv, 0, 1, sz);
+        sv = sz;
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_subc, results, eps));
+    }
 
-    // SECTION("SUBSTITUTE A NUMBER") {
-    //     REQUIRE(compare_da_with_file("substitute_number.txt", z, eps));
-    // }
+    SECTION("SUB") {
+        cout<<"===== Testing function:  da_substitute() ====="<<endl;
+        sv = exp(sx + sda[0]*sda[0] + sy*sda[1]);
+        SDA sz, sw;
+        sw = sqrt(sx + sda[0]*sda[0] + sy*sda[1]);
+        da_substitute(sv, 0, sw, sz);
+        sv = sz;
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_sub, results, eps));
+    }
 
-    // da_substitute(y, 0, x, z);
+    SECTION("SUBV") {
+        cout<<"===== Testing function:  da_substitute() ====="<<endl;
+        sv = exp(sx + sda[0]*sda[0] + sy*sda[1]);
+        SDA sz;
+        std::vector<SDA> slv(2);
+        slv.at(0) = sqrt(sx + sda[0]*sda[0] + sy*sda[1]);
+        slv.at(1) = sin(sx + sda[0]*sda[0] + sy*sda[1]);
+        std::vector<unsigned int> idx{0,1};
+        da_substitute(sv, idx, slv, sz);
+        sv = sz;
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_subv, results, eps));
+    }
 
-    // SECTION("SUBSTITUTE A DA VECTOR") {
-    //     REQUIRE(compare_da_with_file("substitute_da_vector.txt", z, eps));
-    // }
+    SECTION("VSUB") {
+        cout<<"===== Testing function:  da_substitute() ====="<<endl;
+        std::vector<SDA> slv(2);
+        slv.at(0) = sqrt(sx + sda[0]*sda[0] + sy*sda[1]);
+        slv.at(1) = exp(sx + sda[0]*sda[0] + sy*sda[1]);
+        std::vector<unsigned int> idx{0,1};
+        std::vector<SDA> slx(3);
+        std::vector<SDA> sly(3);
+        slx.at(0) = sx + sda[0]*sda[0] + sy*sda[1];
+        slx.at(1) = sin(sx + sda[0]*sda[0] + sy*sda[1]);
+        slx.at(2) = cos(sx + sda[0]*sda[0] + sy*sda[1]);
 
-	// std::vector<DAVector> lv(2);
-    // lv.at(0) = sin(x);
-    // lv.at(1) = cos(x);
-    // std::vector<unsigned int> idx{0,1};
-    // da_substitute(y, idx, lv, z);
-    // SECTION("SUBSTITUTE MULTIPLE DA VECTORS") {
-    //     REQUIRE(compare_da_with_file("substitute_multiple_da_vectors.txt", z, eps));
-    // }
+        da_substitute(slx, idx, slv, sly);
+        sv = sly.at(0);
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_vsub0, results, eps));
+        sv = sly.at(1);
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_vsub1, results, eps));
+        sv = sly.at(2);
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_vsub2, results, eps));
+    }
 
-	// std::vector<DAVector> lx(3);
-    // std::vector<DAVector> ly(3);
-    // lx.at(0) = x;
-    // lx.at(1) = y;
-    // lx.at(2) = sinh(x);
+    SECTION("COMP") {
+        cout<<"===== Testing function:  da_composition() ====="<<endl;
+        std::vector<SDA> slv(2);
+        slv.at(0) = sqrt(sx + sda[0]*sda[0] + sy*sda[1]);
+        slv.at(1) = exp(sx + sda[0]*sda[0] + sy*sda[1]);
+        std::vector<SDA> slx(3);
+        std::vector<SDA> sly(3);
+        slx.at(0) = sx + sda[0]*sda[0] + sy*sda[1];
+        slx.at(1) = sin(sx + sda[0]*sda[0] + sy*sda[1]);
+        slx.at(2) = cos(sx + sda[0]*sda[0] + sy*sda[1]);
 
-    // da_substitute(lx, idx, lv, ly);
+        da_composition(slx, slv, sly);
+        sv = sly.at(0);
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_vsub0, results, eps));
+        sv = sly.at(1);
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_vsub1, results, eps));
+        sv = sly.at(2);
+        eval(sv, sx, sy, x, y, results); 
+        REQUIRE(compare_vectors(v_vsub2, results, eps));
+    }
 
-    // SECTION("BUNCH SUBSTITUTION") {
-    //     REQUIRE(compare_da_with_file("bunch_substitution_0.txt", ly.at(0), eps));
-    //     REQUIRE(compare_da_with_file("bunch_substitution_1.txt", ly.at(1), eps));
-    //     REQUIRE(compare_da_with_file("bunch_substitution_2.txt", ly.at(2), eps));
-    // }
+    SECTION("COMP") {
+        cout<<"===== Testing function:  da_composition() ====="<<endl;
+        std::vector<double> lv(2);
+        lv.at(0) = x;
+        lv.at(1) = y;
+        std::vector<SDA> slx(3);
+        std::vector<Expression> sly(3);
+        slx.at(0) = sqrt(sx + sda[0]*sda[0] + sy*sda[1]);
+        slx.at(1) = sin(sx + sda[0]*sda[0] + sy*sda[1]);
+        slx.at(2) = cos(sx + sda[0]*sda[0] + sy*sda[1]);
 
-	// std::vector<DAVector> lu(3);
-    // lu.at(0) = sin(x);
-    // lu.at(1) = cos(x);
-    // lu.at(2) = tan(x);
-    // da_composition(lx, lu, ly);
+        da_composition(slx, lv, sly);
 
-    // SECTION("DA COMPOSITION") {
-    //     REQUIRE(compare_da_with_file("da_composition_0.txt", ly.at(0), eps));
-    //     REQUIRE(compare_da_with_file("da_composition_1.txt", ly.at(1), eps));
-    //     REQUIRE(compare_da_with_file("da_composition_2.txt", ly.at(2), eps));
-    // }
+        std::vector<SymEngine::RCP<const SymEngine::Basic>> vars{sx,sy};
+        SymEngine::LambdaRealDoubleVisitor v;
+        vector<double> results(3);
+        v.init(vars, {sly.at(0).get_basic()});
+        v.call(&results[0], &lv[0]);
+
+        v.init(vars, {sly.at(1).get_basic()});
+        v.call(&results[1], &lv[0]);
+
+        v.init(vars, {sly.at(2).get_basic()});
+        v.call(&results[2], &lv[0]);
+
+        REQUIRE(compare_vectors(v_compc, results, eps));
+    }
 
 }
 
