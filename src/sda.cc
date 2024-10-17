@@ -1845,6 +1845,23 @@ namespace SymbDA {
     return da_erf*coef + SymEngine::Expression(SymEngine::erf(cc)); 
     }
 
+    /** \brief Evaluate an DA vector by submitting values to the symbols
+     * Replace all the symbols by numbers in a DA vector and calculate the values of all the elements. 
+     * \param sv The DA vector to evaluate.
+     * \param symbols Symbols.
+     * \param inputs Values of the symbols.
+     * \param results values of all the elements in the DA. 
+     *
+     */
+    void eval(DAVector& sv, std::vector<SymEngine::Expression> symbols, std::vector<double>& inputs, vector<double>& results){
+        vector<SymEngine::RCP<const SymEngine::Basic>> vars;
+        for (auto s : symbols) vars.push_back(s.get_basic());
+        SymEngine::LambdaRealDoubleVisitor vec;
+        sv.eval_funs(vars, vec);
+        results.resize(sv.full_length());
+        vec.call(&results[0], &inputs[0]);
+    }
+
     // void cd_copy(std::complex<DAVector>& vs, std::complex<DAVector>& vo) { get_real(vo) = get_real(vs); get_imag(vo) = get_imag(vs);}
     // void cd_copy(std::complex<double> vs, std::complex<DAVector>& vo) { get_real(vo) = vs.real(); get_imag(vo) = vs.imag();}
     // void cd_copy(double x, std::complex<DAVector>& vo) {get_real(vo) = x; get_imag(vo) = 0;}
