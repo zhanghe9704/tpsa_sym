@@ -28,7 +28,7 @@ int main(){
     RCP<const Basic> x=symbol("x0");
     RCP<const Basic> y=symbol("y0");
     RCP<const Basic> z=symbol("z0");
-    DAVector da1 = 1+(Expression(1)+x)*da[0] + y*da[1] + (z-Expression(0.5))*da[2];
+    DAVector da1 = 1+(1+x)*da[0] + y*da[1] + (z-0.5)*da[2];
 
     cout<<da1;
 
@@ -41,7 +41,7 @@ int main(){
         cout<< v.call({0.1, 0.2, 0.3}) <<endl;
     }
 
-    //Use one visitor v for all the coeffients of da1. This is the better method. 
+    //Use one visitor v for all the coeffients of da1. This method is more convenient. 
     SymEngine::LambdaRealDoubleVisitor v;
     da1.eval_funs(vars, v);
     vector<double> results;

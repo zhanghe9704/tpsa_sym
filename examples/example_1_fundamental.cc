@@ -17,12 +17,12 @@ int main(){
     Expression x("x");
     Expression y("y");
     Expression z("z");
-    DAVector da1 = 1+(Expression(1)+x)*da[0] + y*da[1] + (z-Expression(0.5))*da[2];
+    DAVector da1 = 1+(1+x)*da[0] + y*da[1] + (z-0.5)*da[2];
 
     cout<<"Symbolic DA vector 1: "<<endl;
     cout<<da1;
 
-    DAVector da2 = 3.3+(Expression(0.5)+x)*da[0] + y*y*da[1] + (x+z+Expression(1.1))*da[2];
+    DAVector da2 = 3.3+(0.5+x)*da[0] + y*y*da[1] + (x+z+1.1)*da[2];
     cout<<"Symbolic DA vector 2: "<<endl;
     cout<<da2;
 
