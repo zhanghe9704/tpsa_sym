@@ -3,9 +3,6 @@
 #include <array>
 #include <iostream>
 #include <vector>
-#include <symengine/symengine_rcp.h>
-#include <symengine/symbol.h>
-#include <symengine/lambda_double.h>
 
 using SymEngine::Expression;
 using SymEngine::RCP;
