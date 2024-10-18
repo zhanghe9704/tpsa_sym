@@ -1853,7 +1853,7 @@ namespace SymbDA {
      * \param results values of all the elements in the DA. 
      *
      */
-    void eval(DAVector& sv, std::vector<SymEngine::Expression> symbols, std::vector<double>& inputs, vector<double>& results){
+    void eval(DAVector& sv, std::vector<SymEngine::Expression> symbols, std::vector<double>& inputs, std::vector<double>& results){
         vector<SymEngine::RCP<const SymEngine::Basic>> vars;
         for (auto s : symbols) vars.push_back(s.get_basic());
         SymEngine::LambdaRealDoubleVisitor vec;
