@@ -27,6 +27,7 @@ var sda_8h =
     [ "da_substitute", "sda_8h.html#acadfe3b691d0a5a16e4296f86ed9dcf7", null ],
     [ "da_substitute_const", "sda_8h.html#ae49b29ae65071b5f5bd4194e311d534a", null ],
     [ "erf", "sda_8h.html#a3395c12eb24a653d765c842ca6aac306", null ],
+    [ "eval", "sda_8h.html#a700d4dbf0f49063a9aa0e48111795f6e", null ],
     [ "exp", "sda_8h.html#a66b382eff8671c534d15ed12a2210728", null ],
     [ "log", "sda_8h.html#ac3fe5ab9f52ff5798698e2169a730843", null ],
     [ "operator*", "sda_8h.html#a6dc88b122bbda4ce4c3fda94bb84e01d", null ],
@@ -57,8 +58,9 @@ var sda_8h =
     [ "pow", "sda_8h.html#aa5872c1c004072542d177791addf1e6c", null ],
     [ "sin", "sda_8h.html#a9cb5ce11238fec41e9656a1e0831733b", null ],
     [ "sinh", "sda_8h.html#aa6d2aee086c776aed7039c3838fc3d8e", null ],
+    [ "sqrt", "sda_8h.html#adfc697a4e3a0f446ec4b52ebbaa12a11", null ],
     [ "tan", "sda_8h.html#af949d4d6995c46b13cc36f5683b837ff", null ],
     [ "tanh", "sda_8h.html#ad25ddfd0be8ce82657edbf024bac0d76", null ],
-    [ "da", "sda_8h.html#a46942408c721e809f8c585b780ede549", null ],
-    [ "sqrt", "sda_8h.html#adfc697a4e3a0f446ec4b52ebbaa12a11", null ]
+    [ "trim_whitespace", "sda_8h.html#a95754dae84964d4be076b5c5ac95c487", null ],
+    [ "da", "sda_8h.html#a46942408c721e809f8c585b780ede549", null ]
 ];

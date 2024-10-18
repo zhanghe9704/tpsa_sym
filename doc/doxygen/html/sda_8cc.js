@@ -25,7 +25,7 @@ var sda_8cc =
     [ "da_substitute", "sda_8cc.html#acadfe3b691d0a5a16e4296f86ed9dcf7", null ],
     [ "da_substitute_const", "sda_8cc.html#ae49b29ae65071b5f5bd4194e311d534a", null ],
     [ "erf", "sda_8cc.html#a3395c12eb24a653d765c842ca6aac306", null ],
-    [ "eval", "sda_8cc.html#afc0ae27164168e4e0b972535bb31f750", null ],
+    [ "eval", "sda_8cc.html#a700d4dbf0f49063a9aa0e48111795f6e", null ],
     [ "exp", "sda_8cc.html#a66b382eff8671c534d15ed12a2210728", null ],
     [ "log", "sda_8cc.html#ac3fe5ab9f52ff5798698e2169a730843", null ],
     [ "ltrim_whitespace", "sda_8cc.html#a3cb5f3db8f16af974959016406759317", null ],
@@ -59,9 +59,9 @@ var sda_8cc =
     [ "rtrim_whitespace", "sda_8cc.html#a44b4f7e0ef4d7360c6d3619029c261ea", null ],
     [ "sin", "sda_8cc.html#a9cb5ce11238fec41e9656a1e0831733b", null ],
     [ "sinh", "sda_8cc.html#aa6d2aee086c776aed7039c3838fc3d8e", null ],
+    [ "sqrt", "sda_8cc.html#adfc697a4e3a0f446ec4b52ebbaa12a11", null ],
     [ "tan", "sda_8cc.html#af949d4d6995c46b13cc36f5683b837ff", null ],
     [ "tanh", "sda_8cc.html#ad25ddfd0be8ce82657edbf024bac0d76", null ],
     [ "trim_whitespace", "sda_8cc.html#a95754dae84964d4be076b5c5ac95c487", null ],
-    [ "k_whitespace", "sda_8cc.html#a6638f9a4a299bfdbb18cdcbf42c48716", null ],
-    [ "sqrt", "sda_8cc.html#adfc697a4e3a0f446ec4b52ebbaa12a11", null ]
+    [ "k_whitespace", "sda_8cc.html#a6638f9a4a299bfdbb18cdcbf42c48716", null ]
 ];
