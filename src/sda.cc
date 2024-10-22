@@ -391,6 +391,11 @@ namespace SymbDA {
         ad_clean(da_vector_, DAVector::eps);
     }
 
+    /** \brief Evaluate an DA vector by submitting values to the symbols
+     * Replace all the symbols by numbers in a DA vector and calculate the values of all the elements. 
+     * \param m The map from symbols to values.
+     * \return void
+     */
     void DAVector::eval(SymEngine::map_basic_basic m) {
         for(int i=0; i<this->n_element(); ++i) {
             SymEngine::Expression elem = this->element(i);
@@ -401,6 +406,13 @@ namespace SymbDA {
         }
     }
 
+    /** \brief Change the expressions into callable functions far all the elements
+     *
+     * \param[in] vars All the variables/symbols in the DA vector.
+     * \param[out] vec A vector of the callable functions. Each element is a callable function for the respective element.
+     * \return void.
+     *
+     */
     void DAVector::eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> vars, std::vector<SymEngine::LambdaRealDoubleVisitor>& vec) {
         // std::vector<SymEngine::RCP<const SymEngine::Basic>> exprs;
         vec.resize(this->length());
@@ -417,12 +429,20 @@ namespace SymbDA {
         }
     }
 
+    /** \brief Change the expressions into callable functions far all the elements
+     *
+     * \param[in] vars All the variables/symbols in the DA vector.
+     * \param[out] v A callable function that saves all the functions from the elements in the DA vector
+     * \return void.
+     *
+     */
     void DAVector::eval_funs(std::vector<SymEngine::RCP<const SymEngine::Basic>> vars, SymEngine::LambdaRealDoubleVisitor& v) {
         std::vector<SymEngine::RCP<const SymEngine::Basic>> exprs;
         // for(int i=0; i<this->n_element(); ++i) {
         for(int i=0; i<this->length(); ++i) {
             SymEngine::Expression elem = this->element(i);
             if(!is_zero(elem)) {
+                // simplified_expr(elem);
                 exprs.push_back(elem.get_basic());   
             }
             else {
@@ -430,6 +450,18 @@ namespace SymbDA {
             }
         }
         v.init(vars, exprs);
+    }
+
+    /** \brief Simplify each elements in the DA vector
+     */
+    void DAVector::simplify() {
+        for(int i=0; i<this->length(); ++i) {
+            SymEngine::Expression elem = this->element(i);
+            if(!is_zero(elem)) {
+                simplified_expr(elem);
+                this->set_element(i, elem);
+            }
+        }
     }
 
     Base::Base(const unsigned int n) {
@@ -1861,6 +1893,22 @@ namespace SymbDA {
         results.resize(sv.full_length());
         vec.call(&results[0], &inputs[0]);
     }
+
+    /** \brief Evaluate an DA vector as functions of the symbols
+     * \param sv The DA vector to evaluate.
+     * \param symbols Symbols.
+     * \return the functions of the symbols.  
+     *
+     */
+    SymEngine::LambdaRealDoubleVisitor eval(DAVector& sv, std::vector<SymEngine::Expression> symbols) {
+        vector<SymEngine::RCP<const SymEngine::Basic>> vars;
+        for (auto s : symbols) vars.push_back(s.get_basic());
+        SymEngine::LambdaRealDoubleVisitor vec;
+        sv.eval_funs(vars, vec);
+        return vec;
+    }
+
+
 
     // void cd_copy(std::complex<DAVector>& vs, std::complex<DAVector>& vo) { get_real(vo) = get_real(vs); get_imag(vo) = get_imag(vs);}
     // void cd_copy(std::complex<double> vs, std::complex<DAVector>& vo) { get_real(vo) = vs.real(); get_imag(vo) = vs.imag();}

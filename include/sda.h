@@ -46,6 +46,7 @@ namespace SymbDA {
     SymEngine::Expression element(std::vector<int> idx);
     SymEngine::Expression derivative(std::vector<int> idx);
     std::vector<int>& element_orders(int i);
+    void simplify();
     // double norm();
     // double weighted_norm(double w);
     void set_element(int *c, SymEngine::Expression elem);
@@ -166,6 +167,7 @@ namespace SymbDA {
   DAVector operator-(const DAVector &da_vector);
   bool operator==(const DAVector &da_vector_1, const DAVector &da_vector_2);
   void eval(DAVector& sv, std::vector<SymEngine::Expression> symbols, std::vector<double>& inputs, std::vector<double>& results);
+  SymEngine::LambdaRealDoubleVisitor eval(DAVector& sv, std::vector<SymEngine::Expression> symbols);
   // inline DAVector& get_real(std::complex<DAVector>& v){return reinterpret_cast<DAVector(&)[2]>(v)[0];}
   // inline DAVector& get_imag(std::complex<DAVector>& v){return reinterpret_cast<DAVector(&)[2]>(v)[1];}
   // inline const DAVector& get_real(const std::complex<DAVector>& v){return reinterpret_cast<const DAVector(&)[2]>(v)[0];}

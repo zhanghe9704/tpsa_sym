@@ -51,6 +51,7 @@ void eval(SDA& sv, Expression& sx, Expression& sy, double x, double y, vector<do
     inputs.at(1) = y;
     vec.call(&results[0], &inputs[0]);
 }
+
 vector<double> v_sqrt {1.2619825672330027e+00  ,
 0.0000000000000000e+00  ,
 2.1354098463568110e+00  ,
