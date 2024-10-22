@@ -25,6 +25,7 @@ var sda_8cc =
     [ "da_substitute", "sda_8cc.html#acadfe3b691d0a5a16e4296f86ed9dcf7", null ],
     [ "da_substitute_const", "sda_8cc.html#ae49b29ae65071b5f5bd4194e311d534a", null ],
     [ "erf", "sda_8cc.html#a3395c12eb24a653d765c842ca6aac306", null ],
+    [ "eval", "sda_8cc.html#a21190bce47ce3d19b2ab442addbb489f", null ],
     [ "eval", "sda_8cc.html#a700d4dbf0f49063a9aa0e48111795f6e", null ],
     [ "exp", "sda_8cc.html#a66b382eff8671c534d15ed12a2210728", null ],
     [ "log", "sda_8cc.html#ac3fe5ab9f52ff5798698e2169a730843", null ],

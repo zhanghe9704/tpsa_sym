@@ -27,6 +27,7 @@ var namespace_symb_d_a =
     [ "da_substitute", "namespace_symb_d_a.html#acadfe3b691d0a5a16e4296f86ed9dcf7", null ],
     [ "da_substitute_const", "namespace_symb_d_a.html#ae49b29ae65071b5f5bd4194e311d534a", null ],
     [ "erf", "namespace_symb_d_a.html#a3395c12eb24a653d765c842ca6aac306", null ],
+    [ "eval", "namespace_symb_d_a.html#a21190bce47ce3d19b2ab442addbb489f", null ],
     [ "eval", "namespace_symb_d_a.html#a700d4dbf0f49063a9aa0e48111795f6e", null ],
     [ "exp", "namespace_symb_d_a.html#a66b382eff8671c534d15ed12a2210728", null ],
     [ "log", "namespace_symb_d_a.html#ac3fe5ab9f52ff5798698e2169a730843", null ],

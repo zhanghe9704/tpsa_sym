@@ -208,6 +208,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a700d4dbf0f49063a9aa0e48111795f6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_symb_d_a.html#a700d4dbf0f49063a9aa0e48111795f6e">eval</a> (<a class="el" href="struct_symb_d_a_1_1_d_a_vector.html">DAVector</a> &amp;sv, std::vector&lt; SymEngine::Expression &gt; symbols, std::vector&lt; double &gt; &amp;inputs, std::vector&lt; double &gt; &amp;results)</td></tr>
 <tr class="memdesc:a700d4dbf0f49063a9aa0e48111795f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate an DA vector by submitting values to the symbols Replace all the symbols by numbers in a DA vector and calculate the values of all the elements.  <a href="namespace_symb_d_a.html#a700d4dbf0f49063a9aa0e48111795f6e">More...</a><br /></td></tr>
 <tr class="separator:a700d4dbf0f49063a9aa0e48111795f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21190bce47ce3d19b2ab442addbb489f"><td class="memItemLeft" align="right" valign="top">SymEngine::LambdaRealDoubleVisitor&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_symb_d_a.html#a21190bce47ce3d19b2ab442addbb489f">eval</a> (<a class="el" href="struct_symb_d_a_1_1_d_a_vector.html">DAVector</a> &amp;sv, std::vector&lt; SymEngine::Expression &gt; symbols)</td></tr>
+<tr class="memdesc:a21190bce47ce3d19b2ab442addbb489f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate an DA vector as functions of the symbols.  <a href="namespace_symb_d_a.html#a21190bce47ce3d19b2ab442addbb489f">More...</a><br /></td></tr>
+<tr class="separator:a21190bce47ce3d19b2ab442addbb489f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95754dae84964d4be076b5c5ac95c487"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_symb_d_a.html#a95754dae84964d4be076b5c5ac95c487">trim_whitespace</a> (std::string input_line)</td></tr>
 <tr class="memdesc:a95754dae84964d4be076b5c5ac95c487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trim the spaces at the head and the tail of the string.  <a href="namespace_symb_d_a.html#a95754dae84964d4be076b5c5ac95c487">More...</a><br /></td></tr>
 <tr class="separator:a95754dae84964d4be076b5c5ac95c487"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1066,8 +1069,47 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a21190bce47ce3d19b2ab442addbb489f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21190bce47ce3d19b2ab442addbb489f">&#9670;&nbsp;</a></span>eval() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SymEngine::LambdaRealDoubleVisitor SymbDA::eval </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_symb_d_a_1_1_d_a_vector.html">DAVector</a> &amp;&#160;</td>
+          <td class="paramname"><em>sv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; SymEngine::Expression &gt;&#160;</td>
+          <td class="paramname"><em>symbols</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Evaluate an DA vector as functions of the symbols. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sv</td><td>The DA vector to evaluate. </td></tr>
+    <tr><td class="paramname">symbols</td><td>Symbols. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the functions of the symbols. <br  />
+ </dd></dl>
+
+</div>
+</div>
 <a id="a700d4dbf0f49063a9aa0e48111795f6e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a700d4dbf0f49063a9aa0e48111795f6e">&#9670;&nbsp;</a></span>eval()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a700d4dbf0f49063a9aa0e48111795f6e">&#9670;&nbsp;</a></span>eval() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

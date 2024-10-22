@@ -61,5 +61,6 @@ var struct_symb_d_a_1_1_d_a_vector =
     [ "set_element", "struct_symb_d_a_1_1_d_a_vector.html#a41d453e616e6727001a9bf08e0e41928", null ],
     [ "set_element", "struct_symb_d_a_1_1_d_a_vector.html#a7223f89208a74ec944b97734865cf846", null ],
     [ "set_element", "struct_symb_d_a_1_1_d_a_vector.html#a6bd68d8ab64f6a7e11936048ce9236e1", null ],
+    [ "simplify", "struct_symb_d_a_1_1_d_a_vector.html#a60efa18ad4c50384601a1fedbd5827a5", null ],
     [ "da_vector_", "struct_symb_d_a_1_1_d_a_vector.html#af6621d15c79745b9b20c970d44f2b1c5", null ]
 ];
