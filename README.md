@@ -4,7 +4,7 @@
 
 ## About this code
 
-This code allows users to do symbolic computations using  Differential Algebra (DA), also called Truncated Power Series Algebra (TPSA), in C++. This code is developed based on the numerical DA/TPSA lib,  [*cppTPSA/pyTPSA*](https://github.com/zhanghe9704/tpsa), and the symbolic computation lib, [*SymEngine*](https://github.com/symengine/symengine). The algorithms for DA/TPSA computation in this lib are exactly the same with those in  [*cppTPSA/pyTPSA*](https://github.com/zhanghe9704/tpsa), but they are implemented on symbols rather than numbers. Currently, symbol calculation with complex numbers is not supported. It could be added in the future version, should a desire exist. 
+This code allows users to do symbolic computations using  Differential Algebra (DA), also called Truncated Power Series Algebra (TPSA), in C++. This code is developed based on the numerical DA/TPSA lib,  [*cppTPSA/pyTPSA*](https://github.com/zhanghe9704/tpsa), and the symbolic computation lib, [*SymEngine*](https://github.com/symengine/symengine). The algorithms for DA/TPSA computation in this lib are exactly the same with those in  [*cppTPSA/pyTPSA*](https://github.com/zhanghe9704/tpsa), but they are implemented on symbols rather than numbers. Currently, symbolic calculation with complex numbers is not supported. It could be added in the future version, should a desire exist. 
 
 For users who are not familar with TPSA and DA, please refer to chapter 8 in [*Lecture Notes on Special Topics in Accelerator Physics*](http://inspirehep.net/record/595287/files/slac-pub-9574.pdf)  by  Prof. Alex Chao  and chapter 2 in [*Modern Map Methods in Particle Beam Physics*](http://bt.pa.msu.edu/cgi-bin/display.pl?name=AIEP108book) by Prof. Martin Berz. It may also be helpful to play with the numerical DA/TPSA lib [*cppTPSA/pyTPSA*](https://github.com/zhanghe9704/tpsa) first. 
 
@@ -183,7 +183,7 @@ The simplest way to compile SDA in Windows is to use WSL2 and compile it as in L
 Sorry! The author has never used macOS and hence cannot provide an instruction. However, if you can install SymEngine following its instruction successfully, compiling SDA lib is expected to be as straightforward as in Linux. 
 
 
-###Known issues ###
+### Known issues ###
 
 When running tests in Linux (tested in Ubuntu 20.04/22.04), a "segmentation fault" error will be reported after passing all the tests. The does not happen when running the tests on Windows, and in Linux it does not happen when I used the lib in other programs. There might be conflict in the way how CATCH2 and this SDA lib manage the memory.     
 

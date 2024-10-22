@@ -4,7 +4,7 @@ var searchData=
   ['element_5forders_105',['element_orders',['../struct_symb_d_a_1_1_d_a_vector.html#a1b247108d4f108cdb34e3da8e9ff14c2',1,'SymbDA::DAVector']]],
   ['eps_106',['eps',['../struct_symb_d_a_1_1_d_a_vector.html#ae95a6ee31f26592ee31ba88083e8231a',1,'SymbDA::DAVector']]],
   ['erf_107',['erf',['../namespace_symb_d_a.html#a3395c12eb24a653d765c842ca6aac306',1,'SymbDA']]],
-  ['eval_108',['eval',['../struct_symb_d_a_1_1_d_a_vector.html#a64bfa3ef26a7cdf8b308f4962e0c9869',1,'SymbDA::DAVector::eval()'],['../namespace_symb_d_a.html#afc0ae27164168e4e0b972535bb31f750',1,'SymbDA::eval()']]],
+  ['eval_108',['eval',['../struct_symb_d_a_1_1_d_a_vector.html#a64bfa3ef26a7cdf8b308f4962e0c9869',1,'SymbDA::DAVector::eval()'],['../namespace_symb_d_a.html#a700d4dbf0f49063a9aa0e48111795f6e',1,'SymbDA::eval()']]],
   ['eval_5ffuns_109',['eval_funs',['../struct_symb_d_a_1_1_d_a_vector.html#a04ff7aae94e020fbbc264e05f614461a',1,'SymbDA::DAVector::eval_funs(std::vector&lt; SymEngine::RCP&lt; const SymEngine::Basic &gt;&gt; vars, std::vector&lt; SymEngine::LambdaRealDoubleVisitor &gt; &amp;v)'],['../struct_symb_d_a_1_1_d_a_vector.html#a5bce11bd7389cb9ab130e298528ef9c2',1,'SymbDA::DAVector::eval_funs(std::vector&lt; SymEngine::RCP&lt; const SymEngine::Basic &gt;&gt; vars, SymEngine::LambdaRealDoubleVisitor &amp;v)']]],
   ['exp_110',['exp',['../namespace_symb_d_a.html#a66b382eff8671c534d15ed12a2210728',1,'SymbDA']]]
 ];
