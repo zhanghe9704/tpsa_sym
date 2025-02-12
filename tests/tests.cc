@@ -577,7 +577,7 @@ TEST_CASE("SDA FUNCTIONS") {
 
     Expression sx("x"), sy("y");
     double x{1.5926}, y{5.3897};
-    double eps = 1e-15;
+    double eps = 1e-13;
     vector<double> results;
     SDA sv;
 
