@@ -106,29 +106,30 @@ The simplest way to compile SDA in Windows is to use WSL2 and compile it as in L
 
    Install MSYS2 and then open MSYS2 MINGW64 terminal.  If necessary, install the compiling tools. (May have already been installed.)
 
-   `pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake`
+   ```shell
+   pacman -S mingw-w64-x86_64-toolchain
+   pacman -S mingw-w64-x86_64-cmake
+   ln -s /mingw64/bin/mingw32-make.exe /mingw64/bin/make.exe
+   ```
+   If you installed MSYS2 in C:\msys64, your compiler, make and cmake are installed in C:\msys64\mingw64\bin. Add this directory to the beginning of the environment variable PATH.
 
-   Make sure `gcc`, `g++`, `mingw32-make`, and `cmake` are callable from the  terminal. Close the terminal and reopen it. 
+   Install gmp-devel, which is required by symengine. 
+   ```shell
+   pacman -S gmp-devel
+   ```
 
-   In the MSYS2 MINGW64 terminal, go to the SymEngine folder. Windows partitions are mounted under the root in MSYS2. For example, go to `/d/symengine` for `D:\symengine`. Use the following command to compile SymEngine. 
+   From now on, you do NOT need the mingw64 command line anymore. You can use the windows command line or poweshell to compile and install the code. 
+
+   Go to the root folder of symengine, open the command line terminal, and run:
 
    ```shell
    mkdir build
-   cd build
-   cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
-   mingw32-make
+   cd build -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=c:\msys64\mingw64 ..
+   make
+   make install
    ```
-
-   This will build a static lib of SymEngine. For dynamic/shared lib, use the following command to configure cmake.
-
-   `cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=YES`
-
-   To install SymEngine to the default folder, run MSYS2 MINGW64 as administrator and go back to the above folder. 
-
-   `mingw32-make install`
-
-    SymEngine will be installed to ` C:/Program Files (x86)/symengine/`
-
+   The above commends will install symengine to c:\msys64\ming64. To avoid -G "MinGW Makefiles" in the command line, you can create an environment variable CMAKE_GENERATOR and set its value as  "MinGW Makefiles". It sets the default generator to be MinGW Makefiles for cmake. 
+   
    1.2 **Compile SDA**
 
    Go to the SDA folder and run the following commands.
@@ -137,47 +138,26 @@ The simplest way to compile SDA in Windows is to use WSL2 and compile it as in L
    mkdir build
    cd build
    cmake .. -G "MinGW Makefiles"
-   mingw32-make
+   make
+   make install
    ```
+
+   The above commends will install the SDA lib to c:\msys64\ming64. 
 
    1.3 **compile the examples**
 
-   `make examples`
+   `cmake --build . --target build-examples`
 
    The example source files locate in the folder `examples`. The executables are compiled and save in `build/bin/examples`. 
 
    1.4 **Compile the tests**
 
-   `make tests`
+   `cmake --build . --target build-tests`
 
    An executable `run_tests` will be created in `build/bin/tests`.   
 
    The tests depend on [*Catch2*]([GitHub - catchorg/Catch2: A modern, C++-native, test framework for unit-tests, TDD and BDD - using C++14, C++17 and later (C++11 support is in v2.x branch, and C++03 on the Catch1.x branch)](https://github.com/catchorg/Catch2)) version 2.3.16, which is a header only test framework for C++. 
 
-   1.5 **Before you run any executables**
-
-   The dynamic libs of *symengine* and *gmp* may be needed to run the executables. To make sure they can be found, add their directories to the environmental variable *Path*. If compiled as above, the directories are
-
-   `C:\Program Files (x86)\symengine\bin`
-
-   `C:\msys64\mingw64\bin`
-
-
-2. **Compile with Microsoft compiler and Visual Studio IDE**
-
-   If SymEngine is installed through conda-forge using 
-
-   `conda install symengine -c conda-forge`
-
-   the SymEngine lib was compiled by Microsoft compiler. SDA has to be compiled by Microsoft compiler, too. Open SDA fold with conda terminal and run the following commands.
-
-   ```shell
-   mkdir build
-   cd build
-   cmake -G "Visual Studio 16 2019" -A x64 ..
-   ```
-
-    Visual Studio projects will be generated. Then you can open those projects to compile the SDA, the examples, and the tests. You may want to change some settings inside the projects. However, the author is not familar with Visual Studio and cannot provide further help. 
 
 ### macOS ###
 Sorry! The author has never used macOS and hence cannot provide an instruction. However, if you can install SymEngine following its instruction successfully, compiling SDA lib is expected to be as straightforward as in Linux. 
