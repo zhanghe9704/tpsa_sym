@@ -1,6 +1,9 @@
-cmake_minimum_required(VERSION 3.5.1)
+cmake_minimum_required(VERSION 3.15.1)
 
-#set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "g++")
+
+set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_INSTALL_PREFIX /usr/local)
@@ -43,17 +46,17 @@ message(STATUS "SYMENGINE_INCLUDE_DIRS = ${SYMENGINE_INCLUDE_DIRS}")
 message(STATUS "SYMENGINE_LIBRARY_DIRS = ${SYMENGINE_LIBRARY_DIRS}")
 
 #Generate the shared library and the static llibary from the sources
-add_library(tpsaShared SHARED ${SOURCES})
+add_library(symtpsaShared SHARED ${SOURCES})
 # Link SymEngine with your application
-target_link_libraries(tpsaShared  ${SYMENGINE_LIBRARIES})
-set_target_properties(tpsaShared PROPERTIES 
+target_link_libraries(symtpsaShared  ${SYMENGINE_LIBRARIES})
+set_target_properties(symtpsaShared PROPERTIES 
     OUTPUT_NAME "symtpsa"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     COMPILE_FLAGS ${RELEASE_COMPILE_OPTIONS}
 )
-add_library(tpsaStatic STATIC ${SOURCES})
-target_link_libraries(tpsaStatic  ${SYMENGINE_LIBRARIES})
-set_target_properties(tpsaStatic PROPERTIES 
+add_library(symtpsaStatic STATIC ${SOURCES})
+target_link_libraries(symtpsaStatic  ${SYMENGINE_LIBRARIES})
+set_target_properties(symtpsaStatic PROPERTIES 
     OUTPUT_NAME "symtpsa"
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     COMPILE_FLAGS ${RELEASE_COMPILE_OPTIONS}
@@ -70,7 +73,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 file(GLOB EXAMPLE_SOURCES ${CMAKE_SOURCE_DIR}/examples/*.cc)
 
 # Custom target to build examples
-# add_custom_target(build_examples ALL DEPENDS tpsaStatic)
+# add_custom_target(build_examples ALL DEPENDS symtpsaStatic)
 add_custom_target(build_examples
     COMMENT "Building examples"
 )
@@ -87,7 +90,7 @@ foreach(EXAMPLE_SOURCE ${EXAMPLE_SOURCES})
     set_target_properties(${EXAMPLE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/examples)
 
     # Link against the static library
-    target_link_libraries(${EXAMPLE_NAME} tpsaStatic)
+    target_link_libraries(${EXAMPLE_NAME} symtpsaStatic)
 
     # Make the example depend on the custom target
     add_dependencies(build_examples ${EXAMPLE_NAME})
@@ -102,7 +105,7 @@ endforeach()
 file(GLOB TEST_SOURCES ${CMAKE_SOURCE_DIR}/tests/*.cc)
 
 # Custom target to build examples
-# add_custom_target(build_examples ALL DEPENDS tpsaStatic)
+# add_custom_target(build_examples ALL DEPENDS symtpsaStatic)
 add_custom_target(build_tests
     COMMENT "Building tests"
 )
@@ -114,7 +117,7 @@ add_executable(run_tests EXCLUDE_FROM_ALL ${TEST_SOURCES})
 set_target_properties(run_tests PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests)
 
 # Link against the static library
-target_link_libraries(run_tests tpsaStatic)
+target_link_libraries(run_tests symtpsaStatic)
 
 # Make the example depend on the custom target
 add_dependencies(build_tests run_tests)
@@ -131,7 +134,7 @@ add_dependencies(build_tests run_tests)
 #     set_target_properties(${TEST_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/tests)
 
 #     # Link against the static library
-#     target_link_libraries(${TEST_NAME} tpsaStatic)
+#     target_link_libraries(${TEST_NAME} symtpsaStatic)
 
 #     # Make the example depend on the custom target
 #     add_dependencies(build_tests ${TEST_NAME})
@@ -184,11 +187,23 @@ foreach(DEBUG_SOURCE ${DEBUG_SOURCES})
      add_dependencies(build_debug ${DEBUG_NAME})
 endforeach()
 
+if(WIN32)
+    set(CMAKE_INSTALL_PREFIX "C:/msys64/mingw64")
+endif()
+
+
 # Optionally, you can add a custom command to build examples separately
 add_custom_target(examples
     COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target build_examples
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Building examples"
+)
+
+# Target to clean examples
+add_custom_target(clean_examples
+    COMMAND ${CMAKE_MAKE_PROGRAM} clean
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Cleaning examples"
 )
 
 # Optionally, you can add a custom command to build examples separately
@@ -204,9 +219,24 @@ add_custom_target(tests
     COMMENT "Building tests"
 )
 
+# Target to clean tests
+add_custom_target(clean_tests
+    COMMAND ${CMAKE_MAKE_PROGRAM} clean
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Cleaning tests"
+)
+
+# Target to clean tests, including removing catch_main.o
+add_custom_target(clean_tests_all
+    COMMAND ${CMAKE_MAKE_PROGRAM} clean
+    COMMAND ${CMAKE_COMMAND} -E rm -f ${CMAKE_SOURCE_DIR}/tests/catch_main.o
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    COMMENT "Cleaning tests and removing catch_main.o"
+)
+
 #Set the location for library installation -- i.e., /usr/local/lib in this case
 #Use "sudo make install" to apply
-install(TARGETS tpsaShared tpsaStatic DESTINATION)
+install(TARGETS symtpsaShared symtpsaStatic DESTINATION)
 
 #Install the header file
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/sda.h DESTINATION include)
