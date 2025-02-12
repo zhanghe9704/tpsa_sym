@@ -1,7 +1,7 @@
 var sda_8h =
 [
-    [ "DAVector", "struct_symb_d_a_1_1_d_a_vector.html", "struct_symb_d_a_1_1_d_a_vector" ],
-    [ "Base", "struct_symb_d_a_1_1_base.html", "struct_symb_d_a_1_1_base" ],
+    [ "SymbDA::DAVector", "struct_symb_d_a_1_1_d_a_vector.html", "struct_symb_d_a_1_1_d_a_vector" ],
+    [ "SymbDA::Base", "struct_symb_d_a_1_1_base.html", "struct_symb_d_a_1_1_base" ],
     [ "acos", "sda_8h.html#a24b6efb52860028e23c105a73a2b81bd", null ],
     [ "asin", "sda_8h.html#a36962eefbd8c1963f159f299f0507642", null ],
     [ "atan", "sda_8h.html#aff6ef0023837d0b043b15602b0279f04", null ],
