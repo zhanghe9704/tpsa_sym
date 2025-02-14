@@ -45,6 +45,7 @@ Math functions overloaded:
 - pow
 - erf 
   
+
 More information on the code is available in [this doxygen document](https://zhanghe9704.github.io/tpsa_sym/doc/doxygen/html/index.html).
 
 
@@ -124,16 +125,17 @@ The simplest way to compile SDA in Windows is to use WSL2 and compile it as in L
 
    ```shell
    mkdir build
-   cd build -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=c:\msys64\mingw64 ..
+   cd build
+   cmake .. -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=c:\msys64\mingw64 ..
    make
    make install
    ```
    The above commends will install symengine to c:\msys64\ming64. To avoid -G "MinGW Makefiles" in the command line, you can create an environment variable CMAKE_GENERATOR and set its value as  "MinGW Makefiles". It sets the default generator to be MinGW Makefiles for cmake. 
    
    1.2 **Compile SDA**
-
+   
    Go to the SDA folder and run the following commands.
-
+   
    ```shell
    mkdir build
    cd build
@@ -141,21 +143,21 @@ The simplest way to compile SDA in Windows is to use WSL2 and compile it as in L
    make
    make install
    ```
-
+   
    The above commends will install the SDA lib to c:\msys64\ming64. 
-
+   
    1.3 **compile the examples**
-
+   
    `cmake --build . --target build-examples`
-
+   
    The example source files locate in the folder `examples`. The executables are compiled and save in `build/bin/examples`. 
-
+   
    1.4 **Compile the tests**
-
+   
    `cmake --build . --target build-tests`
-
+   
    An executable `run_tests` will be created in `build/bin/tests`.   
-
+   
    The tests depend on [*Catch2*]([GitHub - catchorg/Catch2: A modern, C++-native, test framework for unit-tests, TDD and BDD - using C++14, C++17 and later (C++11 support is in v2.x branch, and C++03 on the Catch1.x branch)](https://github.com/catchorg/Catch2)) version 2.3.16, which is a header only test framework for C++. 
 
 
