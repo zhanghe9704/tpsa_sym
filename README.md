@@ -126,7 +126,7 @@ The simplest way to compile SDA in Windows is to use WSL2 and compile it as in L
    ```shell
    mkdir build
    cd build
-   cmake .. -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=c:\msys64\mingw64 ..
+   cmake -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=c:\msys64\mingw64 ..
    make
    make install
    ```
