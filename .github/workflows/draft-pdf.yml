@@ -21,7 +21,8 @@ jobs:
           # This should be the path to the paper within your repo.
           paper-path: paper/paper.md
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@43a465b14ce4f11aa37e3899a227b5df8a4039a2
+
         with:
           name: paper
           # This is the output path where Pandoc will write the compiled
