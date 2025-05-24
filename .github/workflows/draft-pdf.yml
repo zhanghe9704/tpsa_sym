@@ -3,9 +3,9 @@
 on:
   workflow_dispatch:
 
-  # push:
-  #   branches:
-  #     - master  # Adjust this to your default branch
+  push:
+    branches:
+      - paper  # Adjust this to your branch
 
 jobs:
   paper:
