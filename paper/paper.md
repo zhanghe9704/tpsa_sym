@@ -37,20 +37,18 @@ c\cdot[a]_{n} & := & [c\cdot a]_{n},\label{eq:addmlt}\\
 {}[a]_{n}\cdot[b]_{n} & := & [a\cdot b]_{n}.\nonumber 
 \end{eqnarray}
 
-According to the fixed point theorem  [@AIEP108book], the inverse of a DA vector that is not infinitely small can be calculated in a finite number of iterations. 
-
-The derivation operator $\partial_v$ with respect to the $v^{\mathrm{th}}$ variable and its inverse operator $\partial^{-1}v$ can be defined and carried out on a term by term basis on $[a]n$. Once the fundamental operators are defined, the DA vector can be used in calculations just as a number.
+According to the fixed point theorem  [@AIEP108book], the inverse of a DA vector that is not infinitely small can be calculated in a finite number of iterations. The derivation operator $\partial_v$ with respect to the $v^{\mathrm{th}}$ variable and its inverse operator $\partial^{-1}v$ can be defined and carried out on a term by term basis on $[a]_n$. A DA vector can be used in calculations just as a number.
 
 The symbolic DA combines DA with symbolic calculation. Any coefficient of a Symbolic DA (SDA) vector is an explicit expression of the symbols in lieu of a number.  
 
 # Statement of need
-DA was used in particle beam dynamic analysis in the 1980s and was gradually extended to other fields. DA provides powerful analyzing tools [@caprimap; @monthnf], for a dynamic system. It is also used in various numerical algorithms [@rdaint; @makino2005verified; @FMMCPO2010].   DA tools are available in particle accelerator simulators [@COSYCAP04; @grote2003mad; @MADX; @forest2002introduction], or as stand-alone libraries  [@massari2018differential; @DACE; @zhang2024cpptpsa]. All of them only perform numerical DA calculation. This library is the first and currently the only one that carries out symbolic DA calculations. 
+DA has been used in particle beam dynamic analysis since1980s and gradually extended to other fields. DA provides powerful analyzing tools [@caprimap; @monthnf], for a dynamic system. It is also used in various numerical algorithms [@rdaint; @makino2005verified; @FMMCPO2010].   DA tools are available in particle accelerator simulators [@COSYCAP04; @grote2003mad; @MADX; @forest2002introduction], or as stand-alone libraries  [@massari2018differential; @DACE; @zhang2024cpptpsa]. All of them only perform numerical DA calculation. This is the first and only library for symbolic DA calculations. 
 
 We developed SDA to improve the efficiency of repetitive DA processes. By performing the computation once with SDA, we obtain an explicit expression for how the final DA vector depends on the initial inputs. Evaluating this expression—rather than rerunning the full DA process for each new input—significantly reduces computation time [@zhang2025Boosting]. SDA also provides an efficient method for computing higher‐order derivatives of any given function.
 
 # Features
 
-This library performs symbolic DA calculations. It is based on the numerical DA library, cppTPSA [@zhang2024cpptpsa]. All the DA calculations are carried out on symbols using exactly the same algorithms in cppTPSA by employing the SymEngine library [@Fernando2024SymEngine]. Users can compile the source code into a static or shared library and install it on their system. The main features of this library are listed as follows. 
+This library is based on the numerical DA library, cppTPSA [@zhang2024cpptpsa]. All the DA calculations are carried out on symbols using exactly the same algorithms in cppTPSA by employing the SymEngine library [@Fernando2024SymEngine]. Users can compile the source code into a static or shared library and install it on their system. The main features of this library include the following: 
 
 1. Define the SDA vector data type and overload common math operators/functions for it. 
 2. Support the composition, derivation, and inverse derivation on SDA vectors. 
