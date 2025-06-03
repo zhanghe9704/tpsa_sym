@@ -44,7 +44,7 @@ The symbolic DA combines DA with symbolic calculation. Any coefficient of a Symb
 # Statement of need
 DA has been used in particle beam dynamic analysis since1980s and gradually extended to other fields. DA provides powerful analyzing tools [@caprimap; @monthnf], for a dynamic system. It is also used in various numerical algorithms [@rdaint; @makino2005verified; @FMMCPO2010].   DA tools are available in particle accelerator simulators [@COSYCAP04; @grote2003mad; @MADX; @forest2002introduction], or as stand-alone libraries  [@massari2018differential; @DACE; @zhang2024cpptpsa]. All of them only perform numerical DA calculation. This is the first and only library for symbolic DA calculations. 
 
-We developed SDA to improve the efficiency of repetitive DA processes. By performing the computation once with SDA, we obtain an explicit expression for how the final DA vector depends on the initial inputs. Evaluating this expression—rather than rerunning the full DA process for each new input—significantly reduces computation time [@zhang2025Boosting]. SDA also provides an efficient method for computing higher‐order derivatives of any given function.
+We developed SDA to improve the efficiency of repetitive DA processes. By performing the computation once with SDA, we obtain an explicit expression for how the final DA vector depends on the initial inputs. Evaluating this expression—rather than rerunning the full DA process for each new input—significantly reduces computation time [@zhang2025Boosting]. SDA also provides an efficient method for computing higher‐order derivatives of any given function [@zhang2025higher].
 
 # Features
 
