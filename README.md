@@ -167,8 +167,7 @@ Sorry! The author has never used macOS and hence cannot provide an instruction. 
 ### How to use SDA ###
 We assume the users have some basic concepts of DA. The difference between DA and SDA lies in the fact that SDA allow you to use symbols in your DA calculation. 
 
-Similar to DA, before starting any SDA calculation, one needs to define the number of bases and the cut-off order of the SDA variable and the size of the memory pool that saves the SDA vectors. 
-in the following code, a memory pool that holds 400 SDA vectors of three bases up to the fourth order is created. 
+Similar to DA, before starting any SDA calculation, one needs to define the number of bases and the cut-off order of the SDA vectors and the size of the memory pool that saves the SDA vectors. In the following code, a memory pool that holds 400 SDA vectors of three bases up to the fourth order is created. 
 ```C++
     // Set DA environment parameters
     int da_order = 4;   // Maximum order of DA expansion
@@ -176,7 +175,7 @@ in the following code, a memory pool that holds 400 SDA vectors of three bases u
     int da_pool = 400;  // Pool size to whole 400 DA vectors
     da_init(da_order, da_dim, da_pool); // Initialize the DA environment
 ```
-After calling `da_init()`, the bases are available as `da[i]` where i is 0 - 2. Now we can construct our first SDA vector using the bases. In the following code, we first defined three symbols, x, y, and z. Then we defined a first order SDA vector and the three symbols are used in the coefficients. 
+After calling `da_init()`, the bases are available as `da[i]` where `i` is 0 - 2. Now we can construct our first SDA vector using the bases. In the following code, we first defined three symbols, x, y, and z. Then we defined a first-order SDA vector and the three symbols are used in the coefficients. 
 
 ```C++
     // Define symbolic variables using SymEngine
@@ -188,7 +187,7 @@ After calling `da_init()`, the bases are available as `da[i]` where i is 0 - 2. 
     SymbDA::DAVector da1 = 1+(1+x)*da[0] + y*da[1] + (z-0.5)*da[2];
 ```
 
-If we output the SDA vector `da1` to the screen, we will see as follows. A full 3D 4-order SDA vector will have 35 elements. `da1` has only 4 elements, including one zero-order term and three first-order terms. 
+The value of the SDA vector `da1` is shown below. A full 3D fourth-order SDA vector will have 35 elements. `da1` has only 4 elements, including one zero-order term and three first-order terms. 
 
 ```shell
  Base      I        V [8]               [ 4 / 35 ]
@@ -203,7 +202,7 @@ Once a SDA vector is defined, you can use it as a number. In the following codes
 SymbDA::DAVector da2 = 3.3+(0.5+x)*da[0] + y*y*da[1] + (x+z+1.1)*da[2];
 auto da3 = da1 + da2;
 ```
-The value of `da2` is as follows. 
+The value of `da2` is shown as follows. 
 ```shell
  Base      I        V [14]               [ 4 / 35 ]
 ------------------------------------------------
@@ -212,7 +211,7 @@ The value of `da2` is as follows.
  0 1 0     2    y**2
  0 0 1     3    1.1 + x + z
 ```
-The value of `da3`, the summation of `da1` and `da2` is as follows. 
+The value of `da3`, the summation of `da1` and `da2`, is shown as follows. 
 ```shell
 Base      I        V [15]               [ 4 / 35 ]
 ------------------------------------------------
@@ -221,9 +220,9 @@ Base      I        V [15]               [ 4 / 35 ]
  0 1 0     2    y + y**2
  0 0 1     3    0.6 + x + 2*z
 ```
-It is easy to see the summation is carried out element by element as expected. 
+It is easy to see that the summation is carried out element by element, as expected. 
 
-We can also use an SDA in a math function. In the following code, we calculate the square root the `da1`. 
+We can also use an SDA vector in a math function. For example, we calculate the square root `da1`. 
 ```C++
 da3 = sqrt(da1);
 ```
