@@ -164,6 +164,112 @@ The simplest way to compile SDA in Windows is to use WSL2 and compile it as in L
 ### macOS ###
 Sorry! The author has never used macOS and hence cannot provide an instruction. However, if you can install SymEngine following its instruction successfully, compiling SDA lib is expected to be as straightforward as in Linux. 
 
+### How to use SDA ###
+We assume the users have some basic concepts of DA. The difference between DA and SDA lies in the fact that SDA allow you to use symbols in your DA calculation. 
+
+Similar to DA, before starting any SDA calculation, one needs to define the number of bases and the cut-off order of the SDA variable and the size of the memory pool that saves the SDA vectors. 
+in the following code, a memory pool that holds 400 SDA vectors of three bases up to the fourth order is created. 
+```C++
+    // Set DA environment parameters
+    int da_order = 4;   // Maximum order of DA expansion
+    int da_dim = 3;     // Number of variables (dimensions)
+    int da_pool = 400;  // Pool size to whole 400 DA vectors
+    da_init(da_order, da_dim, da_pool); // Initialize the DA environment
+```
+After calling `da_init()`, the bases are available as `da[i]` where i is 0 - 2. Now we can construct our first SDA vector using the bases. In the following code, we first defined three symbols, x, y, and z. Then we defined a first order SDA vector and the three symbols are used in the coefficients. 
+
+```C++
+    // Define symbolic variables using SymEngine
+    SymEngine::Expression x("x");
+    SymEngine::Expression y("y");
+    SymEngine::Expression z("z");
+
+    // Construct a symbolic DA vector using the symbolic variables
+    SymbDA::DAVector da1 = 1+(1+x)*da[0] + y*da[1] + (z-0.5)*da[2];
+```
+
+If we output the SDA vector `da1` to the screen, we will see as follows. A full 3D 4-order SDA vector will have 35 elements. `da1` has only 4 elements, including one zero-order term and three first-order terms. 
+
+```shell
+ Base      I        V [8]               [ 4 / 35 ]
+------------------------------------------------
+ 0 0 0     0    1.0
+ 1 0 0     1    1 + x
+ 0 1 0     2    y
+ 0 0 1     3    -0.5 + z
+```
+Once a SDA vector is defined, you can use it as a number. In the following codes, we define another SDA  vector `da2` and take the summation of both SDA vectors.  
+```C++
+SymbDA::DAVector da2 = 3.3+(0.5+x)*da[0] + y*y*da[1] + (x+z+1.1)*da[2];
+auto da3 = da1 + da2;
+```
+The value of `da2` is as follows. 
+```shell
+ Base      I        V [14]               [ 4 / 35 ]
+------------------------------------------------
+ 0 0 0     0    3.3
+ 1 0 0     1    0.5 + x
+ 0 1 0     2    y**2
+ 0 0 1     3    1.1 + x + z
+```
+The value of `da3`, the summation of `da1` and `da2` is as follows. 
+```shell
+Base      I        V [15]               [ 4 / 35 ]
+------------------------------------------------
+ 0 0 0     0    4.3
+ 1 0 0     1    1.5 + 2*x
+ 0 1 0     2    y + y**2
+ 0 0 1     3    0.6 + x + 2*z
+```
+It is easy to see the summation is carried out element by element as expected. 
+
+We can also use an SDA in a math function. In the following code, we calculate the square root the `da1`. 
+```C++
+da3 = sqrt(da1);
+```
+The result is a full-rank SDA vector. 
+```shell
+Base       I        V [21]               [ 35 / 35 ]
+-------------------------------------------------
+ 0 0 0     0    1
+ 1 0 0     1    0.5 + 0.5*x
+ 0 1 0     2    0.5*y
+ 0 0 1     3    -0.25 + 0.5*z
+ 2 0 0     4    -0.125 - 0.25*x - 0.125*x**2
+ 1 1 0     5    -0.25*y - 0.25*x*y
+ 1 0 1     6    0.125 + 0.125*x - 0.25*z - 0.25*x*z
+ 0 2 0     7    -0.125*y**2
+ 0 1 1     8    0.125*y - 0.25*y*z
+ 0 0 2     9    -0.03125 + 0.125*z - 0.125*z**2
+ 3 0 0    10    0.0625 + 0.1875*x + 0.1875*x**2 + 0.0625*x**3
+ 2 1 0    11    0.1875*y + 0.375*x*y + 0.1875*x**2*y
+ 2 0 1    12    -0.09375 - 0.1875*x + 0.1875*z + 0.375*x*z + 0.1875*x**2*z - 0.09375*x**2
+ 1 2 0    13    0.1875*x*y**2 + 0.1875*y**2
+ 1 1 1    14    -0.1875*y - 0.1875*x*y + 0.375*y*z + 0.375*x*y*z
+ 1 0 2    15    0.046875 + 0.046875*x - 0.1875*z - 0.1875*x*z + 0.1875*x*z**2 + 0.1875*z**2
+ 0 3 0    16    0.0625*y**3
+ 0 2 1    17    0.1875*y**2*z - 0.09375*y**2
+ 0 1 2    18    0.046875*y - 0.1875*y*z + 0.1875*y*z**2
+ 0 0 3    19    -0.0078125 + 0.046875*z - 0.09375*z**2 + 0.0625*z**3
+ 4 0 0    20    -0.0390625 - 0.15625*x - 0.234375*x**2 - 0.15625*x**3 - 0.0390625*x**4
+ 3 1 0    21    -0.15625*y - 0.46875*x*y - 0.46875*x**2*y - 0.15625*x**3*y
+ 3 0 1    22    0.078125 + 0.234375*x - 0.15625*z - 0.46875*x*z - 0.46875*x**2*z - 0.15625*x**3*z + 0.234375*x**2 + 0.078125*x**3
+ 2 2 0    23    -0.46875*x*y**2 - 0.234375*x**2*y**2 - 0.234375*y**2
+ 2 1 1    24    0.234375*y + 0.46875*x*y + 0.234375*x**2*y - 0.46875*y*z - 0.9375*x*y*z - 0.46875*x**2*y*z
+ 2 0 2    25    -0.05859375 - 0.1171875*x + 0.234375*z + 0.46875*x*z - 0.46875*x*z**2 + 0.234375*x**2*z - 0.234375*x**2*z**2 - 0.05859375*x**2 - 0.234375*z**2
+ 1 3 0    26    -0.15625*x*y**3 - 0.15625*y**3
+ 1 2 1    27    0.234375*x*y**2 - 0.46875*y**2*z - 0.46875*x*y**2*z + 0.234375*y**2
+ 1 1 2    28    -0.1171875*y - 0.1171875*x*y + 0.46875*y*z - 0.46875*y*z**2 + 0.46875*x*y*z - 0.46875*x*y*z**2
+ 1 0 3    29    0.01953125 + 0.01953125*x - 0.1171875*z - 0.1171875*x*z + 0.234375*x*z**2 - 0.15625*x*z**3 + 0.234375*z**2 - 0.15625*z**3
+ 0 4 0    30    -0.0390625*y**4
+ 0 3 1    31    -0.15625*y**3*z + 0.078125*y**3
+ 0 2 2    32    0.234375*y**2*z - 0.234375*y**2*z**2 - 0.05859375*y**2
+ 0 1 3    33    0.01953125*y - 0.1171875*y*z + 0.234375*y*z**2 - 0.15625*y*z**3
+ 0 0 4    34    -0.00244140625 + 0.01953125*z - 0.05859375*z**2 + 0.078125*z**3 - 0.0390625*z**4
+```
+
+**Please look into the `examples` folder for more examples and complete codes.**
+
 
 ### Known issues ###
 
