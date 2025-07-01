@@ -148,13 +148,13 @@ The simplest way to compile SDA in Windows is to use WSL2 and compile it as in L
    
    1.3 **compile the examples**
    
-   `cmake --build . --target build-examples`
+   `cmake --build . --target build_examples`
    
    The example source files locate in the folder `examples`. The executables are compiled and save in `build/bin/examples`. 
    
    1.4 **Compile the tests**
    
-   `cmake --build . --target build-tests`
+   `cmake --build . --target build_tests`
    
    An executable `run_tests` will be created in `build/bin/tests`.   
    
