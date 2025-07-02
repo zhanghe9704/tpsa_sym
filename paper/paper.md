@@ -21,7 +21,7 @@ bibliography: paper.bib
 
 # Summary
 
-The truncated power series algebra (TPSA), or differential algebra (DA), is a well-established and widely used method in particle accelerator physics. It is typically used to generate high-order map of a nonlinear dynamical system but is also used in symplectic tracking, normal form analysis, verified integration, global optimization, fast multipole method, etc.  This package is the first  to carry out symbolic DA-based calculations. Symbolic DA makes it possible to trace the contribution of initial conditions to the final result in a DA calculation process and improve the efficiency of  repeated DA calculations, which potentially broadens the usage of DA. 
+Truncated Power Series Algebra (TPSA), or Differential Algebra (DA), is a well-established tool in accelerator physics, commonly used for generating high-order maps of dynamic systems, as well as in symplectic tracking, normal form analysis, verified integration, optimization, and fast multipole methods. This package is the first to perform symbolic DA computations, enabling  traceability of initial condition contributions and runtime reduction for repeated DA calculations, potentially expanding DA's applications.
 
 # Background
 
@@ -29,7 +29,7 @@ The fundamental concept in DA is the DA vector, which can be considered as the T
 
 Considering a function $f(\mathbf{x})$ and its Taylor expansion $f_{\mathrm{T}}(\mathbf{x}_0)$  at the point $\mathbf{x}_0$ up to order $n$, we can define  the equivalence relation between the Taylor expansion and the DA vector as follows
 
-$$ [f]_n = f_{\mathrm{T}}(\mathbf{x}_0) = \sum {C_{n_1,n_2, ..., n_v}} \cdot d_1^{n_1} \cdot \dots \cdot d_v^{n_v}, $$ where $\mathbf{x} = (x_1, x_2, \dots, x_v)$, and $n \ge n_1 + n_2 + \dots + n_v$. Here $d_i$ is a special number: it represents a small variance in $x_i$. To add two DA vectors, we simply add  the coefficients of the like terms. To multiply two DA vectors, we multiply each term in the first one with all the terms in the second one and  then combine like terms while ignoring all terms above order $n$. Given two DA vectors $[a]_n$ and $[b]_n$ and a scalar c, we have
+$$ [f]_n = f_{\mathrm{T}}(\mathbf{x}_0) = \sum {C_{n_1,n_2, ..., n_v}} \cdot d_1^{n_1} \cdot \dots \cdot d_v^{n_v}, $$ where $\mathbf{x} = (x_1, x_2, \dots, x_v)$, and $n \ge n_1 + n_2 + \dots + n_v$. Here $d_i$ is a special number: it represents a small variance in $x_i$. To add two DA vectors, we simply add  the coefficients of the like terms. To multiply two DA vectors, we multiply each term in the first one with all the terms in the second one and  then combine like terms, ignoring all terms above order $n$. Given two DA vectors $[a]_n$ and $[b]_n$ and a scalar c, we have
 
 \begin{eqnarray}
 [a]_{n}+[b]_{n} & := & [a+b]_{n},\nonumber \\
