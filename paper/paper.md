@@ -37,26 +37,27 @@ c\cdot[a]_{n} & := & [c\cdot a]_{n},\label{eq:addmlt}\\
 {}[a]_{n}\cdot[b]_{n} & := & [a\cdot b]_{n}.\nonumber 
 \end{eqnarray}
 
-According to the fixed point theorem  [@AIEP108book], the inverse of a DA vector that is not infinitely small can be calculated in a finite number of iterations. The derivation operator $\partial_v$ with respect to the $v^{\mathrm{th}}$ variable and its inverse operator $\partial^{-1}v$ can be defined and carried out on a term by term basis on $[a]_n$. A DA vector can be used in calculations just as a number.
+According to the fixed point theorem  [@AIEP108book], the inverse of a DA vector that is not infinitely small can be calculated in a finite number of iterations. The derivation operator $\partial_v$ with respect to the $v^{\mathrm{th}}$ variable and its inverse operator $\partial^{-1}v$ can be carried out on a term by term basis on $[a]_n$. A DA vector can be used in calculations just as a number.
 
 The symbolic DA combines DA with symbolic calculation. Any coefficient of a Symbolic DA (SDA) vector is an explicit expression of the symbols in lieu of a number.  
 
 # Statement of need
-DA has been used in particle beam dynamic analysis since1980s and gradually extended to other fields. DA provides powerful analyzing tools [@caprimap; @monthnf], for a dynamic system. It is also used in various numerical algorithms [@rdaint; @makino2005verified; @FMMCPO2010].   DA tools are available in particle accelerator simulators [@COSYCAP04; @grote2003mad; @MADX; @forest2002introduction], or as stand-alone libraries  [@massari2018differential; @DACE; @zhang2024cpptpsa]. All of them only perform numerical DA calculation. This is the first and only library for symbolic DA calculations. 
+DA has been used in particle beam dynamic analysis since1980s and gradually extended to other fields. DA provides powerful analyzing tools [@caprimap; @monthnf], for a dynamic system. It is also used in various numerical algorithms， *e.g.* verified integration  [@rdaint], global optimization [@makino2005verified], and fast multipole method [@FMMCPO2010].   DA tools are available in particle accelerator simulators [@COSYCAP04; @grote2003mad; @MADX; @forest2002introduction], or as stand-alone libraries  [@massari2018differential; @DACE; @zhang2024cpptpsa]. All of them only perform numerical DA calculation. This is the first and only library for symbolic DA calculations. 
 
-We developed SDA to improve the efficiency of repetitive DA processes. By performing the computation once with SDA, we obtain an explicit expression for how the final DA vector depends on the initial inputs. Evaluating this expression—rather than rerunning the full DA process for each new input—significantly reduces computation time [@zhang2025Boosting]. SDA also provides an efficient method for computing higher‐order derivatives of any given function [@zhang2025higher].
+The SDA package can be used in several important ways. First, in high-performance computing scenarios involving differential algebra (DA), SDA can produce explicit expressions for the results of complex DA calculations. These expressions enable the generation of highly efficient code that replaces runtime DA computations, resulting in significant performance improvements [@zhang2025Boosting]. This was the original motivation for developing the package. Second, as a tool for dynamic analysis, SDA supports parametric and time-dependent studies by allowing DA maps to vary with symbolic parameters. This makes it possible to analyze how system behavior changes with evolving settings—something difficult to achieve with numerical DA alone. Finally, SDA provides a new way to obtain symbolic expressions of higher-order derivatives by following the algorithmic differentiation process, effectively bridging the gap between symbolic and numerical approaches  [@zhang2025higher].
+
+
 
 # Features
 
-This library is based on the numerical DA library, cppTPSA [@zhang2024cpptpsa]. All the DA calculations are carried out on symbols using exactly the same algorithms in cppTPSA by employing the SymEngine library [@Fernando2024SymEngine]. Users can compile the source code into a static or shared library and install it on their system. The main features of this library include the following: 
+This library is based on the numerical DA library, cppTPSA [@zhang2024cpptpsa]. All the DA calculations are carried out on symbols using exactly the same algorithms in cppTPSA by employing the SymEngine library [@Fernando2024SymEngine]. Users can compile the source code into a static or shared library and install it on their system. The main features of this library are:
 
-1. Define the SDA vector data type and overload common math operators/functions for it. 
-2. Support the composition, derivation, and inverse derivation on SDA vectors. 
-4. Obtain the explicit expression of a partial derivative for a function. 
-4. Obtain the callable function on the symbols from an SDA.
-7. Obtain the numerical DA from an SDA by assigning values to all the symbols.
+1. A custom SDA vector type with overloaded math operations, including composition, differentiation, and inverse.
+2. Extraction of explicit expressions for partial derivatives.
+3. Generation of callable functions from an SDA vector.
+4. Conversion of symbolic SDA to numerical DA.
 
-The following code shows how to calculate the SDA vector of $1/\sqrt{x^2+y^2}$ up to the third order.   After initializing a memory pool for 400 SDA vectors and defining the symbols, $x$ and $y$, the SDA vector $f$ is calculated and printed. The value of the SDA vector is shown in \autoref{fig:sda}. The first column shows the orders of the bases, the second column displays the index of each term in the SDA vector, and the last column lists the coefficient of each term as a function of $x$ and $y$. 
+The following code shows how to calculate the SDA vector of $1/\sqrt{x^2+y^2}$ up to the third order.   After initializing a memory pool for 400 SDA vectors and defining the symbols, $x$ and $y$, the SDA vector $f$ is calculated and shown in \autoref{fig:sda}. The orders of the bases, the index of each term , and the coefficient of each term as a function of $x$ and $y$ are displayed in columns. 
 
 ```c++
 #include <iostream>
