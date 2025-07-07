@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15.1)
 
-set(CMAKE_C_COMPILER "gcc")
-set(CMAKE_CXX_COMPILER "g++")
+# set(CMAKE_C_COMPILER "gcc")
+# set(CMAKE_CXX_COMPILER "g++")
 
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 14)
@@ -156,7 +156,8 @@ set(DEBUG_INCLUDE_DIRS
     ${SYMENGINE_INCLUDE_DIRS}
 )
 
-set(DEBUG_COMPILE_OPTIONS "-g" "-O0" "-DDEBUG")
+#set(DEBUG_COMPILE_OPTIONS "-g -O0 -DDEBUG -fsanitize=address -Wall -Wextra") 
+set(DEBUG_COMPILE_OPTIONS "-g -O0 -DDEBUG") 
 # Custom target to build the debug executable
 file(GLOB DEBUG_SOURCES ${CMAKE_SOURCE_DIR}/debug/*.cc)
 
@@ -177,11 +178,14 @@ foreach(DEBUG_SOURCE ${DEBUG_SOURCES})
  #   target_compile_options(${DEBUG_NAME} PRIVATE ${DEBUG_COMPILE_OPTIONS})
     set_target_properties(${DEBUG_NAME} PROPERTIES COMPILE_FLAGS ${DEBUG_COMPILE_OPTIONS})
 
+
     # Include directories for the debug executable
     target_include_directories(${DEBUG_NAME} PRIVATE ${DEBUG_INCLUDE_DIRS})
  #   message(STATUS "Set include directories for ${DEBUG_EXECUTABLE_NAME} to: ${DEBUG_INCLUDE_DIRS}")
 
     target_link_libraries(${DEBUG_NAME} PRIVATE symengine flint gmp mpfr)
+
+    target_link_options(${DEBUG_NAME} PRIVATE -fsanitize=address)
    
      # Make the debug executable depend on the custom target
      add_dependencies(build_debug ${DEBUG_NAME})

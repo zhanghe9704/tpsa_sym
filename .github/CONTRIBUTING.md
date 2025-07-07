@@ -1,3 +1,8 @@
+---
+layout: default
+title: Contributing
+---
+
 # Guidelines for Third-Party Contributions, Issue Reporting, and Support
 
 ## How to Contribute
