@@ -530,8 +530,8 @@ void ad_reserve(const unsigned int n)
 
 void ad_clear() {
 
-    for(int i=0; i<gnv+1; ++i) delete[] H[i];
-    delete[] H;
+    // for(int i=0; i<gnv+1; ++i) delete[] H[i];
+    // delete[] H;
     for(int i=0; i<FULL_VEC_LEN; ++i) delete[] prdidx[i];
     delete[] prdidx;
     delete[] base;
@@ -1678,7 +1678,8 @@ void ad_copy(const TVEC* isrc, const TVEC* idst) {
 void ad_copy(const SymEngine::Expression* isrc, int length, const TVEC* idst) {
     unsigned int j = *idst;
     if (FULL_VEC_LEN<length) length = FULL_VEC_LEN;
-    memcpy(advec[j], isrc, length*sizeof(SymEngine::Expression));
+    // memcpy(advec[j], isrc, length*sizeof(SymEngine::Expression));
+    std::copy_n(isrc, length, advec[j]);
     adveclen[j] = length;
 }
 
@@ -1701,6 +1702,7 @@ void ad_reset(const TVEC* iv) {
  *
  */
 void ad_free(const TVEC* i) {
+    if(*i<gnv) return; // Do not free the global TPS vectors - the bases.
     if(adlist.empty()) return;
     ad_reset(i);
     adlist.at(*i) = adlist.at(ad_end);

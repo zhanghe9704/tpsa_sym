@@ -9,7 +9,7 @@
 //! \author Lingyun Yang, http://www.lingyunyang.com/
 
 #ifndef SYMBTPSA
-#define SYBMTPSA
+#define SYMBTPSA
 // #ifndef WIN32
 
 // /* should work unchanged on _win32 using Lahey */
